@@ -25,4 +25,4 @@ replay_pid*
 /bin/
 *.classpath
 *.project
-build.fx.build
+build.fxbuild
