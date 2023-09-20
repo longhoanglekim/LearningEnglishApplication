@@ -1,4 +1,4 @@
-module com.oop_2023 {
+module com.ui {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
