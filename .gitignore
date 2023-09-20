@@ -26,3 +26,12 @@ replay_pid*
 *.classpath
 *.project
 build.fxbuild
+
+### Intellij IDEA ###
+/.idea
+/OOP_2023.iml
+/mvnw.cmd
+/mvnw
+/.mvn
+/target
+```
