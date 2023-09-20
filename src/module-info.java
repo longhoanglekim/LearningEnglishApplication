@@ -1,5 +1,5 @@
 module App {
 	requires javafx.controls;
 	
-	opens application to javafx.graphics, javafx.fxml;
+	opens main to javafx.graphics, javafx.fxml;
 }
