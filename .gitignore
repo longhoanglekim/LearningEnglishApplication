@@ -34,4 +34,5 @@ build.fxbuild
 /mvnw
 /.mvn
 /target
+/pom.xml
 ```
