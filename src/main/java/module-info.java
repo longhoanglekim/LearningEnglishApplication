@@ -1,4 +1,4 @@
-module com.ui {
+module com.example.oop_2023 {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
@@ -11,6 +11,6 @@ module com.ui {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
 
-    opens com.ui to javafx.fxml;
-    exports com.ui;
+    opens com.example.oop_2023 to javafx.fxml;
+    exports com.example.oop_2023;
 }
