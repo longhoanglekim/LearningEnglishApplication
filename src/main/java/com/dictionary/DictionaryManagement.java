@@ -61,6 +61,7 @@ public class DictionaryManagement {
 
 
     public static void deleteWord() {
+        System.out.println("Nhap tu muon xoa:");
         Scanner sc = new Scanner(System.in);
         String target = sc.nextLine();
         for (int i = 0; i < Dictionary.size(); i++) {
@@ -85,4 +86,6 @@ public class DictionaryManagement {
             e.printStackTrace();
         }
     }
+
+
 }
