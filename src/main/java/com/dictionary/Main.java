@@ -5,5 +5,6 @@ public class Main {
         DictionaryCommandline dic = new DictionaryCommandline();
         DictionaryManagement.insertFromFile();
         dic.dictionaryBasic();
+        DictionaryManagement.dictionaryExportToFile();
     }
 }

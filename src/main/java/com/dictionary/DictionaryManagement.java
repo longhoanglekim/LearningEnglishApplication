@@ -1,5 +1,7 @@
 package com.dictionary;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -67,6 +69,20 @@ public class DictionaryManagement {
                 Dictionary.words.remove(i);
                 break;
             }
+        }
+    }
+
+    public static void dictionaryExportToFile() {
+        File new_file = new File("src/main/java/com/dictionary/demo.txt");
+        try {
+            FileWriter writer = new FileWriter(new_file);
+            for (Word i : Dictionary.words) {
+                writer.write(i.getWord_target() + " " + i.getWord_explain());
+                writer.write("\n");
+            }
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
