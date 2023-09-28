@@ -97,6 +97,12 @@
       <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>  </dependencies>
+<dependency>
+  <groupId>junit</groupId>
+  <artifactId>junit</artifactId>
+  <version>4.12</version>
+  <scope>test</scope>
+</dependency>
 
   <build>
     <plugins>
@@ -118,7 +124,7 @@
             <!-- Default configuration for running with: mvn clean javafx:run -->
             <id>default-cli</id>
             <configuration>
-              <mainClass>com.oop_2023/com.ui.HelloApplication</mainClass>
+              <mainClass>com.oop_2023/com.ui.DictionaryApplication</mainClass>
               <launcher>app</launcher>
               <jlinkZipName>app</jlinkZipName>
               <jlinkImageName>app</jlinkImageName>
