@@ -7,7 +7,6 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-
 import java.io.IOException;
 
 public class DictionaryApplication extends Application {
@@ -20,13 +19,12 @@ public class DictionaryApplication extends Application {
         stage.getIcons().add(icon);
         //Stage settings
         stage.setTitle("Dictionary Application Demo");
-        stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
-        stage.setResizable(false);
+        //stage.setResizable(true);
         stage.show();
     }
 
     public static void main(String[] args) {
-        launch(args);
+        launch();
     }
 }

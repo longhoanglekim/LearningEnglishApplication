@@ -3,6 +3,10 @@ package com.dictionary;
 import java.util.*;
 
 public class DictionaryCommandline {
+    /**
+     * Show all words in dictionary.
+     * May be used for testing. May be removed later.
+     */
     public void showAllWords() {
         System.out.println("No\t| English\t| Vietnamese");
         for (int i = 0; i < Dictionary.size(); i++) {
@@ -13,11 +17,20 @@ public class DictionaryCommandline {
         }
     }
 
+    /**
+     * Load and show all words in dictionary.
+     * May be used for testing. May be removed later.
+     */
     public void dictionaryBasic() {
         DictionaryManagement.insertFromCommandline();
         showAllWords();
     }
 
+    /**
+     * Search for words that start with a given string.
+     * @param word String to search for.
+     * @return List of words that start with the given string.
+     */
     public ArrayList<Word> dictionarySearcher(String word) {
         ArrayList<Word> result = new ArrayList<>();
         for (int i = 0; i < Dictionary.size(); i++) {
@@ -29,6 +42,10 @@ public class DictionaryCommandline {
         return result;
     }
 
+    /**
+     * Guess words game.
+     * @return true if user wants to continue, false otherwise.
+     */
     public boolean guessWords() {
         Scanner sc = new Scanner(System.in);
         Set<Word> set = new HashSet<>();
@@ -64,6 +81,10 @@ public class DictionaryCommandline {
         return false;
     }
 
+    /**
+     * Perform dictionary advanced.
+     * May be used for testing. May be removed later.
+     */
     public void dictionaryAdvanced() {
         //perform ui
         while (true) {

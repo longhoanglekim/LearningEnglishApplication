@@ -1,62 +1,88 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ui.MainController">
    <children>
       <BorderPane prefHeight="500.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <left>
             <VBox prefHeight="454.0" prefWidth="126.0" style="-fx-background-color: #119DA4;" stylesheets="@application.css" BorderPane.alignment="CENTER">
                <children>
-                  <Button alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="35.0" prefWidth="126.0" stylesheets="@application.css" text="Dictionary" textFill="WHITE">
+                  <ToggleButton alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="35.0" prefWidth="126.0" stylesheets="@application.css" text="Search" textFill="WHITE">
                      <graphic>
                         <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../icon/Book.png" />
+                              <Image url="@../icon/Search.png" />
                            </image>
                         </ImageView>
-                     </graphic></Button>
-                  <Button alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="35.0" prefWidth="126.0" stylesheets="@application.css" text="Translate" textFill="WHITE">
+                     </graphic></ToggleButton>
+                  <ToggleButton alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="35.0" prefWidth="126.0" stylesheets="@application.css" text="Translate" textFill="WHITE">
                      <graphic>
                         <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../icon/Translate.png" />
                            </image>
                         </ImageView>
-                     </graphic></Button>
-                  <Button alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="40.0" prefWidth="126.0" stylesheets="@application.css" text="Games" textFill="WHITE">
+                     </graphic></ToggleButton>
+                  <ToggleButton alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="40.0" prefWidth="126.0" stylesheets="@application.css" text="Games" textFill="WHITE">
                      <graphic>
-                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
-                     </graphic></Button>
-                  <Button alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="35.0" prefWidth="126.0" stylesheets="@application.css" text="Settings" textFill="WHITE">
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icon/ABC.png" />
+                           </image></ImageView>
+                     </graphic></ToggleButton>
+                  <ToggleButton alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="35.0" prefWidth="126.0" stylesheets="@application.css" text="Favourite" textFill="WHITE">
                      <graphic>
-                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
-                     </graphic></Button>
-                  <Button alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="35.0" prefWidth="126.0" stylesheets="@application.css" text="Help" textFill="WHITE">
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icon/Bookmark.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </ToggleButton>
+                  <ToggleButton alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="35.0" prefWidth="126.0" stylesheets="@application.css" text="Settings" textFill="WHITE">
                      <graphic>
-                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
-                     </graphic></Button>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icon/Settings.png" />
+                           </image></ImageView>
+                     </graphic></ToggleButton>
+                  <ToggleButton alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="35.0" prefWidth="126.0" stylesheets="@application.css" text="Help" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icon/Question Mark.png" />
+                           </image></ImageView>
+                     </graphic>
+                  </ToggleButton>
                </children>
             </VBox>
          </left>
          <center>
-            <VBox prefHeight="502.0" prefWidth="674.0" BorderPane.alignment="CENTER">
+            <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="610.0" prefWidth="772.0" BorderPane.alignment="CENTER">
                <children>
-                  <SplitPane dividerPositions="0.5" prefHeight="579.0" prefWidth="674.0">
+                  <SplitPane dividerPositions="0.44715025906735745" prefHeight="4000.0" prefWidth="4000.0">
                     <items>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="462.0" prefWidth="296.0">
                            <children>
-                              <TextField prefHeight="26.0" prefWidth="227.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                              <ImageView fitHeight="26.0" fitWidth="25.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />
+                              <TextField fx:id="searchBox" layoutX="14.0" layoutY="11.0" prefHeight="38.0" prefWidth="320.0" promptText="Search" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="11.0">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font></TextField>
+                              <ListView fx:id="wordList" layoutX="14.0" layoutY="62.0" prefHeight="372.0" prefWidth="314.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="62.0" />
                            </children>
                         </AnchorPane>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
@@ -70,7 +96,25 @@
             </VBox>
          </center>
          <top>
-            <HBox prefHeight="50.0" prefWidth="800.0" style="-fx-background-color: #10424B;" BorderPane.alignment="CENTER" />
+            <HBox alignment="CENTER_LEFT" style="-fx-background-color: #10424B;" BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView fitHeight="45.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icon/Book.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Label graphicTextGap="5.0" prefHeight="50.0" prefWidth="239.0" text="Zictionary" textFill="#ececec" underline="true">
+                     <font>
+                        <Font name="Forte" size="31.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Label>
+               </children></HBox>
          </top>
       </BorderPane>
    </children>
