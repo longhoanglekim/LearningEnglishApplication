@@ -1,0 +1,9 @@
+cow con bò
+dog con chó
+duck con vịt
+elephant con voi
+fish con cá
+frog con ếch
+giraffe con hươu cao cổ
+goat con dê
+size kích cỡ
