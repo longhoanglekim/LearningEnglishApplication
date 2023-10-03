@@ -1,18 +1,15 @@
 package com.ui;
 
 import com.dictionary.Database;
-import com.dictionary.Dictionary;
-import com.dictionary.DictionaryCommandline;
+import com.commandline.Dictionary;
+import com.commandline.DictionaryCommandline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -28,6 +25,7 @@ import java.util.ResourceBundle;
  */
 public class MainController implements Initializable {
 
+
     @FXML
     private ListView<String> wordList;
 
@@ -37,8 +35,7 @@ public class MainController implements Initializable {
     @FXML
     TextArea meaning;
 
-    private DictionaryCommandline dictionaryCommandline = new DictionaryCommandline();
-    HashMap<String, String> map = new HashMap<String, String>();
+    private HashMap<String, String> map = new HashMap<String, String>();
     private final ObservableList<String> wordData = FXCollections.observableArrayList();
     private final ObservableList<String> meaningData = FXCollections.observableArrayList();
     /**
@@ -56,22 +53,23 @@ public class MainController implements Initializable {
         try {
            loadDatabase(connectDataBase,queryWord,queryDetail);
 
-            // Filter list view with search box data.
-
-//            searchBox.textProperty().addListener((observable, oldValue, newValue) -> {
-//                filteredData.setPredicate(s -> {
-//                    if (newValue == null || newValue.isEmpty()) {
-//                        return true;
-//                    }
-//                    String lowerCaseFilter = newValue.toLowerCase();
-//                    if (s.toLowerCase().contains(lowerCaseFilter)) {
-//                        return true;
-//                    }
-//                    return false;
-//                });
-//            });
+            FilteredList<String> filteredData = new FilteredList<>(wordData, s -> true);
+            searchBox.textProperty().addListener((observable, oldValue, newValue) -> {
+                filteredData.setPredicate(s -> {
+                    if (newValue == null || newValue.isEmpty()) {
+                        return true;
+                    }
+                    String lowerCaseFilter = newValue.toLowerCase();
+                    if (s.toLowerCase().startsWith(lowerCaseFilter)) {
+                        return true;
+                    }
+                    return false;
+                });
+            });
 
             // Set the filter list to be the list view items.
+            wordList.setItems(filteredData);
+
 
             // Set fixed cell size avoid listview from resizing and warning.
             wordList.setFixedCellSize(30);
@@ -111,6 +109,5 @@ public class MainController implements Initializable {
             i++;
         }
         wordList.setItems(wordData);
-
     }
 }

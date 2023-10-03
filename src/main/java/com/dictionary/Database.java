@@ -1,5 +1,5 @@
 package com.dictionary;
-
+import com.commandline.*;
 import java.sql.*;
 
 
@@ -31,7 +31,7 @@ public class Database {
      * Must be called after {@link Database#getDatabaseConnection()}.
      */
     public void getDataFromDatabase() {
-        String query = "SELECT * FROM tbl_edict";
+        var query = "SELECT * FROM tbl_edict";
         try {
             Statement statement = databaseLink.createStatement();
             ResultSet queryOutput = statement.executeQuery(query);
