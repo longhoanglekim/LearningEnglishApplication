@@ -8,8 +8,11 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -34,6 +37,13 @@ public class MainController implements Initializable {
 
     @FXML
     TextArea meaning;
+
+    @FXML
+    private BorderPane bp;
+    private Button searchButton;
+    private Button translateButton;
+    private Button favoriteButton;
+    private Button settingButton;
 
     private HashMap<String, String> map = new HashMap<String, String>();
     private final ObservableList<String> wordData = FXCollections.observableArrayList();
@@ -83,7 +93,7 @@ public class MainController implements Initializable {
      */
     public void onWordListClicked(){
         meaning.setText(map.get(wordList.getSelectionModel().getSelectedItem()));
-   }
+    }
 
     /**
      * load data from database and put into wordList,meaninglist and set them into data map,
@@ -109,5 +119,32 @@ public class MainController implements Initializable {
             i++;
         }
         wordList.setItems(wordData);
+    }
+
+    /**
+     * Search the word in the search box.
+     */
+    public void searchClick() {
+        try {
+            bp.setCenter(null);
+            b pane = FXMLLoader.load(getClass().getResource("Application.fxml"));
+            bp = pane;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Translate the word in the search box.
+     */
+    public void translateClick() {
+        try {
+            bp.setCenter(null);
+            AnchorPane pane = FXMLLoader.load(getClass().getResource("Translate.fxml"));
+            bp.setCenter(pane);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

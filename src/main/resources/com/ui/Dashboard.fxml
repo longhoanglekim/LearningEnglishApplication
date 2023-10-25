@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="455.0" prefWidth="129.0" stylesheets="@LightMode.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.DashboardController">
+   <VBox prefHeight="454.0" prefWidth="126.0" styleClass="vbox" stylesheets="@LightMode.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" BorderPane.alignment="CENTER">
+      <children>
+         <Button fx:id="home" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onHomeClicked" prefHeight="40.0" prefWidth="115.0" stylesheets="@LightMode.css" text="Home" textFill="WHITE">
+            <graphic>
+               <FontAwesomeIconView caretBias="false" glyphName="HOME" size="30" styleClass="fontawesome-icon" />
+            </graphic>
+            <VBox.margin>
+               <Insets left="5.0" top="5.0" />
+            </VBox.margin>
+         </Button>
+         <Button fx:id="translate" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onTranslateClicked" prefHeight="40.0" prefWidth="115.0" stylesheets="@LightMode.css" text="Translate" textFill="WHITE">
+            <graphic>
+               <FontAwesomeIconView caretBias="false" glyphName="LANGUAGE" size="30" styleClass="fontawesome-icon" />
+            </graphic>
+            <VBox.margin>
+               <Insets left="5.0" top="5.0" />
+            </VBox.margin></Button>
+         <Button fx:id="game" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onGameClicked" prefHeight="40.0" prefWidth="115.0" stylesheets="@LightMode.css" text="Games" textFill="WHITE">
+            <graphic>
+               <FontAwesomeIconView glyphName="DICE-D6" size="30" styleClass="fontawesome-icon" />
+            </graphic>
+            <VBox.margin>
+               <Insets left="5.0" top="5.0" />
+            </VBox.margin></Button>
+         <Button fx:id="bookmark" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="40.0" prefWidth="115.0" stylesheets="@LightMode.css" text="Favourite" textFill="WHITE">
+            <graphic>
+               <FontAwesomeIconView glyphName="BOOKMARK" size="30" styleClass="fontawesome-icon" />
+            </graphic>
+            <VBox.margin>
+               <Insets left="5.0" top="5.0" />
+            </VBox.margin>
+         </Button>
+         <Button fx:id="history" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onHistoryClicked" prefHeight="40.0" prefWidth="115.0" stylesheets="@LightMode.css" text="Settings" textFill="WHITE">
+            <VBox.margin>
+               <Insets left="5.0" top="5.0" />
+            </VBox.margin>
+            <graphic>
+               <FontAwesomeIconView glyphName="COG" size="30" styleClass="fontawesome-icon" />
+            </graphic></Button>
+         <Button alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="40.0" prefWidth="115.0" stylesheets="@LightMode.css" text="Help" textFill="WHITE">
+            <VBox.margin>
+               <Insets left="5.0" top="5.0" />
+            </VBox.margin>
+            <graphic>
+               <FontAwesomeIconView glyphName="QUESTION" size="30" styleClass="fontawesome-icon" />
+            </graphic>
+         </Button>
+      </children>
+   </VBox>
+</AnchorPane>

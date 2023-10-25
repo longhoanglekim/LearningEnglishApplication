@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Font?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.ui.Search"
+            prefHeight="400.0" prefWidth="600.0">
+    <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="610.0" prefWidth="772.0" BorderPane.alignment="CENTER">
+        <children>
+            <SplitPane dividerPositions="0.44715025906735745" prefHeight="4000.0" prefWidth="4000.0">
+                <items>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="462.0" prefWidth="296.0">
+                        <children>
+                            <TextField fx:id="searchBox" layoutX="14.0" layoutY="11.0" onAction="#onWordListClicked" prefHeight="38.0" prefWidth="320.0" promptText="Search" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="11.0">
+                                <font>
+                                    <Font size="14.0" />
+                                </font></TextField>
+                            <ListView fx:id="wordList" layoutX="14.0" layoutY="62.0" onMouseClicked="#onWordListClicked" prefHeight="372.0" prefWidth="314.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="62.0" />
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                        <children>
+                            <TextArea fx:id="meaning" layoutX="14.0" layoutY="14.0" prefHeight="429.0" prefWidth="286.0" />
+                        </children>
+                    </AnchorPane>
+                </items>
+            </SplitPane>
+        </children>
+    </VBox>
+</AnchorPane>

@@ -1,7 +1,7 @@
 package com.dictionary;
-import com.commandline.*;
-import java.sql.*;
 
+import java.sql.*;
+import java.util.logging.Logger;
 
 public class Database {
     public Connection databaseLink;
@@ -13,16 +13,15 @@ public class Database {
     public Connection getDatabaseConnection() {
         String databaseName = "dictionary";
         String databaseUser = "root";
-        String databasePassword = "Long24062004";
+        String databasePassword = "lyhongduc123";
         String url = "jdbc:mysql://localhost:3306/" + databaseName;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             databaseLink = DriverManager.getConnection(url, databaseUser, databasePassword);
         } catch (Exception e) {
-            //Logger.getLogger(Database.class.getName()).warning("SQLException: " + e.getMessage());
+            Logger.getLogger(Database.class.getName()).warning("SQLException: " + e.getMessage());
             e.printStackTrace();
         }
-
         return databaseLink;
     }
 
@@ -31,14 +30,14 @@ public class Database {
      * Must be called after {@link Database#getDatabaseConnection()}.
      */
     public void getDataFromDatabase() {
-        var query = "SELECT * FROM tbl_edict";
+        String query = "SELECT * FROM tbl_edict";
         try {
             Statement statement = databaseLink.createStatement();
             ResultSet queryOutput = statement.executeQuery(query);
             while (queryOutput.next()) {
                 String target = queryOutput.getString("word");
                 String explain = queryOutput.getString("detail");
-                Dictionary.words.add(new Word(target, explain));
+                //Dictionary.words.add(new Word(target, explain));
             }
         } catch (Exception e) {
             e.printStackTrace();

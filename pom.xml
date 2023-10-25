@@ -102,13 +102,23 @@
       <artifactId>mysql-connector-java</artifactId>
       <version>8.0.33</version>
     </dependency>
+    <dependency>
+      <groupId>de.jensd</groupId>
+      <artifactId>fontawesomefx-materialdesignfont</artifactId>
+      <version>2.0.26-9.1.2</version>
+    </dependency>
+    <dependency>
+      <groupId>de.jensd</groupId>
+      <artifactId>fontawesomefx-commons</artifactId>
+      <version>9.1.2</version>
+    </dependency>
+    <dependency>
+      <groupId>de.jensd</groupId>
+      <artifactId>fontawesomefx-fontawesome</artifactId>
+      <version>4.7.0-9.1.2</version>
+    </dependency>
   </dependencies>
-<dependency>
-  <groupId>junit</groupId>
-  <artifactId>junit</artifactId>
-  <version>4.12</version>
-  <scope>test</scope>
-</dependency>
+
 
   <build>
     <plugins>
@@ -130,7 +140,7 @@
             <!-- Default configuration for running with: mvn clean javafx:run -->
             <id>default-cli</id>
             <configuration>
-              <mainClass>com.oop_2023/com.ui.DictionaryApplication</mainClass>
+              <mainClass>com.oop_2023/com.ui.Application</mainClass>
               <launcher>app</launcher>
               <jlinkZipName>app</jlinkZipName>
               <jlinkImageName>app</jlinkImageName>

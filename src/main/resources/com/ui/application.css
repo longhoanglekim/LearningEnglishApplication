@@ -5,21 +5,17 @@
 */
 
 /*  Button on dashboard */
-.toggle-button {
+.button {
     -fx-background-color: #119DA4;
-    -fx-background-radius: 0em;
+    -fx-background-radius: 2em;
+    -fx-border-radius: 2em;
 }
 
-.toggle-button:hover {
+.button:hover {
     -fx-background-color: #60BDC2;
 }
 
-.toggle-button:pressed {
-    -fx-background-color: #60BDC2;
-    -fx-border-color: #eee5d7;
-}
-
-.toggle-button:selected {
+.button:focused {
     -fx-background-color: #60BDC2;
     -fx-border-color: #eee5d7;
     -fx-border-width: 0px 0px 0px 3px;
