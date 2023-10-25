@@ -13,11 +13,13 @@ import java.io.IOException;
 
 public class View {
     private final StringProperty selectedMenuItem;
-    private AnchorPane dictionaryPane;
     private AnchorPane dashboardPane;
-    private AnchorPane historyPane;
+    private AnchorPane dictionaryPane;
     private AnchorPane translatePane;
+    private AnchorPane historyPane;
+    private AnchorPane bookmarkPane;
     private AnchorPane gamePane;
+    private AnchorPane settingPane;
 
     public View() {
         selectedMenuItem = new SimpleStringProperty("");
@@ -33,6 +35,10 @@ public class View {
         return selectedMenuItem;
     }
 
+    /**
+     * Get dictionary pane
+     * @return dictionary pane
+     */
     public AnchorPane getDictionaryPane() {
         if (dictionaryPane == null) {
             try {
@@ -44,6 +50,10 @@ public class View {
         return dictionaryPane;
     }
 
+    /**
+     * Get dashboard pane
+     * @return dashboard pane
+     */
     public AnchorPane getDashboardPane() {
         if (dashboardPane == null) {
             try {
@@ -55,17 +65,10 @@ public class View {
         return dashboardPane;
     }
 
-    public AnchorPane getHistoryPane() {
-        if (historyPane == null) {
-            try {
-                historyPane = new FXMLLoader(getClass().getResource("History.fxml")).load();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return historyPane;
-    }
-
+    /**
+     * Get translate pane
+     * @return translate pane
+     */
     public AnchorPane getTranslatePane() {
         if (translatePane == null) {
             try {
@@ -77,6 +80,25 @@ public class View {
         return translatePane;
     }
 
+    /**
+     * Get history pane
+     * @return history pane
+     */
+    public AnchorPane getHistoryPane() {
+        if (historyPane == null) {
+            try {
+                historyPane = new FXMLLoader(getClass().getResource("History.fxml")).load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return historyPane;
+    }
+
+    /**
+     * Get game pane
+     * @return game pane
+     */
     public AnchorPane getGamePane() {
         if (gamePane == null) {
             try {
@@ -88,6 +110,39 @@ public class View {
         return gamePane;
     }
 
+    /**
+     * Get bookmark pane
+     * @return bookmark pane
+     */
+    public AnchorPane getBookmarkPane() {
+        if (bookmarkPane == null) {
+            try {
+                bookmarkPane = new FXMLLoader(getClass().getResource("Bookmark.fxml")).load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return bookmarkPane;
+    }
+
+    /**
+     * Get setting pane
+     * @return setting pane
+     */
+    public AnchorPane getSettingPane() {
+        if (settingPane == null) {
+            try {
+                settingPane = new FXMLLoader(getClass().getResource("Setting.fxml")).load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return settingPane;
+    }
+
+    /**
+     * Show window view with default: LEFT = Dashboard, CENTER = Dictionary.
+     */
     public void showView() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Window.fxml"));
         WindowController controller = new WindowController();
@@ -105,4 +160,6 @@ public class View {
         stage.getIcons().add(new Image("file:src/main/resources/com/ui/zictionary.png"));
         stage.show();
     }
+
+
 }

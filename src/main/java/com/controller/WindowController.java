@@ -17,11 +17,14 @@ public class WindowController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Model.getInstance().getView().getSelectedMenuItem().addListener((observableValue, oldValue, newValue) -> {
             switch (newValue) {
+                case "Translate":
+                    rootWindow.setCenter(Model.getInstance().getView().getTranslatePane());
+                    break;
                 case "History":
                     rootWindow.setCenter(Model.getInstance().getView().getHistoryPane());
                     break;
-                case "Translate":
-                    rootWindow.setCenter(Model.getInstance().getView().getTranslatePane());
+                case "Bookmark":
+                    rootWindow.setCenter(Model.getInstance().getView().getBookmarkPane());
                     break;
                 case "Game":
                     rootWindow.setCenter(Model.getInstance().getView().getGamePane());

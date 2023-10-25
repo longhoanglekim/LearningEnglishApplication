@@ -12,6 +12,10 @@ public class Model {
         return view;
     }
 
+    /**
+     * Get instance of model
+     * @return instance of model
+     */
     public static Model getInstance() {
         if (instance == null) {
             instance = new Model();
