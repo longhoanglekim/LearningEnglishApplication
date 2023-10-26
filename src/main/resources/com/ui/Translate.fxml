@@ -2,6 +2,7 @@
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -12,31 +13,30 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0"
-            xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.controller.TranslateController"
-            stylesheets="@../css/LightMode.css">
+<AnchorPane prefHeight="400.0" prefWidth="800.0" stylesheets="@../css/LightMode.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.TranslateController">
    <children>
-      <GridPane layoutX="75.0" layoutY="66.0" prefHeight="282.0" prefWidth="580.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+      <GridPane layoutY="14.0" prefHeight="380.0" prefWidth="650.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="14.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="256.799951171875" minWidth="10.0" prefWidth="253.60001220703126" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="122.4000244140625" minWidth="12.999975585937506" prefWidth="44.20001220703122" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="280.1999877929687" minWidth="10.0" prefWidth="280.1999877929687" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="379.19996337890626" minWidth="10.0" prefWidth="368.8000244140625" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="326.4" minWidth="12.999975585937506" prefWidth="59.79997558593749" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="389.59998779296876" minWidth="0.0" prefWidth="351.0000244140626" />
         </columnConstraints>
         <rowConstraints>
             <RowConstraints maxHeight="136.59998168945313" minHeight="10.0" prefHeight="33.40000610351562" vgrow="SOMETIMES" />
           <RowConstraints maxHeight="366.1999877929687" minHeight="10.0" prefHeight="359.79999389648435" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
+            <TextField fx:id="toField" prefHeight="362.0" prefWidth="351.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <TextField fx:id="fromField" prefHeight="1000.0" prefWidth="1000.0" GridPane.rowIndex="1" />
-            <TextField fx:id="toField" prefHeight="1000.0" prefWidth="1000.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <ImageView fitHeight="28.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../icon/UK.png" />
                      </image>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
                   </ImageView>
                   <Label fx:id="fromLanguage" text="Label" />
                </children>
@@ -51,7 +51,8 @@
                   <Label fx:id="toLanguage" text="Label" />
                </children>
             </HBox>
-            <FontAwesomeIconView glyphName="EXCHANGE" size="30" wrappingWidth="15.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Button mnemonicParsing="false" onAction="#onTranslateClicked" text="Dịch" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <FontAwesomeIconView glyphName="EXCHANGE" size="30" text="" wrappingWidth="36.6000354886055" GridPane.columnIndex="1">
                <GridPane.margin>
                   <Insets left="5.0" right="5.0" />
                </GridPane.margin>
