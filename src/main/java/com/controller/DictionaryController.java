@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -22,19 +23,24 @@ import java.util.ResourceBundle;
  * Currently, this controller is for testing and can be refactored later.
  */
 public class DictionaryController implements Initializable {
+    @FXML
+    private Label targetField;
+
+    @FXML
+    private Label pronounceField;
+
+    @FXML
+    private TextArea definitionField;
+
+    @FXML
+    private TextField searchField;
 
     @FXML
     private ListView<String> listOfWord;
 
-    @FXML
-    private TextField search_field;
-
-    @FXML
-    TextArea definitionField;
-
     private final ObservableList<String> wordData = FXCollections.observableArrayList();
     private final ObservableList<String> meaningData = FXCollections.observableArrayList();
-    HashMap<String, String> map = new HashMap<String, String>();
+    HashMap<String, String> map = new HashMap<>();
 
     /**
      * Initialize the controller, updating the search view list.
@@ -62,6 +68,7 @@ public class DictionaryController implements Initializable {
         }
     }
 
+/*<<<<<<< Updated upstream*/
     public void loadDatabase(Connection connectDataBase, String query_word, String query_detail) throws Exception{
         Statement statement = connectDataBase.createStatement();
         ResultSet wordOutput = statement.executeQuery(query_word);
@@ -94,7 +101,7 @@ public class DictionaryController implements Initializable {
     public void filterListOfWord() {
         // Filter list view with search box data.
         FilteredList<String> filteredData = new FilteredList<>(wordData, s -> true);
-        search_field.textProperty().addListener((observable, oldValue, newValue) -> {
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.equals(oldValue)) {
                 listOfWord.scrollTo(0);
             }
@@ -110,3 +117,15 @@ public class DictionaryController implements Initializable {
         listOfWord.setItems(filteredData);
     }
 }
+/*=======
+    public void onListViewCellClick() {
+        String query = "SELECT detail FROM tbl_edict WHERE word = " + listOfWord.getSelectionModel().getSelectedItem();
+        listOfWord.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
+            if (newValue != null) {
+
+            }
+            return false;
+        });
+    }
+}
+>>>>>>> Stashed changes*/

@@ -73,7 +73,6 @@
     -fx-cell-size: 30;
     -fx-alignment: center-left;
     -fx-text-fill: black;
-    -fx-background-color: #F1F1F1;
 }
 
 .list-cell:filled:selected:focused, .list-cell:filled:selected {

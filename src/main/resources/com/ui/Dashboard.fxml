@@ -7,7 +7,10 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="455.0" prefWidth="129.0"  xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.DashboardController">
+<AnchorPane prefHeight="455.0" prefWidth="129.0"
+            xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.controller.DashboardController"
+            stylesheets="@../css/LightMode.css">
    <VBox prefHeight="454.0" prefWidth="126.0" styleClass="vbox" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" BorderPane.alignment="CENTER">
       <children>
          <Button fx:id="home" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onHomeClicked" prefHeight="40.0" prefWidth="115.0"  text="Home" textFill="WHITE">
