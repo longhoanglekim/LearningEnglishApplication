@@ -13,7 +13,7 @@ public class Database {
     public Connection getDatabaseConnection() {
         String databaseName = "dictionary";
         String databaseUser = "root";
-        String databasePassword = "lyhongduc123";
+        String databasePassword = "Long24062004";
         String url = "jdbc:mysql://localhost:3306/" + databaseName;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
