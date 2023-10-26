@@ -9,12 +9,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.ResourceBundle;
@@ -32,7 +30,7 @@ public class DictionaryController implements Initializable {
     private TextField search_field;
 
     @FXML
-    TextField meaning;
+    TextArea definitionField;
 
     private final ObservableList<String> wordData = FXCollections.observableArrayList();
     private final ObservableList<String> meaningData = FXCollections.observableArrayList();
@@ -90,7 +88,7 @@ public class DictionaryController implements Initializable {
         filterListOfWord();
     }
     public void chooseWordClikced() {
-        meaning.setText(map.get(listOfWord.getSelectionModel().getSelectedItem()));
+        definitionField.setText(map.get(listOfWord.getSelectionModel().getSelectedItem()));
     }
 
     public void filterListOfWord() {
