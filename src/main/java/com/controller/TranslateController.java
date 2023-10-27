@@ -1,21 +1,14 @@
 package com.controller;
 
-import com.ui.Model;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.net.URL;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 import static com.dictionary.Translator.translateEnToVi;

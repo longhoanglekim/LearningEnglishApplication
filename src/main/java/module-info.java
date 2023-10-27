@@ -5,11 +5,6 @@ module com.ui {
     requires java.sql;
 
     requires org.controlsfx.controls;
-    requires com.dlsc.formsfx;
-    requires net.synedra.validatorfx;
-    requires org.kordamp.ikonli.javafx;
-    requires org.kordamp.bootstrapfx.core;
-    requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
     requires de.jensd.fx.glyphs.commons;
     requires de.jensd.fx.glyphs.materialdesignicons;

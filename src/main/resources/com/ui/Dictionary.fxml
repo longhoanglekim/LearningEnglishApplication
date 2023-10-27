@@ -27,7 +27,7 @@
                         <Insets left="5.0" top="5.0" />
                     </HBox.margin>
                 </FontAwesomeIconView>
-                <TextField id="search_field" fx:id="searchField" prefHeight="30.0" prefWidth="204.0" promptText="Search" styleClass="searchBox" stylesheets="@../css/LightMode.css" text="Search">
+                <TextField id="search_field" fx:id="searchField" prefHeight="30.0" prefWidth="250.0" promptText="Search" styleClass="searchBox" stylesheets="@../css/LightMode.css">
                     <font>
                         <Font size="14.0" />
                     </font>
@@ -39,33 +39,7 @@
         </HBox>
         <SplitPane dividerPositions="0.3590673575129533" prefHeight="4000.0" prefWidth="4000.0">
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="462.0" prefWidth="296.0">
-            <VBox layoutY="-2.0" prefHeight="579.0" prefWidth="32.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="33.0" text="A" />
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="45.0" text="B" />
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="60.0" text="C" />
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="138.0" text="D" />
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="63.0" text="E" />
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="60.0" text="F" />
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="66.0" text="G" />
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="102.0" text="H" />
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="86.0" text="I" />
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="121.0" text="J" />
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="142.0" text="K" />
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="102.0" text="L" />
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="66.0" text="M" />
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="58.0" text="N" />
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="74.0" text="O" />
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="47.0" text="P" />
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="47.0" text="Q" />
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="46.0" text="R" />
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="47.0" text="S" />
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="50.0" text="T" />
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="58.0" text="U" />
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="61.0" text="V" />
-               </children>
-            </VBox>
-                <ListView fx:id="listOfWord" layoutY="-1.0" onMouseClicked="#chooseWordClikced" prefHeight="472.0" prefWidth="10.0" stylesheets="@../css/LightMode.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                <ListView fx:id="listOfWord" layoutX="28.0" layoutY="-1.0" onMouseClicked="#chooseWordClikced" prefHeight="579.0" prefWidth="246.0" stylesheets="@../css/LightMode.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
             </AnchorPane>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
             <children>
