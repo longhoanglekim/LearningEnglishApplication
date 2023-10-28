@@ -9,26 +9,42 @@ import javafx.scene.control.Button;
 
 public class DashboardController implements Initializable {
     @FXML
-    public Button home;
+    public Button dictionary;
     public Button translate;
     public Button history;
     public Button bookmark;
     public Button game;
     public Button setting;
 
+    public Button barButton;
+
     public FontAwesomeIconView homeIcon;
     public FontAwesomeIconView historyIcon;
     public FontAwesomeIconView gameIcon;
     public FontAwesomeIconView translateIcon;
 
+    boolean isBarOpen = false;
 
     @Override
     public void initialize(java.net.URL url, java.util.ResourceBundle resourceBundle) {
         setStyleButtonOnClick("home");
     }
 
+    public void onBarClicked() {
+        if (isBarOpen) {
+            isBarOpen = false;
+            setTextVisible(false);
+            setWidthBar(50);
+            Model.getInstance().getView().getSelectedMenuItem().setValue("BarClose");
+        } else {
+            isBarOpen = true;
+            setTextVisible(true);
+            setWidthBar(110);
+            Model.getInstance().getView().getSelectedMenuItem().setValue("BarOpen");
+        };
+    }
 
-    public void onHomeClicked() {
+    public void onDictionaryClicked() {
         Model.getInstance().getView().getSelectedMenuItem().setValue("Home");
         setStyleButtonOnClick("home");
     }
@@ -58,11 +74,38 @@ public class DashboardController implements Initializable {
         setStyleButtonOnClick("setting");
     }
 
+    public void setTextVisible(boolean visible) {
+        if (visible) {
+            dictionary.setText("Dictionary");
+            translate.setText("Translate");
+            history.setText("History");
+            bookmark.setText("Bookmark");
+            game.setText("Game");
+            setting.setText("Setting");
+        } else {
+            dictionary.setText("");
+            translate.setText("");
+            history.setText("");
+            bookmark.setText("");
+            game.setText("");
+            setting.setText("");
+        }
+    }
+
+    public void setWidthBar(int width) {
+        dictionary.setPrefWidth(width);
+        translate.setPrefWidth(width);
+        history.setPrefWidth(width);
+        bookmark.setPrefWidth(width);
+        game.setPrefWidth(width);
+        setting.setPrefWidth(width);
+    }
+
     public void setStyleButtonOnClick(String button) {
         if (button.equals("home")) {
-            home.setId("button");
+            dictionary.setId("button");
         } else {
-            home.setId("");
+            dictionary.setId("");
         }
         if (button.equals("translate")) {
             translate.setId("button");

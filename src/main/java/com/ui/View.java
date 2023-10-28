@@ -7,9 +7,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
+
 
 public class View {
     private final StringProperty selectedMenuItem;
@@ -25,6 +28,7 @@ public class View {
         selectedMenuItem = new SimpleStringProperty("");
         try {
             dictionaryPane = new FXMLLoader(getClass().getResource("Dictionary.fxml")).load();
+            dashboardPane = new FXMLLoader(getClass().getResource("Dashboard.fxml")).load();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -158,6 +162,8 @@ public class View {
         stage.setScene(scene);
         stage.setTitle("Dictionary beta");
         stage.getIcons().add(new Image("file:src/main/resources/com/ui/zictionary.png"));
+        stage.setMinWidth(800);
+        stage.setMinHeight(550);
         stage.show();
     }
 

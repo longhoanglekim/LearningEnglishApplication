@@ -37,6 +37,20 @@ public class TranslateController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        fromField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.equals(oldValue)) {
+                try {
+                    if (EnToVi) {
+                        toField.setText(translateEnToVi(fromField.getText()));
+                    } else {
+                        toField.setText(translateViToEn(fromField.getText()));
+                    }
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
     }
 
     public void onTranslateClicked() {

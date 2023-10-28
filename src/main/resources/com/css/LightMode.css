@@ -6,7 +6,7 @@
 
 /*  Button on dashboard */
 .fontawesome-icon {
-    -fx-fill: black;
+    -fx-fill: #53535e;
 }
 
 .button {
@@ -32,10 +32,10 @@
 }
 
 
-.split-pane:horizontal > .split-pane-divider {
+/*.split-pane:horizontal > .split-pane-divider {
     -fx-background-color: #3d80c9;
     -fx-background-radius: 0em;
-}
+}*/
 
 /*  Text field   */
 .searchBox {
@@ -43,31 +43,23 @@
     -fx-background-radius: 2em;
 }
 
-/*  Text field   */
-.hbox {
-    -fx-background-color: #546667;
-}
-.hbox:focused {
+/*.hbox:focused {
     -fx-background-color: white;
     -fx-border-style: solid;
     -fx-border-color: #3d80c9;
-}
+}*/
 
 .vbox {
     -fx-background-color: #F1F1F1;
 }
-/*  List view - Currently not work, bugged   */
-/*.list-view .column-header,
-.list-view .column-header-background .filler{
-    -fx-cell-size: 20;
-    -fx-background-color: #3d80c9;
-}*/
 
-/*.list-view .column-header .label {
-    -fx-text-fill: black;
-    -fx-font-weight: bold;
-    -fx-alignment: center-left;
-}*/
+.hbox {
+    -fx-background-color: #3d80c9;
+}
+
+.button-bar {
+    -fx-background-color: #2b76bd;
+}
 
 .list-view .list-cell {
     -fx-cell-size: 30;

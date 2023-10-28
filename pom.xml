@@ -11,7 +11,8 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-<junit.version>5.9.2</junit.version>  </properties>
+    <junit.version>5.9.2</junit.version>
+  </properties>
 
   <dependencies>
     <dependency>
@@ -24,7 +25,7 @@
       <artifactId>javafx-fxml</artifactId>
       <version>17.0.6</version>
     </dependency>
-<dependency>
+    <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-media</artifactId>
       <version>17.0.6</version>
@@ -44,7 +45,7 @@
         </exclusion>
       </exclusions>
     </dependency>
-<dependency>
+    <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
       <version>${junit.version}</version>
@@ -77,7 +78,6 @@
       <version>4.7.0-9.1.2</version>
     </dependency>
   </dependencies>
-
 
   <build>
     <plugins>
