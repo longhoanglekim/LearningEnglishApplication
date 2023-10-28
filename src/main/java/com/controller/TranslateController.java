@@ -6,7 +6,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 
 import java.io.IOException;
 import java.net.URL;
@@ -38,9 +37,8 @@ public class TranslateController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        // Press enter to translate.
-        fromField.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER) {
+        fromField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.equals(oldValue)) {
                 try {
                     if (EnToVi) {
                         toField.setText(translateEnToVi(fromField.getText()));
@@ -52,6 +50,7 @@ public class TranslateController implements Initializable {
                 }
             }
         });
+
     }
 
     public void onTranslateClicked() {
