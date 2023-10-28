@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import org.controlsfx.control.PropertySheet;
 import org.controlsfx.control.ToggleSwitch;
 
 import java.net.URL;
@@ -42,6 +43,9 @@ public class WindowController implements Initializable {
                     break;
                 case "Game":
                     rootWindow.setCenter(Model.getInstance().getView().getGamePane());
+                    break;
+                case "Setting":
+                    rootWindow.setCenter(Model.getInstance().getView().getSettingPane());
                     break;
                 default:
                     rootWindow.setCenter(Model.getInstance().getView().getDictionaryPane());

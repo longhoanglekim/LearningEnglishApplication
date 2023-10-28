@@ -39,7 +39,7 @@ public class DashboardController implements Initializable {
         } else {
             isBarOpen = true;
             setTextVisible(true);
-            setWidthBar(110);
+            setWidthBar(130);
             Model.getInstance().getView().getSelectedMenuItem().setValue("BarOpen");
         };
     }

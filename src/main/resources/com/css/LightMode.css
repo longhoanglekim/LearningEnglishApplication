@@ -100,6 +100,36 @@
     -fx-background-insets: 0em;
 }
 
+/* Kích thước my button font 12px */
+.my-button12 {
+    -fx-background-color: none;
+    -fx-background-radius: 0em;
+    -fx-text-fill: black;
+    -fx-font-size: 12px;
+}
+
+/* Kích thước my button font 14px */
+.my-button14 {
+    -fx-background-color: none;
+    -fx-background-radius: 0em;
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+}
+/* Kích thước my label font 12px */
+.my-label12 {
+    -fx-background-color: none;
+    -fx-background-radius: 0em;
+    -fx-text-fill: black;
+    -fx-font-size: 12px;
+}
+/* Kích thước my label font 14px */
+.my-label14 {
+    -fx-background-color: none;
+    -fx-background-radius: 0em;
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+}
+
 /* Toggle button */
 .toggle-button {
 

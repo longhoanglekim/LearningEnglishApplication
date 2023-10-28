@@ -7,12 +7,9 @@
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0"
-            stylesheets="@../css/LightMode.css"
-            xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.controller.SettingController">
-   <Label layoutX="69.0" layoutY="55.0" text="Font Size" />
-   <ChoiceBox layoutX="125.0" layoutY="51.0" prefHeight="26.0" prefWidth="64.0" />
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/LightMode.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.SettingController">
+   <Label fx:id="labelFontSize" layoutX="69.0" stylesheets="@../css/LightMode.css" layoutY="55.0" text="Font Size" />
+   <ChoiceBox fx:id="fontSize" layoutX="125.0" stylesheets="@../css/LightMode.css" layoutY="51.0" onAction="#onFontSizeSelected" prefHeight="26.0" prefWidth="64.0" />
    <ToggleButton layoutX="93.0" layoutY="200.0" mnemonicParsing="false" text="ToggleButton" />
    <Accordion layoutX="157.0" layoutY="125.0">
      <panes>

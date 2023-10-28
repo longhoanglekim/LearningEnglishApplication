@@ -167,5 +167,4 @@ public class View {
         stage.show();
     }
 
-
 }
