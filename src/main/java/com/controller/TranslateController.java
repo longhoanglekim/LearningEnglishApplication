@@ -3,12 +3,15 @@ package com.controller;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import static com.dictionary.Translator.translateEnToVi;
@@ -17,9 +20,9 @@ import static com.dictionary.Translator.translateViToEn;
 
 public class TranslateController implements Initializable {
     @FXML
-    public TextField fromField;
+    public TextArea fromField;
     @FXML
-    public TextField toField;
+    public TextArea toField;
     @FXML
     public ImageView imageFromLanguage;
     @FXML
@@ -28,38 +31,28 @@ public class TranslateController implements Initializable {
     public Label labelFromLanguage;
     @FXML
     public Label labelToLanguage;
-
-    Image imageVi = new Image(getClass().getResourceAsStream("/com/icon/Vietnam.png"));
-    Image imageEn = new Image(getClass().getResourceAsStream("/com/icon/UK.png"));
+    Image imageVi, imageEn;
 
     boolean EnToVi = true;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        fromField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.equals(oldValue)) {
-                try {
-                    if (EnToVi) {
-                        toField.setText(translateEnToVi(fromField.getText()));
-                    } else {
-                        toField.setText(translateViToEn(fromField.getText()));
-                    }
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
-
+        imageVi = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/icon/Vietnam.png")));
+        imageEn = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/icon/UK.png")));
+        fromField.setWrapText(true);
+        toField.setWrapText(true);
     }
 
     public void onTranslateClicked() {
         try {
+            String toTranslate;
             if (EnToVi) {
-                toField.setText(translateEnToVi(fromField.getText()));
+                toTranslate = translateEnToVi(fromField.getText());
+
             } else {
-                toField.setText(translateViToEn(fromField.getText()));
+                toTranslate = translateViToEn(fromField.getText());
             }
+            toField.setText(translateViToEn(fromField.getText()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
