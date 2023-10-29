@@ -3,6 +3,7 @@ package com.controller;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -11,8 +12,7 @@ import javafx.scene.input.KeyCode;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import static com.dictionary.Translator.translateEnToVi;
 import static com.dictionary.Translator.translateViToEn;
@@ -31,27 +31,29 @@ public class TranslateController implements Initializable {
     public Label labelFromLanguage;
     @FXML
     public Label labelToLanguage;
+    @FXML
+    public ListView<String> historyTranslate;
     Image imageVi, imageEn;
-
     boolean EnToVi = true;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         imageVi = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/icon/Vietnam.png")));
         imageEn = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/icon/UK.png")));
-        fromField.setWrapText(true);
-        toField.setWrapText(true);
+        historyTranslate.setVisible(false);
     }
 
     public void onTranslateClicked() {
         try {
             String toTranslate;
+            String fromTranslate = fromField.getText();
             if (EnToVi) {
-                toField.setText(translateEnToVi(fromField.getText()));
+                toTranslate = translateEnToVi(fromTranslate);
             } else {
-                toField.setText(translateViToEn(fromField.getText()));
+                toTranslate = translateViToEn(fromTranslate);
             }
-
+            toField.setText(toTranslate);
+            historyTranslate.getItems().addAll(fromTranslate);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -71,6 +73,9 @@ public class TranslateController implements Initializable {
             imageToLanguage.setImage(imageVi);
             EnToVi = true;
         }
+    }
+    public void onHistoryClicked() {
+        historyTranslate.setVisible(true);
     }
 
 }
