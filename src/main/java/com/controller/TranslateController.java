@@ -47,12 +47,11 @@ public class TranslateController implements Initializable {
         try {
             String toTranslate;
             if (EnToVi) {
-                toTranslate = translateEnToVi(fromField.getText());
-
+                toField.setText(translateEnToVi(fromField.getText()));
             } else {
-                toTranslate = translateViToEn(fromField.getText());
+                toField.setText(translateViToEn(fromField.getText()));
             }
-            toField.setText(translateViToEn(fromField.getText()));
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
