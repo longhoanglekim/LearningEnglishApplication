@@ -43,6 +43,12 @@
     -fx-background-radius: 2em;
 }
 
+.definitionArea {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 0em;
+    -fx-fill: #FFFFFF;
+}
+
 /*.hbox:focused {
     -fx-background-color: white;
     -fx-border-style: solid;
@@ -129,6 +135,8 @@
     -fx-text-fill: black;
     -fx-font-size: 14px;
 }
+
+
 
 /* Toggle button */
 .toggle-button {

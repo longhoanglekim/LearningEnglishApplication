@@ -82,7 +82,7 @@ public class DictionaryController implements Initializable {
         String selected = listOfWord.getSelectionModel().getSelectedItem();
         Word word = dictionary.lookUp(selected);
         targetField.setText(word.getTarget());
-        pronounceField.setText("Phiên âm : " + word.getPronounce());
+        pronounceField.setText(word.getPronounce());
         definitionField.setText(word.getExplain());
     }
 

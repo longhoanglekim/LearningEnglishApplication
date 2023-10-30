@@ -55,15 +55,15 @@
          </HBox>
       </top>
       <center>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="576.0" prefWidth="542.0" BorderPane.alignment="CENTER">
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="576.0" prefWidth="542.0" styleClass="definitionArea" BorderPane.alignment="CENTER">
             <children>
-               <TextArea fx:id="definitionField" layoutY="125.0" prefHeight="468.0" prefWidth="548.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+               <TextArea fx:id="definitionField" layoutY="125.0" prefHeight="488.0" prefWidth="548.0" styleClass="definitionArea" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                <Label fx:id="targetField" layoutX="14.0" layoutY="14.0" prefHeight="47.0" prefWidth="140.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0">
                   <font>
                      <Font size="29.0" />
                   </font>
                </Label>
-               <Label fx:id="pronounceField" layoutX="14.0" layoutY="72.0" prefHeight="20.0" prefWidth="274.0" AnchorPane.leftAnchor="14.0">
+               <Label fx:id="pronounceField" layoutX="14.0" layoutY="72.0" prefHeight="20.0" prefWidth="274.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="70.0">
                   <font>
                      <Font size="17.0" />
                   </font>

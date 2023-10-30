@@ -38,27 +38,21 @@ public class Local extends Dictionary {
             Scanner sc = new Scanner(new FileReader(file));
             while (sc.hasNextLine()) {
                 String line = sc.nextLine();
-                if (line.startsWith("@")) {
-                    line = line.substring(1); // remove the char '@'.
-                }
                 String[] wap = line.split("/");
-                //System.out.println(wap[0] + " " + wap[1]);
+                String target = wap[0].substring(1);    //Remove the '@' char.
+                String pronounce;
                 StringBuilder explain = new StringBuilder();
-                while (sc.hasNextLine()) {
+                while (sc.hasNext("[+*-=!].*")) {
                     String line_explain = sc.nextLine();
-                    if (line_explain.equals("")) {
-                        break;
-                    }
                     explain.append(line_explain + "\n");
                 }
+                sc.skip("\\R?");        //Skip the empty line.
                 if (wap.length == 1) {
-                    wap = new String[2];
-                    wap[0] = line;
-                    wap[1] = "";
+                    pronounce = "";
                 } else {
-                    wap[1] = "/" + wap[1] + "/";
+                    pronounce = '/' + wap[1] + '/';
                 }
-                Word newWord = new Word(wap[0], wap[1], explain.toString());
+                Word newWord = new Word(target, pronounce, explain.toString());
                 words.put(newWord.getTarget(), newWord);
             }
         } catch (Exception e) {
