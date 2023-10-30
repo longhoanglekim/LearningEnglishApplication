@@ -1,6 +1,9 @@
 package com.controller;
 
 import com.dictionary.Database;
+import com.dictionary.Dictionary;
+import com.dictionary.Local;
+import com.dictionary.Word;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -38,9 +41,9 @@ public class DictionaryController implements Initializable {
     @FXML
     private ListView<String> listOfWord;
 
+    private Dictionary dictionary;
+
     private final ObservableList<String> wordData = FXCollections.observableArrayList();
-    private final ObservableList<String> meaningData = FXCollections.observableArrayList();
-    HashMap<String, String> map = new HashMap<>();
 
     /**
      * Initialize the controller, updating the search view list.
@@ -50,71 +53,47 @@ public class DictionaryController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Database database = new Database();
-        Connection connectDataBase = database.getDatabaseConnection();
-        //database.getDataFromDatabase(); currently bugged, will be fixed later.
-        String query_word = "SELECT word FROM tbl_edict";
-        String detail_word = "SELECT detail FROM tbl_edict";
+        /*dictionary = new Database();
+        if (dictionary.initialize()) {
+            System.out.println("Database initialized.");
+        } else {*/
+            dictionary = new Local();
+            if (dictionary.initialize()) {
+                System.out.println("Local dictionary initialized.");
+            } else {
+                System.out.println("Cannot initialize dictionary.");
+            }
+        //}
+
         try {
-            loadDatabase(connectDataBase, query_word, detail_word);
-
-
-
-            // Set fixed cell size avoid listview from resizing and warning.
+            onActionSearchField();
             listOfWord.setFixedCellSize(30);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-/*<<<<<<< Updated upstream*/
-    public void loadDatabase(Connection connectDataBase, String query_word, String query_detail) throws Exception{
-        Statement statement = connectDataBase.createStatement();
-        ResultSet wordOutput = statement.executeQuery(query_word);
-        while (wordOutput.next()) {
-            String target = wordOutput.getString("word");
-            wordData.add(target);
-            //System.out.println(target);
-        }
-
-            /*while (Dictionary.words.iterator().hasNext()) {
-                wordData.add(new String(Dictionary.words.iterator().next().getWord_target()));
-            }*/
-        listOfWord.setItems(wordData);
-        ResultSet detailOutput = statement.executeQuery(query_detail);
-        int i = 0;
-        while (detailOutput.next()) {
-            String target = detailOutput.getString("detail");
-            meaningData.add(target);
-            map.put(wordData.get(i), meaningData.get(i));
-            i++;
-        }
-        statement = connectDataBase.createStatement();
-
-        filterListOfWord();
-    }
     public void chooseWordClikced() {
-        definitionField.setText(map.get(listOfWord.getSelectionModel().getSelectedItem()));
+        String selected = listOfWord.getSelectionModel().getSelectedItem();
+        Word word = dictionary.lookUp(selected);
+        targetField.setText(word.getTarget());
+        pronounceField.setText(word.getPronounce());
+        definitionField.setText(word.getExplain());
     }
 
-    public void filterListOfWord() {
+    public void onActionSearchField() {
         // Filter list view with search box data.
-        FilteredList<String> filteredData = new FilteredList<>(wordData, s -> true);
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.equals(oldValue)) {
-                listOfWord.scrollTo(0);
+            if (newValue == null || newValue.isEmpty()) {
+                listOfWord.getItems().clear();
+                return;
             }
-            filteredData.setPredicate(s -> {
-                if (newValue.isEmpty()) {
-                    return true;
-                }
-                String lowerCaseFilter = newValue.toLowerCase();
-                return s.toLowerCase().startsWith(lowerCaseFilter);
-            });
+            if (!newValue.equals(oldValue)) {
+                listOfWord.getItems().addAll(dictionary.getAllWordsTarget());
+            }
         });
         // Set the filter list to be the list view items.
-        listOfWord.setItems(filteredData);
+
     }
 }
 /*=======

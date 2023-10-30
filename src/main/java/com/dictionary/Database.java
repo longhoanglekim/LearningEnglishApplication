@@ -13,16 +13,17 @@ public class Database extends Dictionary {
      * Get database connection from a database.
      * @return database link.
      */
-    public Connection getDatabaseConnection() {
+    public Connection getDatabaseConnection() throws Exception {
         String databaseName = "dictionary";
         String databaseUser = "root";
-        String databasePassword = "Long24062004";
+        String databasePassword = "long21312313";
         String url = "jdbc:mysql://localhost:3306/" + databaseName;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             databaseLink = DriverManager.getConnection(url, databaseUser, databasePassword);
         } catch (Exception e) {
             Logger.getLogger(Database.class.getName()).warning("SQLException: " + e.getMessage());
+            throw new Exception("Cannot connect to database.");
         }
         return databaseLink;
     }
@@ -55,15 +56,18 @@ public class Database extends Dictionary {
             e.printStackTrace();
         }
     }
+
     @Override
-    public void initialize() {
+    public boolean initialize() {
         try {
             getDatabaseConnection();
             isInitialized = true;
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
-            e.printStackTrace();
+            //e.printStackTrace();
+            return false;
         }
+        return true;
     }
 
     /**
@@ -87,6 +91,11 @@ public class Database extends Dictionary {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return result;
+    }
+
+    public List<String> getAllWordsTarget() {
+        ArrayList<String> result = new ArrayList<>();
         return result;
     }
 

@@ -7,13 +7,19 @@ public abstract class Dictionary {
     /**
      * Initialize the dictionary.
      */
-    public abstract void initialize();
+    public abstract boolean initialize();
 
     /**
      * Get all words in the dictionary.
-     * @return ArrayList of all words in the dictionary.
+     * @return ArrayList of WORD in the dictionary.
      */
     public abstract List<Word> getAllWords();
+
+    /**
+     * Get all words in the dictionary.
+     * @return ArrayList of STRING WORD in the dictionary.
+     */
+    public abstract List<String> getAllWordsTarget();
 
     /**
      * Search for a pre'suffix' word in the dictionary.
