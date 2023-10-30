@@ -18,8 +18,8 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.HashMap;
-import java.util.ResourceBundle;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Controller for main view.
@@ -71,13 +71,18 @@ public class DictionaryController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        targetField.styleProperty().bind(FontSizeManager.getInstance().fontSizeProperty().asString("-fx-font-size: %dpx;"));
+        definitionField.styleProperty().bind(FontSizeManager.getInstance().fontSizeProperty().asString("-fx-font-size: %dpx;"));
+        searchField.styleProperty().bind(FontSizeManager.getInstance().fontSizeProperty().asString("-fx-font-size: %dpx;"));
+        listOfWord.styleProperty().bind(FontSizeManager.getInstance().fontSizeProperty().asString("-fx-font-size: %dpx;"));
+        pronounceField.styleProperty().bind(FontSizeManager.getInstance().fontSizeProperty().asString("-fx-font-size: %dpx;"));
     }
 
     public void chooseWordClikced() {
         String selected = listOfWord.getSelectionModel().getSelectedItem();
         Word word = dictionary.lookUp(selected);
         targetField.setText(word.getTarget());
-        pronounceField.setText(word.getPronounce());
+        pronounceField.setText("Phiên âm : " + word.getPronounce());
         definitionField.setText(word.getExplain());
     }
 
@@ -85,15 +90,21 @@ public class DictionaryController implements Initializable {
         // Filter list view with search box data.
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == null || newValue.isEmpty()) {
+                // Clear the list view if the search field is empty.
                 listOfWord.getItems().clear();
-                return;
-            }
-            if (!newValue.equals(oldValue)) {
-                listOfWord.getItems().addAll(dictionary.getAllWordsTarget());
+            } else {
+                // Filter the list view based on the search input.
+                List<String> filteredWords = dictionary.getAllWordsTarget()
+                        .stream()
+                        .filter(word -> word.startsWith(newValue))
+                        .collect(Collectors.toList());
+
+                // Update the list view with filtered items.
+                filteredWords.sort(Comparator.naturalOrder());
+                listOfWord.getItems().setAll(filteredWords);
+
             }
         });
-        // Set the filter list to be the list view items.
-
     }
 }
 /*=======

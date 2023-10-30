@@ -38,6 +38,9 @@ public class Local extends Dictionary {
             Scanner sc = new Scanner(new FileReader(file));
             while (sc.hasNextLine()) {
                 String line = sc.nextLine();
+                if (line.startsWith("@")) {
+                    line = line.substring(1); // remove the char '@'.
+                }
                 String[] wap = line.split("/");
                 //System.out.println(wap[0] + " " + wap[1]);
                 StringBuilder explain = new StringBuilder();
