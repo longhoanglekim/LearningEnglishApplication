@@ -16,7 +16,7 @@ public class Database extends Dictionary {
     public Connection getDatabaseConnection() throws Exception {
         String databaseName = "dictionary";
         String databaseUser = "root";
-        String databasePassword = "long21312313";
+        String databasePassword = "lyhongduc123";
         String url = "jdbc:mysql://localhost:3306/" + databaseName;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -70,30 +70,6 @@ public class Database extends Dictionary {
         return true;
     }
 
-    /**
-     * Get all words in the dictionary.
-     *
-     * @return ArrayList of all words in the dictionary.
-     */
-    @Override
-    public List<Word> getAllWords() {
-        ArrayList<Word> result = new ArrayList<>();
-        String query = "SELECT * FROM tbl_edict";
-        try {
-            Statement statement = databaseLink.createStatement();
-            ResultSet queryOutput = statement.executeQuery(query);
-            while (queryOutput.next()) {
-                String target = queryOutput.getString("word");
-                String pronounce = queryOutput.getString("pronounce");
-                String explain = queryOutput.getString("detail");
-                result.add(new Word(target, pronounce, explain));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
-
     public List<String> getAllWordsTarget() {
         ArrayList<String> result = new ArrayList<>();
         return result;
@@ -106,17 +82,15 @@ public class Database extends Dictionary {
      * @return ArrayList of words that start with the given string.
      */
     @Override
-    public List<Word> search(String word) {
-        ArrayList<Word> result = new ArrayList<>();
-        String query = "SELECT * FROM tbl_edict WHERE word LIKE '" + word + "%'";
+    public List<String> search(String word) {
+        ArrayList<String> result = new ArrayList<>();
+        String query = "SELECT word FROM tbl_edict WHERE word LIKE '" + word + "%' ORDER BY word asc";
         try {
             Statement statement = databaseLink.createStatement();
             ResultSet queryOutput = statement.executeQuery(query);
             while (queryOutput.next()) {
                 String target = queryOutput.getString("word");
-                String pronounce = queryOutput.getString("pronounce");
-                String explain = queryOutput.getString("detail");
-                result.add(new Word(target, pronounce, explain));
+                result.add(target);
             }
         } catch (Exception e) {
             e.printStackTrace();

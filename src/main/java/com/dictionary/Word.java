@@ -12,7 +12,7 @@ public class Word {
         this.target = target;
         this.pronounce = pronounce;
         this.explain = explain;
-        beautifyDefinition();
+        //beautifyDefinition();
     }
 
     private void beautifyDefinition() {
@@ -53,5 +53,10 @@ public class Word {
 
     public void setDefinition(ArrayList<String> definition) {
         this.definition = definition;
+    }
+
+    @Override
+    public String toString() {
+        return "@" + target + pronounce + "\n" + explain;
     }
 }

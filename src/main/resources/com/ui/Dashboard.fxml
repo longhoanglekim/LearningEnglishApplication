@@ -33,22 +33,6 @@
             <Insets left="5.0" top="5.0" />
          </VBox.margin>
       </Button>
-      <Button fx:id="history" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#onHistoryClicked" prefHeight="40.0" prefWidth="50.0" textFill="WHITE">
-         <VBox.margin>
-            <Insets left="5.0" top="5.0" />
-         </VBox.margin>
-         <graphic>
-            <FontAwesomeIconView glyphName="HISTORY" size="30" styleClass="fontawesome-icon" textAlignment="CENTER" wrappingWidth="30.0" />
-         </graphic>
-      </Button>
-      <Button fx:id="bookmark" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#onBookmarkClicked" prefHeight="40.0" prefWidth="50.0" textFill="WHITE">
-         <graphic>
-            <FontAwesomeIconView glyphName="BOOKMARK" size="30" styleClass="fontawesome-icon" textAlignment="CENTER" wrappingWidth="30.0" />
-         </graphic>
-         <VBox.margin>
-            <Insets left="5.0" top="5.0" />
-         </VBox.margin>
-      </Button>
       <Button fx:id="game" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#onGameClicked" prefHeight="40.0" prefWidth="50.0" textFill="WHITE">
          <graphic>
             <FontAwesomeIconView glyphName="LEANPUB" size="30" styleClass="fontawesome-icon" textAlignment="CENTER" wrappingWidth="30.0" />

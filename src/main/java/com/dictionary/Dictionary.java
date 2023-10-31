@@ -9,11 +9,6 @@ public abstract class Dictionary {
      */
     public abstract boolean initialize();
 
-    /**
-     * Get all words in the dictionary.
-     * @return ArrayList of WORD in the dictionary.
-     */
-    public abstract List<Word> getAllWords();
 
     /**
      * Get all words in the dictionary.
@@ -26,7 +21,7 @@ public abstract class Dictionary {
      * @param word Word to search for.
      * @return ArrayList of words that start with the given string.
      */
-    public abstract List<Word> search(String word);
+    public abstract List<String> search(String word);
 
     /**
      * Look up a word definition in the dictionary.

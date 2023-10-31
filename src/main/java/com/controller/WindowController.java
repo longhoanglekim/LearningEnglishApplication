@@ -35,12 +35,6 @@ public class WindowController implements Initializable {
                 case "Translate":
                     rootWindow.setCenter(Model.getInstance().getView().getTranslatePane());
                     break;
-                case "History":
-                    rootWindow.setCenter(Model.getInstance().getView().getHistoryPane());
-                    break;
-                case "Bookmark":
-                    rootWindow.setCenter(Model.getInstance().getView().getBookmarkPane());
-                    break;
                 case "Game":
                     rootWindow.setCenter(Model.getInstance().getView().getGamePane());
                     break;

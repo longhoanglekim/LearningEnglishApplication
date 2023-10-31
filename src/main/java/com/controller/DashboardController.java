@@ -11,8 +11,6 @@ public class DashboardController implements Initializable {
     @FXML
     public Button dictionary;
     public Button translate;
-    public Button history;
-    public Button bookmark;
     public Button game;
     public Button setting;
 
@@ -78,15 +76,11 @@ public class DashboardController implements Initializable {
         if (visible) {
             dictionary.setText("Dictionary");
             translate.setText("Translate");
-            history.setText("History");
-            bookmark.setText("Bookmark");
             game.setText("Game");
             setting.setText("Setting");
         } else {
             dictionary.setText("");
             translate.setText("");
-            history.setText("");
-            bookmark.setText("");
             game.setText("");
             setting.setText("");
         }
@@ -95,8 +89,6 @@ public class DashboardController implements Initializable {
     public void setWidthBar(int width) {
         dictionary.setPrefWidth(width);
         translate.setPrefWidth(width);
-        history.setPrefWidth(width);
-        bookmark.setPrefWidth(width);
         game.setPrefWidth(width);
         setting.setPrefWidth(width);
     }
@@ -111,16 +103,6 @@ public class DashboardController implements Initializable {
             translate.setId("button");
         } else {
             translate.setId("");
-        }
-        if (button.equals("history")) {
-            history.setId("button");
-        } else {
-            history.setId("");
-        }
-        if (button.equals("bookmark")) {
-            bookmark.setId("button");
-        } else {
-            bookmark.setId("");
         }
         if (button.equals("game")) {
             game.setId("button");

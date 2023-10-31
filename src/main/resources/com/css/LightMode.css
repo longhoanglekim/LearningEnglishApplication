@@ -4,38 +4,38 @@
    Right now, the buttons are toggle button but can be changed to normal button
 */
 
+/* -----------------------------------DICTIONARY PANE-----------------------------------*/
 /*  Button on dashboard */
 .fontawesome-icon {
-    -fx-fill: #53535e;
+    -fx-fill: #F4F4F4;
 }
 
 .button {
     -fx-background-color: none;
     -fx-background-radius: 0em;
-    -fx-text-fill: black;
+    -fx-text-fill: white;
 }
 
 .button:hover {
     -fx-background-color: #6a777e;
+    -fx-background-color: #5691d0;
 }
 
 .button:pressed {
     -fx-background-color: #6a777e;
+    -fx-background-color: #5691d0;
     -fx-border-color: #505050;
+    -fx-border-color: #59a2ea;
     -fx-border-width: 0px 0px 0px 3px;
 }
 
 #button {
     -fx-background-color: #6a777e;
+    -fx-background-color: #5691d0;
     -fx-border-color: #505050;
+    -fx-border-color: #59a2ea;
     -fx-border-width: 0px 0px 0px 3px;
 }
-
-
-/*.split-pane:horizontal > .split-pane-divider {
-    -fx-background-color: #3d80c9;
-    -fx-background-radius: 0em;
-}*/
 
 /*  Text field   */
 .searchBox {
@@ -43,20 +43,41 @@
     -fx-background-radius: 2em;
 }
 
-.definitionArea {
-    -fx-background-color: #FFFFFF;
-    -fx-background-radius: 0em;
-    -fx-fill: #FFFFFF;
+.text-area {
+    -fx-background-color: #F4F4F4;
 }
 
-/*.hbox:focused {
-    -fx-background-color: white;
-    -fx-border-style: solid;
-    -fx-border-color: #3d80c9;
-}*/
+.text-area .scroll-pane {
+    -fx-background-color: transparent;
+}
 
+.text-area .scroll-pane .viewport{
+    -fx-background-color: transparent;
+}
+
+
+.text-area .scroll-pane .content{
+    -fx-background-color: transparent;
+}
+
+#wordtype {
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-text-fill: #5691d0;
+}
+
+#wordmean {
+    -fx-font-size: 14px;
+    -fx-text-fill: black;
+}
+
+#wordexample {
+    -fx-font-style: italic;
+    -fx-font-size: 14px;
+    -fx-text-fill: black;
+}
 .vbox {
-    -fx-background-color: #F1F1F1;
+    -fx-background-color: #3d80c9;
 }
 
 .hbox {
@@ -86,8 +107,6 @@
 .list-view .increment-button:pressed, .list-view .decrement-button:pressed {
     -fx-background-color: derive(#3d80c9, 90%);
 }
-
-/*  SCROLL BAR */
 
 /* Scroll bar track (background) */
 .list-view .scroll-bar:horizontal .track,

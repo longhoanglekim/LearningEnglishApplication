@@ -16,29 +16,28 @@
 <AnchorPane stylesheets="@../css/LightMode.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.DictionaryController">
    <BorderPane prefHeight="626.0" prefWidth="772.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <top>
-         <HBox prefHeight="34.0" prefWidth="772.0" styleClass="hbox" BorderPane.alignment="CENTER">
+         <HBox prefHeight="40.0" prefWidth="772.0" styleClass="hbox" BorderPane.alignment="CENTER">
             <children>
                <ButtonBar buttonMinWidth="20.0" buttonOrder="L_E+U+FBXI_YNOCAH_R" prefHeight="34.0" prefWidth="223.0">
                  <buttons>
                    <Button fx:id="searchList" minWidth="37.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="26.0">
                         <graphic>
-                           <FontAwesomeIconView glyphName="SEARCH" size="20" />
+                           <FontAwesomeIconView glyphName="SEARCH" size="20" styleClass="fontawesome-icon" />
                         </graphic></Button>
                      <Button fx:id="historyList" mnemonicParsing="false">
                         <graphic>
-                           <FontAwesomeIconView glyphName="HISTORY" size="20" />
+                           <FontAwesomeIconView glyphName="HISTORY" size="20" styleClass="fontawesome-icon" />
                         </graphic></Button>
                      <Button fx:id="bookmarkList" mnemonicParsing="false">
                         <graphic>
-                           <FontAwesomeIconView glyphName="BOOKMARK" size="20" />
+                           <FontAwesomeIconView glyphName="BOOKMARK" size="20" styleClass="fontawesome-icon" />
                         </graphic></Button>
                  </buttons>
                   <padding>
                      <Insets right="50.0" />
                   </padding>
                </ButtonBar>
-               <Label />
-               <FontAwesomeIconView glyphName="BOOK" size="30">
+               <FontAwesomeIconView glyphName="BOOK" size="30" styleClass="fontawesome-icon">
                   <HBox.margin>
                      <Insets left="10.0" />
                   </HBox.margin>
@@ -57,18 +56,18 @@
       <center>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="576.0" prefWidth="542.0" styleClass="definitionArea" BorderPane.alignment="CENTER">
             <children>
-               <TextArea fx:id="definitionField" layoutY="125.0" prefHeight="488.0" prefWidth="548.0" styleClass="definitionArea" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-               <Label fx:id="targetField" layoutX="14.0" layoutY="14.0" prefHeight="47.0" prefWidth="140.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0">
+               <Label fx:id="targetField" layoutX="14.0" layoutY="120.0" prefHeight="30.0" prefWidth="140.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="10.0">
                   <font>
                      <Font size="29.0" />
                   </font>
                </Label>
-               <Label fx:id="pronounceField" layoutX="14.0" layoutY="72.0" prefHeight="20.0" prefWidth="274.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="70.0">
+               <Label fx:id="pronounceField" layoutX="14.0" layoutY="72.0" prefHeight="20.0" prefWidth="274.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="50.0">
                   <font>
                      <Font size="17.0" />
                   </font>
                </Label>
-               <ButtonBar layoutX="218.0" layoutY="18.0" prefHeight="40.0" prefWidth="262.0" AnchorPane.rightAnchor="67.60000000000002" AnchorPane.topAnchor="18.0">
+               <TextArea fx:id="definitionField" layoutY="125.0" prefHeight="506.0" prefWidth="548.0" styleClass="text-area" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0" />
+               <ButtonBar layoutX="218.0" layoutY="18.0" prefHeight="40.0" prefWidth="149.0" AnchorPane.rightAnchor="68.0" AnchorPane.topAnchor="18.0">
                  <buttons>
                    <Button fx:id="pronounceButton" mnemonicParsing="false" text="Button" />
                      <Button fx:id="bookmarkButton" mnemonicParsing="false" text="Button" />

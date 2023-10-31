@@ -19,20 +19,11 @@ public class View {
     private AnchorPane dashboardPane;
     private AnchorPane dictionaryPane;
     private AnchorPane translatePane;
-    private AnchorPane historyPane;
-    private AnchorPane bookmarkPane;
     private AnchorPane gamePane;
     private AnchorPane settingPane;
 
     public View() {
         selectedMenuItem = new SimpleStringProperty("");
-        try {
-            dictionaryPane = new FXMLLoader(getClass().getResource("Dictionary.fxml")).load();
-            dashboardPane = new FXMLLoader(getClass().getResource("Dashboard.fxml")).load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        //dictionaryPane = new FXMLLoader(getClass().getResource("Dictionary.fxml")).load();
     }
 
     public StringProperty getSelectedMenuItem() {
@@ -85,21 +76,6 @@ public class View {
     }
 
     /**
-     * Get history pane
-     * @return history pane
-     */
-    public AnchorPane getHistoryPane() {
-        if (historyPane == null) {
-            try {
-                historyPane = new FXMLLoader(getClass().getResource("History.fxml")).load();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return historyPane;
-    }
-
-    /**
      * Get game pane
      * @return game pane
      */
@@ -112,21 +88,6 @@ public class View {
             }
         }
         return gamePane;
-    }
-
-    /**
-     * Get bookmark pane
-     * @return bookmark pane
-     */
-    public AnchorPane getBookmarkPane() {
-        if (bookmarkPane == null) {
-            try {
-                bookmarkPane = new FXMLLoader(getClass().getResource("Bookmark.fxml")).load();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return bookmarkPane;
     }
 
     /**

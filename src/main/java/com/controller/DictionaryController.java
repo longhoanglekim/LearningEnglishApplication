@@ -4,20 +4,13 @@ import com.dictionary.Database;
 import com.dictionary.Dictionary;
 import com.dictionary.Local;
 import com.dictionary.Word;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
+import com.ui.DefinitionBeautify;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.text.Text;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -41,9 +34,16 @@ public class DictionaryController implements Initializable {
     @FXML
     private ListView<String> listOfWord;
 
-    private Dictionary dictionary;
+    @FXML
+    private Button searchList;
 
-    private final ObservableList<String> wordData = FXCollections.observableArrayList();
+    @FXML
+    private Button historyList;
+
+    @FXML
+    private Button bookmarkList;
+
+    private Dictionary dictionary;
 
     /**
      * Initialize the controller, updating the search view list.
@@ -53,7 +53,7 @@ public class DictionaryController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        /*dictionary = new Database();
+        /*ictionary = new Database();
         if (dictionary.initialize()) {
             System.out.println("Database initialized.");
         } else {*/
@@ -64,6 +64,10 @@ public class DictionaryController implements Initializable {
                 System.out.println("Cannot initialize dictionary.");
             }
         //}
+            setStyleProperty();
+            searchList.setOnAction(event -> {
+                dictionary.export();
+            });
 
         try {
             onActionSearchField();
@@ -71,19 +75,24 @@ public class DictionaryController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        targetField.styleProperty().bind(FontSizeManager.getInstance().fontSizeProperty().asString("-fx-font-size: %dpx;"));
-        definitionField.styleProperty().bind(FontSizeManager.getInstance().fontSizeProperty().asString("-fx-font-size: %dpx;"));
-        searchField.styleProperty().bind(FontSizeManager.getInstance().fontSizeProperty().asString("-fx-font-size: %dpx;"));
-        listOfWord.styleProperty().bind(FontSizeManager.getInstance().fontSizeProperty().asString("-fx-font-size: %dpx;"));
-        pronounceField.styleProperty().bind(FontSizeManager.getInstance().fontSizeProperty().asString("-fx-font-size: %dpx;"));
     }
 
     public void chooseWordClikced() {
         String selected = listOfWord.getSelectionModel().getSelectedItem();
         Word word = dictionary.lookUp(selected);
+        if (word == null) {
+            return;
+        }
         targetField.setText(word.getTarget());
         pronounceField.setText(word.getPronounce());
-        definitionField.setText(word.getExplain());
+        String explain = word.getExplain();
+        Scanner sc = new Scanner(explain);
+        while (sc.hasNextLine()) {
+            String line = sc.nextLine();
+            Text newtext = new Text(line);
+            newtext = DefinitionBeautify.beautifyDef(newtext);
+            definitionField.appendText(newtext.getText() + "\n");
+        }
     }
 
     public void onActionSearchField() {
@@ -94,17 +103,31 @@ public class DictionaryController implements Initializable {
                 listOfWord.getItems().clear();
             } else {
                 // Filter the list view based on the search input.
-                List<String> filteredWords = dictionary.getAllWordsTarget()
+                /*List<String> filteredWords = dictionary.getAllWordsTarget()
                         .stream()
                         .filter(word -> word.startsWith(newValue))
                         .collect(Collectors.toList());
 
                 // Update the list view with filtered items.
-                filteredWords.sort(Comparator.naturalOrder());
-                listOfWord.getItems().setAll(filteredWords);
+                filteredWords.sort(Comparator.naturalOrder());*/
+                if (!newValue.equals(oldValue)) {
+                    listOfWord.getItems().clear();
+                    List<String> target = dictionary.search(newValue);
+                    if (target != null) {
+                        listOfWord.getItems().addAll(target);
+                    }
+                }
 
             }
         });
+    }
+
+    public void setStyleProperty() {
+        searchField.styleProperty().bind(FontSizeManager.getInstance().fontSizeProperty().asString("-fx-font-size: %dpx;"));
+        listOfWord.styleProperty().bind(FontSizeManager.getInstance().fontSizeProperty().asString("-fx-font-size: %dpx;"));
+        definitionField.styleProperty().bind(FontSizeManager.getInstance().fontSizeProperty().asString("-fx-font-size: %dpx;"));
+        definitionField.setWrapText(true);
+
     }
 }
 /*=======
