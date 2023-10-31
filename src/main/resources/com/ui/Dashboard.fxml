@@ -9,15 +9,15 @@
 
 <AnchorPane prefHeight="340.0" prefWidth="60.0" stylesheets="@../css/LightMode.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.DashboardController">
    <VBox prefHeight="10.0" prefWidth="10.0" styleClass="vbox" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" BorderPane.alignment="CENTER">
-      <Button fx:id="barButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onBarClicked" prefHeight="40.0" prefWidth="50.0" textFill="WHITE">
+      <Button fx:id="barButton" alignment="BASELINE_LEFT" minHeight="30.0" mnemonicParsing="false" onAction="#onBarClicked" prefHeight="30.0" prefWidth="50.0" textFill="WHITE">
          <graphic>
             <FontAwesomeIconView glyphName="BARS" size="30" styleClass="fontawesome-icon" textAlignment="CENTER" wrappingWidth="30.0" />
          </graphic>
          <VBox.margin>
-            <Insets left="5.0" />
+            <Insets left="5.0" top="5.0" />
          </VBox.margin>
       </Button>
-      <Button fx:id="dictionary" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#onDictionaryClicked" prefHeight="40.0" prefWidth="50.0" textFill="WHITE">
+      <Button fx:id="dictionary" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#onDictionaryClicked" prefHeight="30.0" prefWidth="50.0" textFill="WHITE">
          <graphic>
             <FontAwesomeIconView caretBias="false" glyphName="HOME" size="30" styleClass="fontawesome-icon" textAlignment="CENTER" wrappingWidth="30.0" />
          </graphic>
@@ -25,7 +25,7 @@
             <Insets left="5.0" top="5.0" />
          </VBox.margin>
       </Button>
-      <Button fx:id="translate" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#onTranslateClicked" prefHeight="40.0" prefWidth="50.0" textFill="WHITE">
+      <Button fx:id="translate" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#onTranslateClicked" prefHeight="30.0" prefWidth="50.0" textFill="WHITE">
          <graphic>
             <FontAwesomeIconView caretBias="false" glyphName="LANGUAGE" size="30" styleClass="fontawesome-icon" textAlignment="CENTER" wrappingWidth="30.0" />
          </graphic>
@@ -33,7 +33,7 @@
             <Insets left="5.0" top="5.0" />
          </VBox.margin>
       </Button>
-      <Button fx:id="game" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#onGameClicked" prefHeight="40.0" prefWidth="50.0" textFill="WHITE">
+      <Button fx:id="game" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#onGameClicked" prefHeight="30.0" prefWidth="50.0" textFill="WHITE">
          <graphic>
             <FontAwesomeIconView glyphName="LEANPUB" size="30" styleClass="fontawesome-icon" textAlignment="CENTER" wrappingWidth="30.0" />
          </graphic>
@@ -41,7 +41,7 @@
             <Insets left="5.0" top="5.0" />
          </VBox.margin>
       </Button>
-      <Button fx:id="setting" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#onSettingClicked" prefHeight="40.0" prefWidth="50.0" textFill="WHITE">
+      <Button fx:id="setting" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#onSettingClicked" prefHeight="30.0" prefWidth="50.0" textFill="WHITE">
          <VBox.margin>
             <Insets left="5.0" top="5.0" />
          </VBox.margin>
@@ -49,7 +49,7 @@
             <FontAwesomeIconView glyphName="COG" size="30" styleClass="fontawesome-icon" textAlignment="CENTER" wrappingWidth="30.0" />
          </graphic>
       </Button>
-      <Button fx:id="help" alignment="BASELINE_LEFT" graphicTextGap="10.0" layoutX="10.0" layoutY="279.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="50.0" textFill="WHITE">
+      <Button fx:id="help" alignment="BASELINE_LEFT" graphicTextGap="10.0" layoutX="10.0" layoutY="279.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="50.0" textFill="WHITE">
          <graphic>
             <FontAwesomeIconView glyphName="QUESTION" size="30" styleClass="fontawesome-icon" textAlignment="CENTER" wrappingWidth="30.0" />
          </graphic>

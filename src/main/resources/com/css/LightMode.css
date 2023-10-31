@@ -10,6 +10,10 @@
     -fx-fill: #F4F4F4;
 }
 
+.listbutton-fontawesome-icon {
+    -fx-fill: #b0b0b0;
+}
+
 .button {
     -fx-background-color: none;
     -fx-background-radius: 0em;
@@ -37,7 +41,26 @@
     -fx-border-width: 0px 0px 0px 3px;
 }
 
+.normalButton {
+    -fx-background-color: none;
+    -fx-text-fill: white;
+    -fx-border-width: 0em;
+}
+
+.normalButton:hover {
+    -fx-background-color: #bdc2c5;
+}
+
+.normalButton:pressed {
+    -fx-background-color: #9fa3a6;
+    -fx-border-width: 0em;
+}
+
 /*  Text field   */
+.text {
+    -fx-text-fill: white;
+}
+
 .searchBox {
     -fx-background-color: none;
     -fx-background-radius: 2em;
@@ -57,6 +80,10 @@
 
 
 .text-area .scroll-pane .content{
+    -fx-background-color: transparent;
+}
+
+.scroll-pane {
     -fx-background-color: transparent;
 }
 
@@ -88,41 +115,79 @@
     -fx-background-color: #2b76bd;
 }
 
-.list-view .list-cell {
+.list-cell {
+    -fx-border-width: 0em;
     -fx-cell-size: 30;
-    -fx-alignment: center-left;
     -fx-text-fill: black;
 }
 
 .list-cell:filled:selected:focused, .list-cell:filled:selected {
-    -fx-background-color: linear-gradient(#328BDB 0%, #207BCF 25%, #1973C9 75%, #0A65BF 100%);
+    -fx-background-color: #5691d0;
+    -fx-border-color: none;
+    -fx-border-width: 0em;
     -fx-text-fill: white;
 }
 
-/* Up down arrow button on scroll bar */
-.list-view .increment-button, .list-view .decrement-button {
-    -fx-background-color: transparent;
+/** CSS **/
+.list-view {
+    -fx-border-color:derive(gray,80%);
 }
 
-.list-view .increment-button:pressed, .list-view .decrement-button:pressed {
-    -fx-background-color: derive(#3d80c9, 90%);
+/* The main scrollbar CSS class of ListView */
+.list-view .scroll-bar:horizontal ,
+.list-view  .scroll-bar:vertical{
+    -fx-background-color:transparent;
+
 }
 
-/* Scroll bar track (background) */
-.list-view .scroll-bar:horizontal .track,
-.list-view .scroll-bar:vertical .track {
+/* The increment and decrement button CSS class of scrollbar */
+.list-view .increment-button ,.mylistview .decrement-button {
+    -fx-background-color:transparent;
+    -fx-border-color:derive(gray,80%);
+}
+
+/* The main scrollbar **track** CSS class  */
+.list-view .scroll-bar:horizontal .track ,
+.list-view .scroll-bar:vertical .track{
     -fx-background-color: transparent;
-    -fx-border-color: derive(#3d80c9, 90%);
+    -fx-border-color:derive(gray,80%);
     -fx-background-radius: 0em;
-    -fx-boder-radius: 0em;
 }
 
-/* Scroll bar thumb (scroll button to drag) */
+/* The main scrollbar **thumb** CSS class which we drag every time (movable) */
 .list-view .scroll-bar:horizontal .thumb,
 .list-view .scroll-bar:vertical .thumb {
-    -fx-background-color: derive(#3d80c9, 90%);
+    -fx-background-color:derive(black,90%);
+    -fx-background-insets: 0, 0, 0;
     -fx-background-radius: 0em;
-    -fx-background-insets: 0em;
+
+}
+
+/* ------------------------------------------------------------------------------------- */
+/** EVENT CSS **/
+/* ------------------------------------------------------------------------------------- */
+
+/* The main scrollbar **track** CSS class on event of "hover" and "pressed" */
+
+.list-view .scroll-bar:horizontal:hover .track ,
+.list-view .scroll-bar:horizontal:pressed .track ,
+.list-view .scroll-bar:vertical:hover .track,
+.list-view .scroll-bar:vertical:pressed .track{
+    -fx-background-color: derive(#434343,20%);
+    -fx-opacity: 0.2;
+    -fx-background-radius: 0em;
+}
+
+/* The main scrollbar **thumb** CSS class on event of "hover" and "pressed" */
+.list-view .scroll-bar .thumb:hover,
+.list-view .scroll-bar .thumb:pressed{
+    -fx-background-color: derive(black,50%);
+}
+
+.list-view .increment-button:hover ,.mylistview .decrement-button:hover {
+    -fx-background-color:derive(gray,100%);
+    -fx-border-color:derive(gray,80%);
+    -fx-padding:10px;
 }
 
 /* Kích thước my button font 12px */

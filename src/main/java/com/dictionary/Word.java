@@ -1,6 +1,7 @@
 package com.dictionary;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Word {
     private String target;
@@ -16,8 +17,19 @@ public class Word {
     }
 
     private void beautifyDefinition() {
-        String[] temp = explain.split("<br/>");
-        for (String s : temp) {
+        Scanner sc = new Scanner(explain);
+        String s;
+        int indexBlock = 1;
+        while (sc.hasNextLine()) {
+            s = sc.nextLine();
+            if (s.charAt(0) == '*') {
+                s = s.toUpperCase();
+            } else if (s.charAt(0) == '-') {
+                s = indexBlock++ + ". " + s.substring(1);
+            } else if (s.charAt(0) == '=') {
+                String[] tmp = s.split("\\+");
+                s = tmp[0] + ":" + tmp[1];
+            }
             definition.add(s);
         }
     }

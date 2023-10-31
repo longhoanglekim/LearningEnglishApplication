@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane stylesheets="@../css/LightMode.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.DictionaryController">
@@ -18,33 +20,57 @@
       <top>
          <HBox prefHeight="40.0" prefWidth="772.0" styleClass="hbox" BorderPane.alignment="CENTER">
             <children>
-               <ButtonBar buttonMinWidth="20.0" buttonOrder="L_E+U+FBXI_YNOCAH_R" prefHeight="34.0" prefWidth="223.0">
-                 <buttons>
-                   <Button fx:id="searchList" minWidth="37.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="26.0">
+               <HBox prefHeight="40.0" prefWidth="223.0" styleClass="button-bar">
+                  <children>
+                   <Button fx:id="searchList" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onSearchClick">
                         <graphic>
-                           <FontAwesomeIconView glyphName="SEARCH" size="20" styleClass="fontawesome-icon" />
-                        </graphic></Button>
-                     <Button fx:id="historyList" mnemonicParsing="false">
+                           <FontAwesomeIconView glyphName="SEARCH" size="20">
+                              <styleClass>
+                                 <String fx:value="fontawesome-icon" />
+                                 <String fx:value="listbutton-fontawesome-icon" />
+                              </styleClass>
+                           </FontAwesomeIconView>
+                        </graphic>
+                        <HBox.margin>
+                           <Insets left="25.0" top="5.0" />
+                        </HBox.margin>
+                     </Button>
+                     <Button fx:id="historyList" mnemonicParsing="false" onAction="#onHistoryClick">
                         <graphic>
-                           <FontAwesomeIconView glyphName="HISTORY" size="20" styleClass="fontawesome-icon" />
-                        </graphic></Button>
-                     <Button fx:id="bookmarkList" mnemonicParsing="false">
+                           <FontAwesomeIconView glyphName="HISTORY" size="20">
+                              <styleClass>
+                                 <String fx:value="fontawesome-icon" />
+                                 <String fx:value="listbutton-fontawesome-icon" />
+                              </styleClass>
+                           </FontAwesomeIconView>
+                        </graphic>
+                        <HBox.margin>
+                           <Insets left="25.0" top="5.0" />
+                        </HBox.margin>
+                     </Button>
+                     <Button fx:id="bookmarkList" mnemonicParsing="false" onAction="#onBookmarkClick">
                         <graphic>
-                           <FontAwesomeIconView glyphName="BOOKMARK" size="20" styleClass="fontawesome-icon" />
-                        </graphic></Button>
-                 </buttons>
-                  <padding>
-                     <Insets right="50.0" />
-                  </padding>
-               </ButtonBar>
+                           <FontAwesomeIconView glyphName="BOOKMARK" size="20">
+                              <styleClass>
+                                 <String fx:value="fontawesome-icon" />
+                                 <String fx:value="listbutton-fontawesome-icon" />
+                              </styleClass>
+                           </FontAwesomeIconView>
+                        </graphic>
+                        <HBox.margin>
+                           <Insets left="25.0" top="5.0" />
+                        </HBox.margin>
+                     </Button>
+                  </children>
+               </HBox>
                <FontAwesomeIconView glyphName="BOOK" size="30" styleClass="fontawesome-icon">
                   <HBox.margin>
-                     <Insets left="10.0" />
+                     <Insets left="10.0" top="5.0" />
                   </HBox.margin>
                </FontAwesomeIconView>
-               <Label text="Definition">
+               <Label styleClass="text" text="Definition">
                   <HBox.margin>
-                     <Insets left="10.0" top="5.0" />
+                     <Insets left="10.0" top="10.0" />
                   </HBox.margin>
                   <font>
                      <Font size="15.0" />
@@ -56,17 +82,21 @@
       <center>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="576.0" prefWidth="542.0" styleClass="definitionArea" BorderPane.alignment="CENTER">
             <children>
-               <Label fx:id="targetField" layoutX="14.0" layoutY="120.0" prefHeight="30.0" prefWidth="140.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="10.0">
+               <Label fx:id="targetField" layoutX="14.0" layoutY="120.0" minHeight="-Infinity" prefHeight="34.0" prefWidth="273.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="5.0">
                   <font>
                      <Font size="29.0" />
                   </font>
                </Label>
-               <Label fx:id="pronounceField" layoutX="14.0" layoutY="72.0" prefHeight="20.0" prefWidth="274.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="50.0">
+               <Label fx:id="pronounceField" layoutX="14.0" layoutY="72.0" prefHeight="20.0" prefWidth="274.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="40.0">
                   <font>
                      <Font size="17.0" />
                   </font>
                </Label>
-               <TextArea fx:id="definitionField" layoutY="125.0" prefHeight="506.0" prefWidth="548.0" styleClass="text-area" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0" />
+               <ScrollPane layoutY="74.0" prefHeight="512.0" prefWidth="548.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="74.0">
+                  <content>
+                     <VBox fx:id="definitionField" prefHeight="506.0" prefWidth="548.0" />
+                  </content>
+               </ScrollPane>
                <ButtonBar layoutX="218.0" layoutY="18.0" prefHeight="40.0" prefWidth="149.0" AnchorPane.rightAnchor="68.0" AnchorPane.topAnchor="18.0">
                  <buttons>
                    <Button fx:id="pronounceButton" mnemonicParsing="false" text="Button" />
@@ -78,11 +108,11 @@
       </center>
       <left>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="576.0" prefWidth="224.0" BorderPane.alignment="CENTER">
-               <HBox prefHeight="30.0" prefWidth="225.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <HBox prefHeight="40.0" prefWidth="225.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                    <opaqueInsets>
                        <Insets left="10.0" />
                    </opaqueInsets>
-                   <TextField id="search_field" fx:id="searchField" prefHeight="110.0" prefWidth="248.0" promptText="Search" styleClass="searchBox" stylesheets="@../css/LightMode.css">
+                   <TextField id="search_field" fx:id="searchField" prefHeight="40.0" prefWidth="190.0" promptText="Search" styleClass="searchBox" stylesheets="@../css/LightMode.css">
                        <font>
                            <Font size="14.0" />
                        </font>
@@ -90,8 +120,27 @@
                            <Insets />
                        </HBox.margin>
                    </TextField>
+               <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#onDeleteClick" prefHeight="40.0" prefWidth="20.0" styleClass="normalButton">
+                  <graphic>
+                     <FontAwesomeIconView glyphName="TIMES" size="25" wrappingWidth="20.0" />
+                  </graphic>
+                  <HBox.margin>
+                     <Insets />
+                  </HBox.margin>
+                  <opaqueInsets>
+                     <Insets />
+                  </opaqueInsets>
+               </Button>
+               <Button fx:id="copyButton" minHeight="-Infinity" mnemonicParsing="false" onAction="#onCopyClick" prefHeight="40.0" prefWidth="20.0" styleClass="normalButton">
+                  <graphic>
+                     <FontAwesomeIconView glyphName="COPY" size="20" wrappingWidth="20.0" />
+                  </graphic>
+                  <opaqueInsets>
+                     <Insets />
+                  </opaqueInsets>
+               </Button>
                </HBox>
-                <ListView fx:id="listOfWord" layoutX="28.0" layoutY="28.0" onMouseClicked="#chooseWordClikced" prefHeight="582.0" prefWidth="274.0" stylesheets="@../css/LightMode.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0" />
+                <ListView fx:id="listOfWord" layoutX="28.0" layoutY="28.0" onMouseClicked="#chooseWordClikced" prefHeight="582.0" prefWidth="274.0" stylesheets="@../css/LightMode.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
             </AnchorPane>
       </left>
    </BorderPane>

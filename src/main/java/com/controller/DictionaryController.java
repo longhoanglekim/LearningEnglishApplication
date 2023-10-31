@@ -1,18 +1,18 @@
 package com.controller;
 
-import com.dictionary.Database;
 import com.dictionary.Dictionary;
 import com.dictionary.Local;
 import com.dictionary.Word;
-import com.ui.DefinitionBeautify;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 import java.net.URL;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Controller for main view.
@@ -26,7 +26,7 @@ public class DictionaryController implements Initializable {
     private Label pronounceField;
 
     @FXML
-    private TextArea definitionField;
+    private VBox definitionField;
 
     @FXML
     private TextField searchField;
@@ -42,6 +42,12 @@ public class DictionaryController implements Initializable {
 
     @FXML
     private Button bookmarkList;
+
+    @FXML
+    private Button deleteButton;
+
+    @FXML
+    private Button copyButton;
 
     private Dictionary dictionary;
 
@@ -65,10 +71,7 @@ public class DictionaryController implements Initializable {
             }
         //}
             setStyleProperty();
-            searchList.setOnAction(event -> {
-                dictionary.export();
-            });
-
+            deleteButton.setVisible(false);
         try {
             onActionSearchField();
             listOfWord.setFixedCellSize(30);
@@ -83,33 +86,47 @@ public class DictionaryController implements Initializable {
         if (word == null) {
             return;
         }
+        definitionField.getChildren().clear();
+
         targetField.setText(word.getTarget());
         pronounceField.setText(word.getPronounce());
         String explain = word.getExplain();
         Scanner sc = new Scanner(explain);
+        int indexBlock = 1;
         while (sc.hasNextLine()) {
+            Text result = new Text();
             String line = sc.nextLine();
-            Text newtext = new Text(line);
-            newtext = DefinitionBeautify.beautifyDef(newtext);
-            definitionField.appendText(newtext.getText() + "\n");
+            char firstChar = line.charAt(0);
+            if (firstChar == '*') {
+                result.setText(line.substring(1));
+                result.setId("wordtype");
+            } else if (firstChar == '-') {
+                result.setText("\t" + indexBlock++ + ". " + line.substring(1));
+                result.setId("wordmean");
+            } else if (firstChar == '=') {
+                String[] tmp = line.split("\\+");
+                result.setText("\t\t٠ " + tmp[0].substring(1) + ":" + tmp[1]);
+                result.setId("wordexample");
+            } else if (firstChar == '!') {
+                result.setText("\t\t٠ " + line.substring(1));
+                result.setId("wordexample");
+            }
+            definitionField.getChildren().add(result);
         }
     }
 
     public void onActionSearchField() {
         // Filter list view with search box data.
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            // Clear the list view if the search field is empty.
             if (newValue == null || newValue.isEmpty()) {
-                // Clear the list view if the search field is empty.
+                deleteButton.setVisible(false);
                 listOfWord.getItems().clear();
+            // Otherwise, search the dictionary and update the list view.
             } else {
-                // Filter the list view based on the search input.
-                /*List<String> filteredWords = dictionary.getAllWordsTarget()
-                        .stream()
-                        .filter(word -> word.startsWith(newValue))
-                        .collect(Collectors.toList());
-
-                // Update the list view with filtered items.
-                filteredWords.sort(Comparator.naturalOrder());*/
+                if (!deleteButton.isVisible()) {
+                    deleteButton.setVisible(true);
+                }
                 if (!newValue.equals(oldValue)) {
                     listOfWord.getItems().clear();
                     List<String> target = dictionary.search(newValue);
@@ -125,20 +142,64 @@ public class DictionaryController implements Initializable {
     public void setStyleProperty() {
         searchField.styleProperty().bind(FontSizeManager.getInstance().fontSizeProperty().asString("-fx-font-size: %dpx;"));
         listOfWord.styleProperty().bind(FontSizeManager.getInstance().fontSizeProperty().asString("-fx-font-size: %dpx;"));
-        definitionField.styleProperty().bind(FontSizeManager.getInstance().fontSizeProperty().asString("-fx-font-size: %dpx;"));
-        definitionField.setWrapText(true);
+    }
 
+    public void onSearchClick() {
+        searchField.clear();
+        setStyleListButton("searchList");
+        listOfWord.getItems().clear();
+        //listOfWord.getItems().addAll(dictionary.getAllWordsTarget());
+    }
+
+    public void onHistoryClick() {
+        searchField.clear();
+        setStyleListButton("historyList");
+        listOfWord.getItems().clear();
+        //listOfWord.getItems().addAll(dictionary.getAllWordsTarget());
+    }
+
+    public void onBookmarkClick() {
+        searchField.clear();
+        setStyleListButton("bookmarkList");
+        listOfWord.getItems().clear();
+        //listOfWord.getItems().addAll(dictionary.getAllWordsTarget());
+    }
+
+    public void onDeleteClick() {
+        searchField.clear();
+    }
+
+    public void onCopyClick() {
+        Clipboard clipboard = Clipboard.getSystemClipboard();
+        ClipboardContent content = new ClipboardContent();
+        content.putString(searchField.getText());
+        clipboard.setContent(content);
+    }
+
+    public void setStyleListButton(String button) {
+        if (button == null) {
+            return;
+        }
+        if (button.equals("searchList")) {
+            searchList.setText("Search");
+            searchList.setId("fontawesome-icon");
+        } else {
+            searchList.setText("");
+            searchList.setId("listbutton-fontawesome-icon");
+        }
+        if (button.equals("historyList")) {
+            historyList.setText("History");
+            searchList.setId("fontawesome-icon");
+        } else {
+            historyList.setText("");
+            searchList.setId("listbutton-fontawesome-icon");
+        }
+        if (button.equals("bookmarkList")) {
+            bookmarkList.setText("Bookmark");
+            searchList.setId("fontawesome-icon");
+        } else {
+            bookmarkList.setText("");
+            searchList.setId("listbutton-fontawesome-icon");
+        }
     }
 }
-/*=======
-    public void onListViewCellClick() {
-        String query = "SELECT detail FROM tbl_edict WHERE word = " + listOfWord.getSelectionModel().getSelectedItem();
-        listOfWord.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
-            if (newValue != null) {
-
-            }
-            return false;
-        });
-    }
-}
->>>>>>> Stashed changes*/

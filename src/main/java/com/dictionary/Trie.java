@@ -65,6 +65,7 @@ public class Trie {
     }
 
     public static Word lookup(Trie root, String target) {
+        if (target == null || target.isEmpty()) return null;
         Trie tmp = root;
         for (int i = 0; i < target.length(); i++) {
             char x = target.charAt(i);
