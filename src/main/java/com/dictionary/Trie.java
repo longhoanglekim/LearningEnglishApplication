@@ -21,7 +21,7 @@ public class Trie {
     public static void insert(Trie root, Word word) {
         Trie tmp = root;
         String target = word.getTarget();
-        System.out.println(target);
+        //System.out.println(target);
         for (int i = 0; i < target.length(); i++) {
             char x = target.charAt(i);
 

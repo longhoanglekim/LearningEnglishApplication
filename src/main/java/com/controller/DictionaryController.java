@@ -3,6 +3,8 @@ package com.controller;
 import com.dictionary.Dictionary;
 import com.dictionary.Local;
 import com.dictionary.Word;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -48,6 +50,9 @@ public class DictionaryController implements Initializable {
 
     @FXML
     private Button copyButton;
+
+    @FXML
+    private Button bookmarkButton;
 
     private Dictionary dictionary;
 
@@ -113,6 +118,27 @@ public class DictionaryController implements Initializable {
             }
             definitionField.getChildren().add(result);
         }
+
+        bookmarkButton.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    // Add your event handling code here.
+                    System.out.println(selected);
+                    if (dictionary.getBookmarkList().isEmpty())  {
+                        dictionary.addBookmarkWord(selected);
+                        System.out.println("Added");
+                    } else {
+                        if (!dictionary.getBookmarkList().contains(selected)) {
+                            dictionary.addBookmarkWord(selected);
+                            System.out.println("Added");
+                        } else {
+                            dictionary.removeBookmarkWord(selected);
+                            System.out.println("Removed");
+                        }
+                    }
+                    System.out.println("Added");
+                }
+            });
     }
 
     public void onActionSearchField() {
@@ -162,7 +188,10 @@ public class DictionaryController implements Initializable {
         searchField.clear();
         setStyleListButton("bookmarkList");
         listOfWord.getItems().clear();
-        //listOfWord.getItems().addAll(dictionary.getAllWordsTarget());
+        if (!dictionary.getBookmarkList().isEmpty()) {
+            listOfWord.getItems().addAll(dictionary.getBookmarkList());
+        }
+
     }
 
     public void onDeleteClick() {
@@ -202,4 +231,6 @@ public class DictionaryController implements Initializable {
             searchList.setId("listbutton-fontawesome-icon");
         }
     }
+
+
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Dictionary {
+    protected List<String> bookmarkList = new ArrayList<>();
     /**
      * Initialize the dictionary.
      */
@@ -52,4 +53,20 @@ public abstract class Dictionary {
      * Export the dictionary to a file/database.
      */
     public abstract void export();
+
+    /**
+     *
+     * @return list of bookmark.
+     */
+    public List<String> getBookmarkList() {
+        return bookmarkList;
+    }
+
+    public void addBookmarkWord(String target) {
+        bookmarkList.add(target);
+    }
+
+    public void removeBookmarkWord(String word) {
+        bookmarkList.remove(word);
+    }
 }
