@@ -13,6 +13,7 @@ public class Local extends Dictionary {
     /**
      * Initialize the dictionary.
      */
+
     @Override
     public boolean initialize() {
         words = new Trie();

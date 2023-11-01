@@ -3,6 +3,8 @@ package com.controller;
 import com.dictionary.Dictionary;
 import com.dictionary.Local;
 import com.dictionary.Word;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -10,6 +12,7 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 
 import java.net.URL;
@@ -20,6 +23,9 @@ import java.util.*;
  * Currently, this controller is for testing and can be refactored later.
  */
 public class DictionaryController implements Initializable {
+    @FXML
+    FontAwesomeIconView colorFont;
+
     @FXML
     private Label targetField;
 
@@ -88,12 +94,12 @@ public class DictionaryController implements Initializable {
                 chooseWordClicked();
             }
         });
-        bookmarkButton.setOnAction(event -> configBookmark());
+
         // Set action for list view.
         listViewType = ListViewType.SEARCH;
         searchList.setOnAction(event -> searchListView());
         historyList.setOnAction(event -> historyListView());
-        bookmarkList.setOnAction(event -> bookmarkListView());
+        //bookmarkList.setOnAction(event -> bookmarkListView());
         try {
             onActionSearchField();
             listOfWord.setFixedCellSize(30);
@@ -109,6 +115,13 @@ public class DictionaryController implements Initializable {
         definitionField.getChildren().clear();
         showWord(word);
         dictionary.addHistoryWord(currentWord);
+        bookmarkButton.setOnAction(event -> configBookmark());
+
+        if(dictionary.getBookmarkList().contains(currentWord)){
+            colorFont.setFill(Paint.valueOf("#ff0000"));
+        }
+        else colorFont.setFill(Paint.valueOf("#000000"));
+
     }
 
     public void onEnterPress() {
@@ -150,22 +163,52 @@ public class DictionaryController implements Initializable {
 
     public void configBookmark() {
         System.out.println(currentWord);
+
         if (dictionary.getBookmarkList().isEmpty())  {
             dictionary.addBookmarkWord(currentWord);
             System.out.println("Added");
+
+
+            colorFont.setFill(Paint.valueOf("#ff0000"));
         } else {
             if (!dictionary.getBookmarkList().contains(currentWord)) {
                 dictionary.addBookmarkWord(currentWord);
                 System.out.println("Added");
+
+                colorFont.setFill(Paint.valueOf("#ff0000"));
             } else {
                 dictionary.removeBookmarkWord(currentWord);
                 System.out.println("Removed");
+
+                colorFont.setFill(Paint.valueOf("#000000"));
             }
         }
-        listOfWord.getItems().clear();
-        listOfWord.getItems().addAll(dictionary.getBookmarkList());
+        updateListViewBookMark();
+        //listOfWord.getItems().clear();
+        //listOfWord.getItems().addAll(dictionary.getBookmarkList());
     }
-
+    public void updateListViewBookMark(){
+        listOfWord.getItems().clear();
+        List<String> target = null;
+        String newValue = searchField.getText();
+        if (listViewType == ListViewType.SEARCH) {
+            target = dictionary.search(newValue);
+        } else if (listViewType == ListViewType.HISTORY) {
+            target = dictionary.searchHistory(newValue);
+        } else if (listViewType == ListViewType.BOOKMARK) {
+            target = dictionary.searchBookmark(newValue);
+        }
+        if (target != null) {
+            int n = target.size();
+            for (int i = 0; i < n; ++i) {
+                if (dictionary.getBookmarkList().contains(target.get(i))) {
+                    target.set(i, target.get(i) + " ♥");
+                }
+            }
+            //add bookmark color
+            listOfWord.getItems().addAll(target);
+        }
+    }
     public void onActionSearchField() {
         // Filter list view with search box data.
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -194,7 +237,16 @@ public class DictionaryController implements Initializable {
                         target = dictionary.searchBookmark(newValue);
                     }
                     if (target != null) {
+
+                        int n = target.size();
+                        for(int i = 0; i < n; ++i){
+                            if(dictionary.getBookmarkList().contains(target.get(i))){
+                                target.set(i,target.get(i) + " ♥");
+                            }
+                        }
+                        //add bookmark color
                         listOfWord.getItems().addAll(target);
+
                     }
                 }
 

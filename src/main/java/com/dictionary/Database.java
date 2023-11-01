@@ -180,4 +180,5 @@ public class Database extends Dictionary {
         String query = "SELECT * FROM tbl_edict";
 
     }
+
 }

@@ -7,6 +7,7 @@ public abstract class Dictionary {
     protected List<String> bookmarkList = new ArrayList<>();
     protected List<String> historyList = new ArrayList<>();
 
+
     /**
      * Initialize the dictionary.
      */
@@ -110,4 +111,5 @@ public abstract class Dictionary {
     public void clearHistory() {
         historyList.clear();
     }
+
 }
