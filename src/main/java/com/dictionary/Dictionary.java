@@ -5,6 +5,8 @@ import java.util.List;
 
 public abstract class Dictionary {
     protected List<String> bookmarkList = new ArrayList<>();
+    protected List<String> historyList = new ArrayList<>();
+
     /**
      * Initialize the dictionary.
      */
@@ -62,11 +64,50 @@ public abstract class Dictionary {
         return bookmarkList;
     }
 
+    public List<String> searchBookmark(String word) {
+        List<String> result = new ArrayList<>();
+        for (String s : bookmarkList) {
+            if (s.contains(word)) {
+                result.add(s);
+            }
+        }
+        return result;
+    }
+
     public void addBookmarkWord(String target) {
         bookmarkList.add(target);
     }
 
     public void removeBookmarkWord(String word) {
         bookmarkList.remove(word);
+    }
+
+    public List<String> getHistoryList() {
+        return historyList;
+    }
+
+    public List<String> searchHistory(String word) {
+        List<String> result = new ArrayList<>();
+        for (String s : historyList) {
+            if (s.contains(word)) {
+                result.add(s);
+            }
+        }
+        return result;
+    }
+
+    public void addHistoryWord(String target) {
+        if (historyList.contains(target)) {
+            historyList.remove(target);
+        }
+        historyList.add(0, target);
+    }
+
+    public void removeHistoryWord(String word) {
+        historyList.remove(word);
+    }
+
+    public void clearHistory() {
+        historyList.clear();
     }
 }

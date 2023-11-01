@@ -2,11 +2,9 @@ package com.dictionary;
 
 import javafx.scene.control.Alert;
 import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
 
 import java.io.*;
 import java.util.*;
-import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 public class Local extends Dictionary {

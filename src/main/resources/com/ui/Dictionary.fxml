@@ -21,7 +21,7 @@
             <children>
                <HBox prefHeight="40.0" prefWidth="223.0" styleClass="button-bar">
                   <children>
-                   <Button fx:id="searchList" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onSearchClick">
+                   <Button fx:id="searchList" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#searchListView">
                         <graphic>
                            <FontAwesomeIconView glyphName="SEARCH" size="20">
                               <styleClass>
@@ -34,7 +34,7 @@
                            <Insets left="25.0" top="5.0" />
                         </HBox.margin>
                      </Button>
-                     <Button fx:id="historyList" mnemonicParsing="false" onAction="#onHistoryClick">
+                     <Button fx:id="historyList" mnemonicParsing="false" onAction="#historyListView">
                         <graphic>
                            <FontAwesomeIconView glyphName="HISTORY" size="20">
                               <styleClass>
@@ -47,7 +47,7 @@
                            <Insets left="25.0" top="5.0" />
                         </HBox.margin>
                      </Button>
-                     <Button fx:id="bookmarkList" mnemonicParsing="false" onAction="#onBookmarkClick">
+                     <Button fx:id="bookmarkList" mnemonicParsing="false" onAction="#bookmarkListView">
                         <graphic>
                            <FontAwesomeIconView glyphName="BOOKMARK" size="20">
                               <styleClass>
@@ -110,7 +110,7 @@
                    <opaqueInsets>
                        <Insets left="10.0" />
                    </opaqueInsets>
-                   <TextField id="search_field" fx:id="searchField" prefHeight="40.0" prefWidth="190.0" promptText="Search" styleClass="searchBox" stylesheets="@../css/LightMode.css">
+                   <TextField id="search_field" fx:id="searchField" onKeyPressed="#onEnterPress" prefHeight="40.0" prefWidth="190.0" promptText="Search" styleClass="searchBox" stylesheets="@../css/LightMode.css">
                        <font>
                            <Font size="14.0" />
                        </font>
@@ -138,7 +138,7 @@
                   </opaqueInsets>
                </Button>
                </HBox>
-                <ListView fx:id="listOfWord" layoutX="28.0" layoutY="28.0" onMouseClicked="#chooseWordClikced" prefHeight="582.0" prefWidth="274.0" stylesheets="@../css/LightMode.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
+                <ListView fx:id="listOfWord" layoutX="28.0" layoutY="28.0" onMouseClicked="#chooseWordClicked" prefHeight="582.0" prefWidth="274.0" stylesheets="@../css/LightMode.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
             </AnchorPane>
       </left>
    </BorderPane>
