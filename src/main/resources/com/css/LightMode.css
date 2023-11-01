@@ -10,7 +10,20 @@
     -fx-fill: #F4F4F4;
 }
 
-.listbutton-fontawesome-icon {
+#bookmark {
+    -fx-fill: none;
+    -fx-border-color: black;
+}
+
+#bookmarked {
+    -fx-fill: yellow;
+}
+
+#fontawesome-icon {
+    -fx-fill: #F4F4F4;
+}
+
+#listbutton-fontawesome-icon {
     -fx-fill: #b0b0b0;
 }
 

@@ -4,21 +4,24 @@ import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class Trie {
     boolean isEndOfWord;
-    HashMap<Character, Trie> map;
+    Map<Character, Trie> map;
     Word word;
 
     Trie() {
         isEndOfWord = false;
-        map = new HashMap<>();
+        map = new TreeMap<>();
         word = null;
     }
 
     public static void insert(Trie root, Word word) {
         Trie tmp = root;
         String target = word.getTarget();
+        System.out.println(target);
         for (int i = 0; i < target.length(); i++) {
             char x = target.charAt(i);
 
@@ -28,8 +31,14 @@ public class Trie {
             tmp = tmp.map.get(x);
         }
 
-        tmp.isEndOfWord = true;
-        tmp.word = word;
+        if (tmp.isEndOfWord) {
+            String tmpExplain = tmp.word.getExplain();
+            tmp.word.setExplain(tmpExplain + "\n" + word.getExplain());
+            //System.out.println("Duplicate word: " + word.getTarget());
+        } else {
+            tmp.isEndOfWord = true;
+            tmp.word = word;
+        }
     }
 
     private static void dfs(Trie root, ArrayList<String> result) {
@@ -52,6 +61,7 @@ public class Trie {
             }
             tmp = tmp.map.get(x);
         }
+        if (tmp.isEndOfWord) result.add(tmp.word.getTarget());
         for (Character x : tmp.map.keySet()) {
             dfs(tmp.map.get(x), result);
         }

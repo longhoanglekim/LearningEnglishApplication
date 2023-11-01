@@ -41,6 +41,7 @@ public class Local extends Dictionary {
                 String line = sc.nextLine();
                 String[] wap = line.split("/");
                 String target = wap[0].substring(1);    //Remove the '@' char.
+                target = target.replace(" ", "");      //Delete space
                 String pronounce;
                 StringBuilder explain = new StringBuilder();
                 Pattern pattern = Pattern.compile("[+*-=!\\w" + VN_CHAR + "].*");
