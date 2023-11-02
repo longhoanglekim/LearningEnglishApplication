@@ -72,19 +72,19 @@ public class Translator {
 
         JsonElement jsonElement = JsonParser.parseString(json);
         String res = "";
-        if (jsonElement.isJsonArray() && jsonElement.isJsonNull()) {
+        if (jsonElement.isJsonArray()) {
             JsonArray jsonArray = jsonElement.getAsJsonArray();
 
             // Lấy phần tử đầu tiên trong mảng JSON ban đầu
-            if (!jsonArray.isEmpty() && jsonArray.get(0) != null) {
+            if (!jsonArray.isEmpty()) {
                 JsonArray innerArray1 = jsonArray.get(0).getAsJsonArray();
 
                 // Lấy phần tử đầu tiên trong mảng con
-                if (!innerArray1.isEmpty() && innerArray1.get(0) != null) {
+                if (!innerArray1.isEmpty()) {
                     JsonArray innerArray2 = innerArray1.get(0).getAsJsonArray();
 
                     // Lấy giá trị tại vị trí 0
-                    if (!innerArray2.isEmpty() && innerArray2.get(0) != null) {
+                    if (!innerArray2.isEmpty()) {
                         res = innerArray2.get(0).getAsString();
                     }
                 }
