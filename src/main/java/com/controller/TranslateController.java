@@ -23,10 +23,10 @@ public class TranslateController implements Initializable {
     public TextArea fromField;
     @FXML
     public TextArea toField;
-    @FXML
+/*    @FXML
     public ImageView imageFromLanguage;
     @FXML
-    public ImageView imageToLanguage;
+    public ImageView imageToLanguage;*/
     @FXML
     public Label labelFromLanguage;
     @FXML
@@ -45,6 +45,20 @@ public class TranslateController implements Initializable {
         toField.styleProperty().bind(FontSizeManager.getInstance().fontSizeProperty().asString("-fx-font-size: %dpx;"));
         labelFromLanguage.styleProperty().bind(FontSizeManager.getInstance().fontSizeProperty().asString("-fx-font-size: %dpx;"));;
         labelToLanguage.styleProperty().bind(FontSizeManager.getInstance().fontSizeProperty().asString("-fx-font-size: %dpx;"));
+
+        fromField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.equals(oldValue)) {
+                try {
+                    if (EnToVi) {
+                        toField.setText(translateEnToVi(fromField.getText()));
+                    } else {
+                        toField.setText(translateEnToVi(fromField.getText()));
+                    }
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
     }
 
     public void onTranslateClicked() {
@@ -67,14 +81,14 @@ public class TranslateController implements Initializable {
         if(EnToVi) {
             labelFromLanguage.setText("Vietnamese");
             labelToLanguage.setText("English");
-            imageFromLanguage.setImage(imageVi);
-            imageToLanguage.setImage(imageEn);
+/*            imageFromLanguage.setImage(imageVi);
+            imageToLanguage.setImage(imageEn);*/
             EnToVi = false;
         } else {
             labelFromLanguage.setText("English");
             labelToLanguage.setText("Vietnamese");
-            imageFromLanguage.setImage(imageEn);
-            imageToLanguage.setImage(imageVi);
+/*            imageFromLanguage.setImage(imageEn);
+            imageToLanguage.setImage(imageVi);*/
             EnToVi = true;
         }
     }

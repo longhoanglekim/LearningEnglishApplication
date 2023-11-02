@@ -7,6 +7,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 
 public class Translator {
 
@@ -18,7 +21,7 @@ public class Translator {
      * @throws IOException .
      */
     public static String translateViToEn(String text) throws IOException {
-        return translate("vi", "en", text);
+        return splitJson(translate("vi", "en", text));
     }
 
     /**
@@ -28,7 +31,7 @@ public class Translator {
      * @throws IOException dfs.
      */
     public static String translateEnToVi(String text) throws IOException {
-        return translate("en", "vi", text);
+        return splitJson(translate("en", "vi", text));
     }
 
 
@@ -46,13 +49,12 @@ public class Translator {
     private static String translate(String langFrom, String langTo, String text)
             throws IOException {
         String urlStr =
-                "https://script.google.com/macros/s/AKfycby3AOWmhe32TgV9nW-Q0TyGOEyCHQeFiIn7hRgy5m8jHPaXDl2GdToyW_3Ys5MTbK6wjg/exec"
-                        + "?q="
-                        + URLEncoder.encode(text, StandardCharsets.UTF_8)
-                        + "&target="
+                "https://translate.googleapis.com/translate_a/single?client=gtx&sl="
+                        + langFrom
+                        + "&tl="
                         + langTo
-                        + "&source="
-                        + langFrom;
+                        + "&dt=t&q="
+                        + URLEncoder.encode(text, StandardCharsets.UTF_8);
         URL url = new URL(urlStr);
         StringBuilder response = new StringBuilder();
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -64,5 +66,30 @@ public class Translator {
         }
         in.close();
         return response.toString();
+    }
+
+    public static String splitJson(String json) {
+
+        JsonElement jsonElement = JsonParser.parseString(json);
+        String res = "";
+        if (jsonElement.isJsonArray() && jsonElement.isJsonNull()) {
+            JsonArray jsonArray = jsonElement.getAsJsonArray();
+
+            // Lấy phần tử đầu tiên trong mảng JSON ban đầu
+            if (!jsonArray.isEmpty() && jsonArray.get(0) != null) {
+                JsonArray innerArray1 = jsonArray.get(0).getAsJsonArray();
+
+                // Lấy phần tử đầu tiên trong mảng con
+                if (!innerArray1.isEmpty() && innerArray1.get(0) != null) {
+                    JsonArray innerArray2 = innerArray1.get(0).getAsJsonArray();
+
+                    // Lấy giá trị tại vị trí 0
+                    if (!innerArray2.isEmpty() && innerArray2.get(0) != null) {
+                        res = innerArray2.get(0).getAsString();
+                    }
+                }
+            }
+        }
+        return res;
     }
 }
