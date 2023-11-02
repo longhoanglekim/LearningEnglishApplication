@@ -2,8 +2,8 @@ package com.controller;
 
 import com.dictionary.Dictionary;
 import com.dictionary.Local;
+import com.dictionary.Speech;
 import com.dictionary.Word;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -59,13 +59,16 @@ public class DictionaryController implements Initializable {
     @FXML
     private Button bookmarkButton;
 
+    @FXML
+    private Button speakButton;
+
     private Dictionary dictionary;
     private String currentWord;
     private ListViewType listViewType;
 
     /**
      * Initialize the controller, updating the search view list.
-     *
+     * Also set the action for the search field and list view.
      * @param url            URL.
      * @param resourceBundle ResourceBundle.
      */
@@ -83,61 +86,85 @@ public class DictionaryController implements Initializable {
             }
         //}
         setStyleProperty();
+
+        // Set button action for search field and list view.
         deleteButton.setVisible(false);
+        bookmarkButton.setVisible(false);
+        speakButton.setVisible(false);
         searchField.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
-                onEnterPress();
+                lookupWordSearchField();
             }
         });
         listOfWord.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
-                chooseWordClicked();
+                lookupWordListView();
+            }
+        });
+        // Set button action for definition field.
+        bookmarkButton.setOnAction(event -> configBookmark());
+        speakButton.setOnAction(event -> {
+            try {
+                Speech.play(currentWord);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
 
-        // Set action for list view.
+        // Set button action for list view status update.
         listViewType = ListViewType.SEARCH;
         searchList.setOnAction(event -> searchListView());
         historyList.setOnAction(event -> historyListView());
-        //bookmarkList.setOnAction(event -> bookmarkListView());
-        try {
-            onActionSearchField();
-            listOfWord.setFixedCellSize(30);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        bookmarkList.setOnAction(event -> bookmarkListView());
+        onActionSearchField();
     }
 
-    public void chooseWordClicked() {
+    /**
+     * Get the current word in list view and show its definition.
+     */
+    public void lookupWordListView() {
         currentWord = listOfWord.getSelectionModel().getSelectedItem();
         Word word = dictionary.lookUp(currentWord);
-        if (word == null) return;
+        if (word == null) {
+            return;
+        }
         definitionField.getChildren().clear();
-        showWord(word);
         dictionary.addHistoryWord(currentWord);
-        bookmarkButton.setOnAction(event -> configBookmark());
-
-        if(dictionary.getBookmarkList().contains(currentWord)){
+        setDefinitionField(word);
+        /*if(dictionary.getBookmarkList().contains(currentWord)){
             colorFont.setFill(Paint.valueOf("#ff0000"));
         }
-        else colorFont.setFill(Paint.valueOf("#000000"));
-
+        else colorFont.setFill(Paint.valueOf("#000000"));*/
     }
 
-    public void onEnterPress() {
+    /**
+     * Get the current word in search field and show its definition.
+     */
+    public void lookupWordSearchField() {
         currentWord = searchField.getText();
         Word word = dictionary.lookUp(currentWord);
-        if (word == null) return;
+        if (word == null) {
+            return;
+        }
         definitionField.getChildren().clear();
-        showWord(word);
         dictionary.addHistoryWord(currentWord);
+        setDefinitionField(word);
     }
 
-    public void showWord(Word word) {
+    /**
+     * Show the word in the definition field.
+     * @see #targetField
+     * @see #pronounceField
+     * @see #definitionField
+     * @param word Word to show.
+     */
+    public void setDefinitionField(Word word) {
         targetField.setText(word.getTarget());
         pronounceField.setText(word.getPronounce());
+
         String explain = word.getExplain();
         Scanner sc = new Scanner(explain);
+
         int indexBlock = 1;
         while (sc.hasNextLine()) {
             Text result = new Text();
@@ -159,35 +186,47 @@ public class DictionaryController implements Initializable {
             }
             definitionField.getChildren().add(result);
         }
+        if (!bookmarkButton.isVisible()) {
+            bookmarkButton.setVisible(true);
+        }
+        if (!speakButton.isVisible()) {
+            speakButton.setVisible(true);
+        }
     }
 
+    /**
+     * Add or remove the current word from the bookmark list.
+     * If the word is already in the bookmark list, remove it.
+     * Otherwise, add it to the bookmark list.
+     * Also update the list view and button if bookmarkList is selected.
+     * @see #listViewType
+     * @see #bookmarkButton
+     */
     public void configBookmark() {
         System.out.println(currentWord);
 
         if (dictionary.getBookmarkList().isEmpty())  {
             dictionary.addBookmarkWord(currentWord);
             System.out.println("Added");
-
-
             colorFont.setFill(Paint.valueOf("#ff0000"));
         } else {
             if (!dictionary.getBookmarkList().contains(currentWord)) {
                 dictionary.addBookmarkWord(currentWord);
                 System.out.println("Added");
-
                 colorFont.setFill(Paint.valueOf("#ff0000"));
             } else {
                 dictionary.removeBookmarkWord(currentWord);
                 System.out.println("Removed");
-
                 colorFont.setFill(Paint.valueOf("#000000"));
             }
         }
-        updateListViewBookMark();
-        //listOfWord.getItems().clear();
-        //listOfWord.getItems().addAll(dictionary.getBookmarkList());
+        // Update the list view if bookmarkList is selected.
+        if (listViewType == ListViewType.BOOKMARK) {
+            listOfWord.getItems().clear();
+            listOfWord.getItems().addAll(dictionary.getBookmarkList());
+        }
     }
-    public void updateListViewBookMark(){
+    /*public void updateListViewBookMark(){
         listOfWord.getItems().clear();
         List<String> target = null;
         String newValue = searchField.getText();
@@ -208,9 +247,12 @@ public class DictionaryController implements Initializable {
             //add bookmark color
             listOfWord.getItems().addAll(target);
         }
-    }
+    }*/
+
+    /**
+     * Search the dictionary and update the list view.
+     */
     public void onActionSearchField() {
-        // Filter list view with search box data.
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
             // Clear the list view if the search field is empty.
             if (newValue == null || newValue.isEmpty()) {
@@ -237,54 +279,67 @@ public class DictionaryController implements Initializable {
                         target = dictionary.searchBookmark(newValue);
                     }
                     if (target != null) {
-
-                        int n = target.size();
+                        /*int n = target.size();
                         for(int i = 0; i < n; ++i){
                             if(dictionary.getBookmarkList().contains(target.get(i))){
                                 target.set(i,target.get(i) + " ♥");
                             }
-                        }
+                        }*/
                         //add bookmark color
                         listOfWord.getItems().addAll(target);
-
                     }
                 }
-
             }
         });
     }
 
+    /**
+     * Update the list view to search view.
+     */
     public void searchListView() {
         searchField.clear();
-        setStyleListButton("searchList");
         listOfWord.getItems().clear();
         listViewType = ListViewType.SEARCH;
+        setStyleListButton("searchList");
     }
 
+    /**
+     * Update the list view to history view.
+     */
     public void historyListView() {
         searchField.clear();
-        setStyleListButton("historyList");
         listOfWord.getItems().clear();
         if (!dictionary.getHistoryList().isEmpty()) {
             listOfWord.getItems().addAll(dictionary.getHistoryList());
         }
         listViewType = ListViewType.HISTORY;
+        setStyleListButton("historyList");
     }
 
+    /**
+     * Update the list view to bookmark view.
+     */
     public void bookmarkListView() {
         searchField.clear();
-        setStyleListButton("bookmarkList");
         listOfWord.getItems().clear();
         if (!dictionary.getBookmarkList().isEmpty()) {
             listOfWord.getItems().addAll(dictionary.getBookmarkList());
         }
         listViewType = ListViewType.BOOKMARK;
+        setStyleListButton("bookmarkList");
     }
 
+    /**
+     * Clear the search field.
+     */
+    @FXML
     public void onDeleteClick() {
         searchField.clear();
     }
 
+    /**
+     * Copy the text in the search field to the clipboard.
+     */
     public void onCopyClick() {
         Clipboard clipboard = Clipboard.getSystemClipboard();
         ClipboardContent content = new ClipboardContent();
@@ -292,6 +347,10 @@ public class DictionaryController implements Initializable {
         clipboard.setContent(content);
     }
 
+    /**
+     * Set the style for the list view button.
+     * @param button The button to set style.
+     */
     public void setStyleListButton(String button) {
         if (button == null) {
             return;

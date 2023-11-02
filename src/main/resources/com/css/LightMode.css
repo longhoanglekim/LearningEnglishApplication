@@ -23,6 +23,23 @@
     -fx-fill: #F4F4F4;
 }
 
+#wordtype {
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-fill: #147288;
+}
+
+#wordmean {
+    -fx-font-size: 14px;
+    -fx-fill: #191919;
+}
+
+#wordexample {
+    -fx-font-style: italic;
+    -fx-font-size: 14px;
+    -fx-fill: #191919;
+}
+
 #listbutton-fontawesome-icon {
     -fx-fill: #b0b0b0;
 }
@@ -56,7 +73,7 @@
 
 .normalButton {
     -fx-background-color: none;
-    -fx-text-fill: white;
+    -fx-text-fill: #191919;
     -fx-border-width: 0em;
 }
 
@@ -74,9 +91,17 @@
     -fx-text-fill: white;
 }
 
-.searchBox {
+.search-field {
     -fx-background-color: none;
     -fx-background-radius: 2em;
+}
+
+.search-box {
+    -fx-background-color: #F4F4F4;
+}
+
+.search-field:focused .search-box {
+    -fx-border-color: #d2204a;
 }
 
 .text-area {
@@ -100,22 +125,6 @@
     -fx-background-color: transparent;
 }
 
-#wordtype {
-    -fx-font-weight: bold;
-    -fx-font-size: 16px;
-    -fx-text-fill: #5691d0;
-}
-
-#wordmean {
-    -fx-font-size: 14px;
-    -fx-text-fill: black;
-}
-
-#wordexample {
-    -fx-font-style: italic;
-    -fx-font-size: 14px;
-    -fx-text-fill: black;
-}
 .vbox {
     -fx-background-color: #3d80c9;
 }
@@ -129,13 +138,14 @@
 }
 
 .list-cell {
+    -fx-background-color: none;
     -fx-border-width: 0em;
     -fx-cell-size: 30;
     -fx-text-fill: black;
 }
 
 .list-cell:filled:selected:focused, .list-cell:filled:selected {
-    -fx-background-color: #5691d0;
+    -fx-background-color: #d2204a;
     -fx-border-color: none;
     -fx-border-width: 0em;
     -fx-text-fill: white;

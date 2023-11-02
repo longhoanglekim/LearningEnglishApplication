@@ -96,9 +96,14 @@
                      <VBox fx:id="definitionField" prefHeight="506.0" prefWidth="548.0" />
                   </content>
                </ScrollPane>
-               <Button fx:id="bookmarkButton" layoutX="424.0" layoutY="25.0" mnemonicParsing="false" AnchorPane.rightAnchor="93.0" AnchorPane.topAnchor="25.0">
+               <Button fx:id="bookmarkButton" layoutX="424.0" layoutY="25.0" mnemonicParsing="false" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="25.0">
                   <graphic>
-                     <FontAwesomeIconView fx:id="colorFont" glyphName="BOOKMARK" selectionFill="#fcf6f6" size="20" text="" />
+                     <FontAwesomeIconView fx:id="colorFont" glyphName="BOOKMARK" selectionFill="#fcf6f6" size="25" text="" />
+                  </graphic>
+               </Button>
+               <Button fx:id="speakButton" layoutX="353.0" layoutY="25.0" mnemonicParsing="false" styleClass="normalButton" text="US" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="25.0">
+                  <graphic>
+                     <FontAwesomeIconView glyphName="VOLUME_UP" size="25" />
                   </graphic>
                </Button>
             </children>
@@ -106,11 +111,11 @@
       </center>
       <left>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="576.0" prefWidth="224.0" BorderPane.alignment="CENTER">
-               <HBox prefHeight="40.0" prefWidth="225.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <HBox prefHeight="40.0" prefWidth="225.0" styleClass="search-box" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                    <opaqueInsets>
                        <Insets left="10.0" />
                    </opaqueInsets>
-                   <TextField id="search_field" fx:id="searchField" onKeyPressed="#onEnterPress" prefHeight="40.0" prefWidth="190.0" promptText="Search" styleClass="searchBox" stylesheets="@../css/LightMode.css">
+                   <TextField id="search_field" fx:id="searchField" onKeyPressed="#lookupWordSearchField" prefHeight="40.0" prefWidth="190.0" promptText="Search" styleClass="search-field" stylesheets="@../css/LightMode.css">
                        <font>
                            <Font size="14.0" />
                        </font>
@@ -138,7 +143,7 @@
                   </opaqueInsets>
                </Button>
                </HBox>
-                <ListView fx:id="listOfWord" layoutX="28.0" layoutY="28.0" onMouseClicked="#chooseWordClicked" prefHeight="582.0" prefWidth="274.0" stylesheets="@../css/LightMode.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
+                <ListView fx:id="listOfWord" layoutX="28.0" layoutY="28.0" onMouseClicked="#lookupWordListView" prefHeight="582.0" prefWidth="274.0" stylesheets="@../css/LightMode.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
             </AnchorPane>
       </left>
    </BorderPane>

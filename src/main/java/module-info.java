@@ -9,6 +9,8 @@ module com.ui {
     requires de.jensd.fx.glyphs.materialdesignicons;
     requires de.jensd.fx.glyphs.fontawesome;
     requires com.google.gson;
+    requires javafx.media;
+    requires java.net.http;
 
     opens com.ui to javafx.fxml;
     exports com.ui;

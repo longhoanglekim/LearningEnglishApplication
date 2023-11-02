@@ -56,7 +56,7 @@
                   <TextArea fx:id="fromField" prefHeight="188.0" prefWidth="470.0" wrapText="true" />
                   <TextArea fx:id="toField" editable="false" layoutX="468.0" prefHeight="188.0" prefWidth="470.0" wrapText="true" />
                   <Line endX="492.60003662109375" endY="3.400002956390381" layoutX="-24.0" layoutY="-2.0" startX="494.0" startY="236.4000244140625" />
-                  <Button layoutX="394.0" layoutY="199.0" mnemonicParsing="false" onAction="#onTranslateClicked" text="Dịch" />
+                  <Button layoutX="394.0" layoutY="199.0" mnemonicParsing="false" text="Dịch" />
                   <Label layoutX="328.0" layoutY="201.0" prefHeight="26.0" prefWidth="52.0" text="Label" />
                   <ImageView fitHeight="26.0" fitWidth="60.0" layoutX="98.0" layoutY="201.0" pickOnBounds="true" preserveRatio="true">
                      <image>

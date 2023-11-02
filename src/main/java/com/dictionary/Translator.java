@@ -90,6 +90,7 @@ public class Translator {
                 }
             }
         }
+        res.replace("<code>0</code>", "\\n");
         return res;
     }
 }

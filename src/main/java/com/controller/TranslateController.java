@@ -5,10 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 
 import java.io.IOException;
 import java.net.URL;
@@ -34,7 +31,7 @@ public class TranslateController implements Initializable {
     @FXML
     public ListView<String> historyTranslate;
     Image imageVi, imageEn;
-    boolean EnToVi = true;
+    boolean enToVi = true;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -46,53 +43,36 @@ public class TranslateController implements Initializable {
         labelFromLanguage.styleProperty().bind(FontSizeManager.getInstance().fontSizeProperty().asString("-fx-font-size: %dpx;"));;
         labelToLanguage.styleProperty().bind(FontSizeManager.getInstance().fontSizeProperty().asString("-fx-font-size: %dpx;"));
 
-        fromField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.equals(oldValue)) {
-                try {
-                    String res = fromField.getText();
-                    String toTrans = "";
-                    if (EnToVi && !res.isEmpty()) {
-                        toTrans = translateEnToVi(res);
-                    }else if(!EnToVi && !res.isEmpty()) {
-                        toTrans = translateViToEn(res);
-                    }
-                    toField.setText(toTrans);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+        fromField.setOnKeyPressed(keyEvent -> {
+            try {
+                String res = fromField.getText();
+                res.replace("\\r\\n", "<code>0</code>");
+                String toTrans = "";
+                if (enToVi && !res.isEmpty()) {
+                    toTrans = translateEnToVi(res);
+                } else if (!enToVi && !res.isEmpty()) {
+                    toTrans = translateViToEn(res);
                 }
+                toField.setText(toTrans);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         });
     }
 
-    public void onTranslateClicked() {
-/*        try {
-            String toTranslate;
-            String fromTranslate = fromField.getText();
-            if (EnToVi) {
-                toTranslate = translateEnToVi(fromTranslate);
-            } else {
-                toTranslate = translateViToEn(fromTranslate);
-            }
-            toField.setText(toTranslate);
-            historyTranslate.getItems().addAll(fromTranslate);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }*/
-    }
-
     public void onSwichClicked() {
-        if(EnToVi) {
+        if(enToVi) {
             labelFromLanguage.setText("Vietnamese");
             labelToLanguage.setText("English");
 /*            imageFromLanguage.setImage(imageVi);
             imageToLanguage.setImage(imageEn);*/
-            EnToVi = false;
+            enToVi = false;
         } else {
             labelFromLanguage.setText("English");
             labelToLanguage.setText("Vietnamese");
 /*            imageFromLanguage.setImage(imageEn);
             imageToLanguage.setImage(imageVi);*/
-            EnToVi = true;
+            enToVi = true;
         }
     }
     public void onHistoryClicked() {

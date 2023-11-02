@@ -41,6 +41,20 @@ public class Trie {
         }
     }
 
+    public static void remove(Trie root, String target) {
+        Trie tmp = root;
+        for (int i = 0; i < target.length(); i++) {
+            char x = target.charAt(i);
+
+            if (!tmp.map.containsKey(x)) {
+                return;
+            }
+            tmp = tmp.map.get(x);
+        }
+        tmp.isEndOfWord = false;
+        tmp.word = null;
+    }
+
     private static void dfs(Trie root, ArrayList<String> result) {
         if (root.isEndOfWord) {
             result.add(root.word.getTarget());
@@ -88,5 +102,11 @@ public class Trie {
 
        if (tmp.isEndOfWord) return tmp.word;
         return null;
+    }
+
+    public static int getSize(Trie root) {
+        ArrayList<String> result = new ArrayList<>();
+        dfs(root, result);
+        return result.size();
     }
 }
