@@ -49,11 +49,14 @@ public class TranslateController implements Initializable {
         fromField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.equals(oldValue)) {
                 try {
-                    if (EnToVi) {
-                        toField.setText(translateEnToVi(fromField.getText()));
-                    } else {
-                        toField.setText(translateEnToVi(fromField.getText()));
+                    String res = fromField.getText();
+                    String toTrans = "";
+                    if (EnToVi && !res.isEmpty()) {
+                        toTrans = translateEnToVi(res);
+                    }else if(!EnToVi && !res.isEmpty()) {
+                        toTrans = translateViToEn(res);
                     }
+                    toField.setText(toTrans);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -62,7 +65,7 @@ public class TranslateController implements Initializable {
     }
 
     public void onTranslateClicked() {
-        try {
+/*        try {
             String toTranslate;
             String fromTranslate = fromField.getText();
             if (EnToVi) {
@@ -74,7 +77,7 @@ public class TranslateController implements Initializable {
             historyTranslate.getItems().addAll(fromTranslate);
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }
+        }*/
     }
 
     public void onSwichClicked() {
