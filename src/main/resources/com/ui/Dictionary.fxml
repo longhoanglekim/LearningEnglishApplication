@@ -19,11 +19,11 @@
       <top>
          <HBox prefHeight="40.0" prefWidth="772.0" styleClass="hbox" BorderPane.alignment="CENTER">
             <children>
-               <HBox prefHeight="40.0" prefWidth="223.0" styleClass="button-bar">
+               <HBox alignment="BASELINE_CENTER" prefHeight="40.0" prefWidth="223.0" styleClass="button-bar">
                   <children>
-                   <Button fx:id="searchList" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#searchListView">
+                   <Button fx:id="searchList" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#searchListView" stylesheets="@../css/LightMode.css" HBox.hgrow="NEVER">
                         <graphic>
-                           <FontAwesomeIconView glyphName="SEARCH" size="20">
+                           <FontAwesomeIconView fx:id="searchIcon" glyphName="SEARCH" size="20">
                               <styleClass>
                                  <String fx:value="fontawesome-icon" />
                                  <String fx:value="listbutton-fontawesome-icon" />
@@ -31,12 +31,12 @@
                            </FontAwesomeIconView>
                         </graphic>
                         <HBox.margin>
-                           <Insets left="25.0" top="5.0" />
+                           <Insets top="5.0" />
                         </HBox.margin>
                      </Button>
-                     <Button fx:id="historyList" mnemonicParsing="false" onAction="#historyListView">
+                     <Button fx:id="historyList" mnemonicParsing="false" onAction="#historyListView" stylesheets="@../css/LightMode.css">
                         <graphic>
-                           <FontAwesomeIconView glyphName="HISTORY" size="20">
+                           <FontAwesomeIconView fx:id="historyIcon" glyphName="HISTORY" size="20">
                               <styleClass>
                                  <String fx:value="fontawesome-icon" />
                                  <String fx:value="listbutton-fontawesome-icon" />
@@ -44,12 +44,12 @@
                            </FontAwesomeIconView>
                         </graphic>
                         <HBox.margin>
-                           <Insets left="25.0" top="5.0" />
+                           <Insets top="5.0" />
                         </HBox.margin>
                      </Button>
-                     <Button fx:id="bookmarkList" mnemonicParsing="false" onAction="#bookmarkListView">
+                     <Button fx:id="bookmarkList" mnemonicParsing="false" onAction="#bookmarkListView" stylesheets="@../css/LightMode.css">
                         <graphic>
-                           <FontAwesomeIconView glyphName="BOOKMARK" size="20">
+                           <FontAwesomeIconView fx:id="bookmarkIcon" glyphName="BOOKMARK" size="20">
                               <styleClass>
                                  <String fx:value="fontawesome-icon" />
                                  <String fx:value="listbutton-fontawesome-icon" />
@@ -57,7 +57,7 @@
                            </FontAwesomeIconView>
                         </graphic>
                         <HBox.margin>
-                           <Insets left="25.0" top="5.0" />
+                           <Insets top="5.0" />
                         </HBox.margin>
                      </Button>
                   </children>

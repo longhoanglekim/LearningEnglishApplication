@@ -19,8 +19,12 @@
     -fx-fill: yellow;
 }
 
-#fontawesome-icon {
-    -fx-fill: #F4F4F4;
+#listbutton-icon {
+    -fx-fill: #b0b0b0;
+}
+
+#listbutton-icon-selected {
+    -fx-fill: #f1f1f1;
 }
 
 #wordtype {
@@ -38,10 +42,6 @@
     -fx-font-style: italic;
     -fx-font-size: 14px;
     -fx-fill: #191919;
-}
-
-#listbutton-fontawesome-icon {
-    -fx-fill: #b0b0b0;
 }
 
 .button {

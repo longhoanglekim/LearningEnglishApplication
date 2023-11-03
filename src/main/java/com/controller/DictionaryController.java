@@ -11,6 +11,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
@@ -27,6 +28,15 @@ import static com.ui.View.dictionary;
 public class DictionaryController implements Initializable {
     @FXML
     FontAwesomeIconView colorFont;
+
+    @FXML
+    FontAwesomeIconView searchIcon;
+
+    @FXML
+    FontAwesomeIconView historyIcon;
+
+    @FXML
+    FontAwesomeIconView bookmarkIcon;
 
     @FXML
     private Label targetField;
@@ -76,19 +86,8 @@ public class DictionaryController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        /*Dictionary = new Database();
-        if (dictionary.initialize()) {
-            System.out.println("Database initialized.");
-        } else {*/
-//            dictionary = new Local();
-//            if (dictionary.initialize()) {
-//                System.out.println("Local dictionary initialized.");
-//            } else {
-//                System.out.println("Cannot initialize dictionary.");
-//            }
-        //}
         setStyleProperty();
-
+        setStyleListButton("searchList");
         // Set button action for search field and list view.
         deleteButton.setVisible(false);
         bookmarkButton.setVisible(false);
@@ -269,7 +268,7 @@ public class DictionaryController implements Initializable {
                 listOfWord.getItems().clear();
                 if (listViewType == ListViewType.HISTORY) {
                     listOfWord.getItems().addAll(dictionary.getHistoryList().getList());
-                } else {
+                } else if (listViewType == ListViewType.BOOKMARK) {
                     listOfWord.getItems().addAll(dictionary.getBookmarkList().getList());
                 }
             // Otherwise, search the dictionary and update the list view.
@@ -366,24 +365,24 @@ public class DictionaryController implements Initializable {
         }
         if (button.equals("searchList")) {
             searchList.setText("Search");
-            searchList.setId("fontawesome-icon");
+            searchIcon.setId("listbutton-icon-selected");
         } else {
             searchList.setText("");
-            searchList.setId("listbutton-fontawesome-icon");
+            searchIcon.setId("listbutton-icon");
         }
         if (button.equals("historyList")) {
             historyList.setText("History");
-            searchList.setId("fontawesome-icon");
+            historyIcon.setId("listbutton-icon-selected");
         } else {
             historyList.setText("");
-            searchList.setId("listbutton-fontawesome-icon");
+            historyIcon.setId("listbutton-icon");
         }
         if (button.equals("bookmarkList")) {
             bookmarkList.setText("Bookmark");
-            searchList.setId("fontawesome-icon");
+            bookmarkIcon.setId("listbutton-icon-selected");
         } else {
             bookmarkList.setText("");
-            searchList.setId("listbutton-fontawesome-icon");
+            bookmarkIcon.setId("listbutton-icon");
         }
     }
 
