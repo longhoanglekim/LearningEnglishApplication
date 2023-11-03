@@ -46,31 +46,13 @@ public class TranslateController implements Initializable {
         labelToLanguage.styleProperty().bind(FontSizeManager.getInstance().fontSizeProperty().asString("-fx-font-size: %dpx;"));
 
         fromField.addEventFilter(KeyEvent.KEY_RELEASED, keyEvent -> {
-            String res = fromField.getText();
-            if (keyEvent.getCode() == KeyCode.ENTER) {
-                res += "";
-                // Xử lý Enter ở đây nếu cần
-                keyEvent.consume(); // Ngăn Enter lan ra
-
-            }
             try {
-                res = fromField.getText();
-                String[] tmp = res.split("\n");
-//                for (String str : tmp) {
-//                    System.out.println(str);
-//                }
-                //System.out.println("-----------");
-                //res = res.replace("\r\n", "<code>0</code>");
+                String res = fromField.getText();
                 String toTrans = "";
                 if (enToVi && !res.isEmpty()) {
-                    for (String str : tmp) {
-                        toTrans += translateEnToVi(str) + "\n";
-                    }
-
+                    toTrans = translateEnToVi(res);
                 } else if (!enToVi && !res.isEmpty()) {
-                    for (String str : tmp) {
-                        toTrans += translateViToEn(str) + "\n";
-                    }
+                    toTrans = translateViToEn(res);
                 }
                 toField.setText(toTrans);
             } catch (IOException e) {

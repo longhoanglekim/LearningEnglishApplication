@@ -79,18 +79,18 @@ public class Translator {
             if (!jsonArray.isEmpty()) {
                 JsonArray innerArray1 = jsonArray.get(0).getAsJsonArray();
 
-                // Lấy phần tử đầu tiên trong mảng con
-                if (!innerArray1.isEmpty()) {
+                // Lấy phần tử đầu tiên trong mảng JSON thứ 2
+                while (!innerArray1.isEmpty()) {
                     JsonArray innerArray2 = innerArray1.get(0).getAsJsonArray();
 
-                    // Lấy giá trị tại vị trí 0
+                    // Lấy translate word ở index 0 của mảng JSON;
                     if (!innerArray2.isEmpty()) {
-                        res = innerArray2.get(0).getAsString();
+                        res += innerArray2.get(0).getAsString();
                     }
+                    innerArray1.remove(0);
                 }
             }
         }
-        res.replace("<code>0</code>", "\\n");
         return res;
     }
 }
