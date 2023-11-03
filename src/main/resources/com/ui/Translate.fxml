@@ -18,7 +18,7 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="1140.0" stylesheets="@../css/LightMode.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.TranslateController">
    <children>
-      <GridPane layoutX="111.0" layoutY="37.0" prefHeight="287.0" prefWidth="940.0" style="-fx-border-color: black;">
+      <GridPane layoutX="50.0" layoutY="37.0" prefHeight="287.0" prefWidth="940.0" style="-fx-border-color: black;">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="455.1999816894531" minWidth="0.0" prefWidth="0.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="938.0" minWidth="0.0" prefWidth="938.0" />
@@ -55,7 +55,7 @@
                <children>
                   <TextArea fx:id="fromField" prefHeight="188.0" prefWidth="470.0" wrapText="true" />
                   <TextArea fx:id="toField" editable="false" layoutX="468.0" prefHeight="188.0" prefWidth="470.0" wrapText="true" />
-                  <Line endX="492.60003662109375" endY="3.400002956390381" layoutX="-24.0" layoutY="-2.0" startX="494.0" startY="236.4000244140625" />
+                  <Line endX="494.0" endY="0.5" layoutX="-24.0" layoutY="-2.0" startX="494.0" startY="236.4000244140625" />
                   <Button layoutX="394.0" layoutY="199.0" mnemonicParsing="false" text="Dịch" />
                   <Label layoutX="328.0" layoutY="201.0" prefHeight="26.0" prefWidth="52.0" text="Label" />
                   <ImageView fitHeight="26.0" fitWidth="60.0" layoutX="98.0" layoutY="201.0" pickOnBounds="true" preserveRatio="true">
@@ -69,5 +69,6 @@
          </children>
       </GridPane>
       <ListView fx:id="historyTranslate" layoutX="111.0" layoutY="338.0" prefHeight="234.0" prefWidth="938.0" />
+      <Line endX="767.0" endY="-310.0" layoutX="222.0" layoutY="397.0" startX="-173.0" startY="-310.0" />
    </children>
 </AnchorPane>
