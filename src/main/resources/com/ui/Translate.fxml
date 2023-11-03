@@ -16,7 +16,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1140.0" stylesheets="@../css/LightMode.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.TranslateController">
+<AnchorPane prefHeight="600.0" prefWidth="1140.0" stylesheets="@../css/LightMode.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.TranslateController">
    <children>
       <GridPane layoutX="111.0" layoutY="37.0" prefHeight="287.0" prefWidth="940.0" style="-fx-border-color: black;">
         <columnConstraints>

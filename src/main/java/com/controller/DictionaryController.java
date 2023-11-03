@@ -18,6 +18,8 @@ import javafx.scene.text.Text;
 import java.net.URL;
 import java.util.*;
 
+import static com.ui.View.dictionary;
+
 /**
  * Controller for main view.
  * Currently, this controller is for testing and can be refactored later.
@@ -62,7 +64,7 @@ public class DictionaryController implements Initializable {
     @FXML
     private Button speakButton;
 
-    private Dictionary dictionary;
+    //private Dictionary dictionary;
     private String currentWord;
     private ListViewType listViewType;
 
@@ -78,12 +80,12 @@ public class DictionaryController implements Initializable {
         if (dictionary.initialize()) {
             System.out.println("Database initialized.");
         } else {*/
-            dictionary = new Local();
-            if (dictionary.initialize()) {
-                System.out.println("Local dictionary initialized.");
-            } else {
-                System.out.println("Cannot initialize dictionary.");
-            }
+//            dictionary = new Local();
+//            if (dictionary.initialize()) {
+//                System.out.println("Local dictionary initialized.");
+//            } else {
+//                System.out.println("Cannot initialize dictionary.");
+//            }
         //}
         setStyleProperty();
 
@@ -93,7 +95,9 @@ public class DictionaryController implements Initializable {
         speakButton.setVisible(false);
         searchField.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
-                lookupWordSearchField();
+                if (listViewType == ListViewType.SEARCH) {
+                    lookupWordSearchField();
+                }
             }
         });
         listOfWord.setOnKeyPressed(event -> {
@@ -129,7 +133,7 @@ public class DictionaryController implements Initializable {
             return;
         }
         definitionField.getChildren().clear();
-        dictionary.addHistoryWord(currentWord);
+        dictionary.getHistoryList().add(currentWord);
         setDefinitionField(word);
         /*if(dictionary.getBookmarkList().contains(currentWord)){
             colorFont.setFill(Paint.valueOf("#ff0000"));
@@ -147,7 +151,7 @@ public class DictionaryController implements Initializable {
             return;
         }
         definitionField.getChildren().clear();
-        dictionary.addHistoryWord(currentWord);
+        dictionary.getHistoryList().add(currentWord);
         setDefinitionField(word);
     }
 
@@ -192,6 +196,11 @@ public class DictionaryController implements Initializable {
         if (!speakButton.isVisible()) {
             speakButton.setVisible(true);
         }
+        if (dictionary.getBookmarkList().getList().contains(currentWord)) {
+            colorFont.setFill(Paint.valueOf("#ff0000"));
+        } else {
+            colorFont.setFill(Paint.valueOf("#000000"));
+        }
     }
 
     /**
@@ -205,17 +214,17 @@ public class DictionaryController implements Initializable {
     public void configBookmark() {
         System.out.println(currentWord);
 
-        if (dictionary.getBookmarkList().isEmpty())  {
-            dictionary.addBookmarkWord(currentWord);
+        if (dictionary.getBookmarkList().getList().isEmpty())  {
+            dictionary.getBookmarkList().add(currentWord);
             System.out.println("Added");
             colorFont.setFill(Paint.valueOf("#ff0000"));
         } else {
-            if (!dictionary.getBookmarkList().contains(currentWord)) {
-                dictionary.addBookmarkWord(currentWord);
+            if (!dictionary.getBookmarkList().getList().contains(currentWord)) {
+                dictionary.getBookmarkList().add(currentWord);
                 System.out.println("Added");
                 colorFont.setFill(Paint.valueOf("#ff0000"));
             } else {
-                dictionary.removeBookmarkWord(currentWord);
+                dictionary.getBookmarkList().remove(currentWord);
                 System.out.println("Removed");
                 colorFont.setFill(Paint.valueOf("#000000"));
             }
@@ -223,7 +232,7 @@ public class DictionaryController implements Initializable {
         // Update the list view if bookmarkList is selected.
         if (listViewType == ListViewType.BOOKMARK) {
             listOfWord.getItems().clear();
-            listOfWord.getItems().addAll(dictionary.getBookmarkList());
+            listOfWord.getItems().addAll(dictionary.getBookmarkList().getList());
         }
     }
     /*public void updateListViewBookMark(){
@@ -259,9 +268,9 @@ public class DictionaryController implements Initializable {
                 deleteButton.setVisible(false);
                 listOfWord.getItems().clear();
                 if (listViewType == ListViewType.HISTORY) {
-                    listOfWord.getItems().addAll(dictionary.getHistoryList());
+                    listOfWord.getItems().addAll(dictionary.getHistoryList().getList());
                 } else {
-                    listOfWord.getItems().addAll(dictionary.getBookmarkList());
+                    listOfWord.getItems().addAll(dictionary.getBookmarkList().getList());
                 }
             // Otherwise, search the dictionary and update the list view.
             } else {
@@ -274,9 +283,9 @@ public class DictionaryController implements Initializable {
                     if (listViewType == ListViewType.SEARCH) {
                         target = dictionary.search(newValue);
                     } else if (listViewType == ListViewType.HISTORY) {
-                        target = dictionary.searchHistory(newValue);
+                        target = dictionary.getHistoryList().search(newValue);
                     } else if (listViewType == ListViewType.BOOKMARK) {
-                        target = dictionary.searchBookmark(newValue);
+                        target = dictionary.getBookmarkList().search(newValue);
                     }
                     if (target != null) {
                         /*int n = target.size();
@@ -309,8 +318,8 @@ public class DictionaryController implements Initializable {
     public void historyListView() {
         searchField.clear();
         listOfWord.getItems().clear();
-        if (!dictionary.getHistoryList().isEmpty()) {
-            listOfWord.getItems().addAll(dictionary.getHistoryList());
+        if (!dictionary.getHistoryList().getList().isEmpty()) {
+            listOfWord.getItems().addAll(dictionary.getHistoryList().getList());
         }
         listViewType = ListViewType.HISTORY;
         setStyleListButton("historyList");
@@ -322,8 +331,8 @@ public class DictionaryController implements Initializable {
     public void bookmarkListView() {
         searchField.clear();
         listOfWord.getItems().clear();
-        if (!dictionary.getBookmarkList().isEmpty()) {
-            listOfWord.getItems().addAll(dictionary.getBookmarkList());
+        if (!dictionary.getBookmarkList().getList().isEmpty()) {
+            listOfWord.getItems().addAll(dictionary.getBookmarkList().getList());
         }
         listViewType = ListViewType.BOOKMARK;
         setStyleListButton("bookmarkList");

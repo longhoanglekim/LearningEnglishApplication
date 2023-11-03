@@ -1,11 +1,13 @@
 package com.dictionary;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public abstract class Dictionary {
-    protected List<String> bookmarkList = new ArrayList<>();
-    protected List<String> historyList = new ArrayList<>();
+    protected Bookmark bookmarkList = new Bookmark();
+    protected History historyList = new History();
 
 
     /**
@@ -58,58 +60,33 @@ public abstract class Dictionary {
     public abstract void export();
 
     /**
-     *
+     * Get the list of bookmark.
      * @return list of bookmark.
      */
-    public List<String> getBookmarkList() {
+    public Bookmark getBookmarkList() {
         return bookmarkList;
     }
 
-    public List<String> searchBookmark(String word) {
-        List<String> result = new ArrayList<>();
-        for (String s : bookmarkList) {
-            if (s.contains(word)) {
-                result.add(s);
-            }
-        }
-        return result;
-    }
-
-    public void addBookmarkWord(String target) {
-        bookmarkList.add(target);
-    }
-
-    public void removeBookmarkWord(String word) {
-        bookmarkList.remove(word);
-    }
-
-    public List<String> getHistoryList() {
+    /**
+     * Get the list of history.
+     * @return list of history.
+     */
+    public History getHistoryList() {
         return historyList;
     }
 
-    public List<String> searchHistory(String word) {
-        List<String> result = new ArrayList<>();
-        for (String s : historyList) {
-            if (s.contains(word)) {
-                result.add(s);
-            }
+    public void close() {
+        try {
+            bookmarkList.saveBookmark();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Cannot save bookmark");
         }
-        return result;
-    }
-
-    public void addHistoryWord(String target) {
-        if (historyList.contains(target)) {
-            historyList.remove(target);
+        try {
+            historyList.saveHistory();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Cannot save history");
         }
-        historyList.add(0, target);
     }
-
-    public void removeHistoryWord(String word) {
-        historyList.remove(word);
-    }
-
-    public void clearHistory() {
-        historyList.clear();
-    }
-
 }

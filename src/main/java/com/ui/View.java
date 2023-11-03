@@ -1,10 +1,15 @@
 package com.ui;
 
 import com.controller.WindowController;
+import com.dictionary.Database;
+import com.dictionary.Dictionary;
+import com.dictionary.Local;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Paint;
@@ -22,8 +27,18 @@ public class View {
     private AnchorPane gamePane;
     private AnchorPane settingPane;
 
+    public static Dictionary dictionary;
+
     public View() {
         selectedMenuItem = new SimpleStringProperty("");
+        //dictionary = new Database();
+//        if (!dictionary.initialize()) {
+            dictionary = new Local();
+            if (!dictionary.initialize()) {
+                System.out.println("Cannot initialize dictionary");
+                Platform.exit();
+            }
+        //}
     }
 
     public StringProperty getSelectedMenuItem() {
@@ -126,6 +141,12 @@ public class View {
         stage.setMinWidth(800);
         stage.setMinHeight(550);
         stage.show();
+        stage.setOnCloseRequest(event -> {
+            dictionary.close();
+            System.out.println("Closing application");
+            Platform.exit();
+            System.exit(0);
+        });
     }
 
 }
