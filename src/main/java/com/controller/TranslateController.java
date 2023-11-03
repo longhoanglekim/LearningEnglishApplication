@@ -59,7 +59,7 @@ public class TranslateController implements Initializable {
 //                for (String str : tmp) {
 //                    System.out.println(str);
 //                }
-                System.out.println("-----------");
+                //System.out.println("-----------");
                 //res = res.replace("\r\n", "<code>0</code>");
                 String toTrans = "";
                 if (enToVi && !res.isEmpty()) {
@@ -68,7 +68,9 @@ public class TranslateController implements Initializable {
                     }
 
                 } else if (!enToVi && !res.isEmpty()) {
-                    toTrans = translateViToEn(res);
+                    for (String str : tmp) {
+                        toTrans += translateViToEn(str) + "\n";
+                    }
                 }
                 toField.setText(toTrans);
             } catch (IOException e) {
