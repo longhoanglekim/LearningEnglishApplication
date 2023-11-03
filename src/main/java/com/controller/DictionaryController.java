@@ -1,20 +1,23 @@
 package com.controller;
 
-import com.dictionary.Dictionary;
-import com.dictionary.Local;
 import com.dictionary.Speech;
 import com.dictionary.Word;
+import com.ui.Model;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
+import org.controlsfx.control.NotificationPane;
+import org.controlsfx.control.Notifications;
+import org.controlsfx.control.textfield.TextFields;
 
 import java.net.URL;
 import java.util.*;
@@ -27,7 +30,7 @@ import static com.ui.View.dictionary;
  */
 public class DictionaryController implements Initializable {
     @FXML
-    FontAwesomeIconView colorFont;
+    FontAwesomeIconView bookmarkDefIcon;
 
     @FXML
     FontAwesomeIconView searchIcon;
@@ -167,7 +170,6 @@ public class DictionaryController implements Initializable {
 
         String explain = word.getExplain();
         Scanner sc = new Scanner(explain);
-
         int indexBlock = 1;
         while (sc.hasNextLine()) {
             Text result = new Text();
@@ -196,9 +198,9 @@ public class DictionaryController implements Initializable {
             speakButton.setVisible(true);
         }
         if (dictionary.getBookmarkList().getList().contains(currentWord)) {
-            colorFont.setFill(Paint.valueOf("#ff0000"));
+            bookmarkDefIcon.setId("bookmarked");
         } else {
-            colorFont.setFill(Paint.valueOf("#000000"));
+            bookmarkDefIcon.setId("bookmark");
         }
     }
 
@@ -211,21 +213,29 @@ public class DictionaryController implements Initializable {
      * @see #bookmarkButton
      */
     public void configBookmark() {
-        System.out.println(currentWord);
+        Notifications notification = Notifications.create()
+                .title("Bookmark")
+                .text("Added " + currentWord + " to bookmark list")
+                .hideAfter(javafx.util.Duration.seconds(1))
+                .position(Pos.BOTTOM_RIGHT)
+                .graphic(null)
+                .owner(Model.getInstance().getView().getDictionaryPane())
+                .hideCloseButton();
 
         if (dictionary.getBookmarkList().getList().isEmpty())  {
             dictionary.getBookmarkList().add(currentWord);
-            System.out.println("Added");
-            colorFont.setFill(Paint.valueOf("#ff0000"));
+            bookmarkDefIcon.setId("bookmarked");
+            notification.show();
         } else {
             if (!dictionary.getBookmarkList().getList().contains(currentWord)) {
                 dictionary.getBookmarkList().add(currentWord);
-                System.out.println("Added");
-                colorFont.setFill(Paint.valueOf("#ff0000"));
+                bookmarkDefIcon.setId("bookmarked");
+                notification.show();
             } else {
                 dictionary.getBookmarkList().remove(currentWord);
-                System.out.println("Removed");
-                colorFont.setFill(Paint.valueOf("#000000"));
+                bookmarkDefIcon.setId("bookmark");
+                notification.text("Removed " + currentWord + " from bookmark list");
+                notification.show();
             }
         }
         // Update the list view if bookmarkList is selected.

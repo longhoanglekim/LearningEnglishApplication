@@ -31,12 +31,6 @@
     -fx-border-width: 0px 0px 0px 3px;
 }
 
-
-.split-pane:horizontal > .split-pane-divider {
-    -fx-background-color: #3d80c9;
-    -fx-background-radius: 0em;
-}
-
 /*  Text field   */
 .searchBox {
     -fx-background-color: none;
@@ -57,18 +51,6 @@
     -fx-background-color: #F1F1F1;
 }
 /*  List view - Currently not work, bugged   */
-/*.list-view .column-header,
-.list-view .column-header-background .filler{
-    -fx-cell-size: 20;
-    -fx-background-color: #3d80c9;
-}*/
-
-/*.list-view .column-header .label {
-    -fx-text-fill: black;
-    -fx-font-weight: bold;
-    -fx-alignment: center-left;
-}*/
-
 .list-view .list-cell {
     -fx-cell-size: 30;
     -fx-alignment: center-left;

@@ -14,14 +14,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane stylesheets="@../css/LightMode.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.DictionaryController">
+<AnchorPane stylesheets="@../css/Dictionary.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.DictionaryController">
    <BorderPane prefHeight="626.0" prefWidth="772.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <top>
          <HBox prefHeight="40.0" prefWidth="772.0" styleClass="hbox" BorderPane.alignment="CENTER">
             <children>
-               <HBox alignment="BASELINE_CENTER" prefHeight="40.0" prefWidth="223.0" styleClass="button-bar">
+               <HBox alignment="BASELINE_CENTER" prefHeight="40.0" prefWidth="225.0" styleClass="button-bar">
                   <children>
-                   <Button fx:id="searchList" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#searchListView" stylesheets="@../css/LightMode.css" HBox.hgrow="NEVER">
+                   <Button fx:id="searchList" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#searchListView" styleClass="list-button" HBox.hgrow="NEVER">
                         <graphic>
                            <FontAwesomeIconView fx:id="searchIcon" glyphName="SEARCH" size="20">
                               <styleClass>
@@ -34,7 +34,7 @@
                            <Insets top="5.0" />
                         </HBox.margin>
                      </Button>
-                     <Button fx:id="historyList" mnemonicParsing="false" onAction="#historyListView" stylesheets="@../css/LightMode.css">
+                     <Button fx:id="historyList" mnemonicParsing="false" onAction="#historyListView" styleClass="list-button">
                         <graphic>
                            <FontAwesomeIconView fx:id="historyIcon" glyphName="HISTORY" size="20">
                               <styleClass>
@@ -47,7 +47,7 @@
                            <Insets top="5.0" />
                         </HBox.margin>
                      </Button>
-                     <Button fx:id="bookmarkList" mnemonicParsing="false" onAction="#bookmarkListView" stylesheets="@../css/LightMode.css">
+                     <Button fx:id="bookmarkList" mnemonicParsing="false" onAction="#bookmarkListView" styleClass="list-button">
                         <graphic>
                            <FontAwesomeIconView fx:id="bookmarkIcon" glyphName="BOOKMARK" size="20">
                               <styleClass>
@@ -86,22 +86,22 @@
                      <Font size="29.0" />
                   </font>
                </Label>
-               <Label fx:id="pronounceField" layoutX="14.0" layoutY="72.0" prefHeight="20.0" prefWidth="274.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="40.0">
+               <Label fx:id="pronounceField" layoutX="14.0" layoutY="72.0" prefHeight="20.0" prefWidth="274.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="45.0">
                   <font>
                      <Font size="17.0" />
                   </font>
                </Label>
-               <ScrollPane layoutY="74.0" prefHeight="512.0" prefWidth="548.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="74.0">
+               <ScrollPane fitToHeight="true" fitToWidth="true" layoutY="86.0" prefHeight="500.0" prefWidth="546.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0">
                   <content>
                      <VBox fx:id="definitionField" prefHeight="506.0" prefWidth="548.0" />
                   </content>
                </ScrollPane>
-               <Button fx:id="bookmarkButton" layoutX="424.0" layoutY="25.0" mnemonicParsing="false" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="25.0">
+               <Button fx:id="bookmarkButton" layoutX="424.0" layoutY="25.0" mnemonicParsing="false" styleClass="normal-button" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="25.0">
                   <graphic>
-                     <FontAwesomeIconView fx:id="colorFont" glyphName="BOOKMARK" selectionFill="#fcf6f6" size="25" text="" />
+                     <FontAwesomeIconView fx:id="bookmarkDefIcon" glyphName="BOOKMARK" size="25" stroke="#db040400" text="" />
                   </graphic>
                </Button>
-               <Button fx:id="speakButton" layoutX="353.0" layoutY="25.0" mnemonicParsing="false" styleClass="normalButton" text="US" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="25.0">
+               <Button fx:id="speakButton" layoutX="353.0" layoutY="25.0" mnemonicParsing="false" styleClass="normal-button" text="US" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="25.0">
                   <graphic>
                      <FontAwesomeIconView glyphName="VOLUME_UP" size="25" />
                   </graphic>
@@ -110,7 +110,7 @@
          </AnchorPane>
       </center>
       <left>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="576.0" prefWidth="224.0" BorderPane.alignment="CENTER">
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="225.0" BorderPane.alignment="CENTER">
                <HBox prefHeight="40.0" prefWidth="225.0" styleClass="search-box" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                    <opaqueInsets>
                        <Insets left="10.0" />
@@ -123,7 +123,7 @@
                            <Insets />
                        </HBox.margin>
                    </TextField>
-               <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#onDeleteClick" prefHeight="40.0" prefWidth="20.0" styleClass="normalButton">
+               <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#onDeleteClick" prefHeight="40.0" prefWidth="20.0" styleClass="normal-button">
                   <graphic>
                      <FontAwesomeIconView glyphName="TIMES" size="25" wrappingWidth="20.0" />
                   </graphic>
@@ -134,7 +134,7 @@
                      <Insets />
                   </opaqueInsets>
                </Button>
-               <Button fx:id="copyButton" minHeight="-Infinity" mnemonicParsing="false" onAction="#onCopyClick" prefHeight="40.0" prefWidth="20.0" styleClass="normalButton">
+               <Button fx:id="copyButton" minHeight="-Infinity" mnemonicParsing="false" onAction="#onCopyClick" prefHeight="40.0" prefWidth="20.0" styleClass="normal-button">
                   <graphic>
                      <FontAwesomeIconView glyphName="COPY" size="20" wrappingWidth="20.0" />
                   </graphic>
