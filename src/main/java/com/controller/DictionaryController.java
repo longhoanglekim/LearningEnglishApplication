@@ -277,7 +277,6 @@ public class DictionaryController implements Initializable {
                     deleteButton.setVisible(true);
                 }
                 if (!newValue.equals(oldValue)) {
-                    listOfWord.getItems().clear();
                     List<String> target = null;
                     if (listViewType == ListViewType.SEARCH) {
                         target = dictionary.search(newValue);
@@ -294,7 +293,8 @@ public class DictionaryController implements Initializable {
                             }
                         }*/
                         //add bookmark color
-                        listOfWord.getItems().addAll(target);
+                        listOfWord.getItems().setAll(target);
+                        listOfWord.scrollTo(0);
                     }
                 }
             }
