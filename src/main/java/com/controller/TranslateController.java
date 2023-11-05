@@ -53,26 +53,14 @@ public class TranslateController implements Initializable {
 
         fromField.addEventFilter(KeyEvent.KEY_RELEASED, keyEvent -> {
             try {
-                // Get the current text in the TextArea
-                String currentText = fromField.getText();
 
-                // Set the character limit you desire (e.g., 100 characters)
-                int characterLimit = 2;
-
-                // Check if the current text exceeds the character limit
-                if (currentText.length() >= characterLimit) {
-                    // Consume the event to prevent further input
-                    System.out.println("Too");
-                    keyEvent.consume();
+                String res = fromField.getText();
+                if (enToVi && !res.isEmpty()) {
+                    currentString = translateEnToVi(res);
+                } else if (!enToVi && !res.isEmpty()) {
+                    currentString = translateViToEn(res);
                 } else {
-                    String res = fromField.getText();
-                    if (enToVi && !res.isEmpty()) {
-                        currentString = translateEnToVi(res);
-                    } else if (!enToVi && !res.isEmpty()) {
-                        currentString = translateViToEn(res);
-                    } else {
-                        currentString = "";
-                    }
+                    currentString = "";
                 }
                 toField.setText(currentString);
             } catch (IOException e) {
