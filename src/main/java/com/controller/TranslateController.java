@@ -1,7 +1,9 @@
 package com.controller;
 
+import com.dictionary.Speech;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
@@ -19,6 +21,8 @@ import static com.dictionary.Translator.translateViToEn;
 
 public class TranslateController implements Initializable {
     @FXML
+    public Button speakButton;
+    @FXML
     public TextArea fromField;
     @FXML
     public TextArea toField;
@@ -34,6 +38,8 @@ public class TranslateController implements Initializable {
     public ListView<String> historyTranslate;
     Image imageVi, imageEn;
     boolean enToVi = true;
+    private String currentString;
+    private static int LIMIT = 2;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -47,20 +53,45 @@ public class TranslateController implements Initializable {
 
         fromField.addEventFilter(KeyEvent.KEY_RELEASED, keyEvent -> {
             try {
-                String res = fromField.getText();
-                String toTrans = "";
-                if (enToVi && !res.isEmpty()) {
-                    toTrans = translateEnToVi(res);
-                } else if (!enToVi && !res.isEmpty()) {
-                    toTrans = translateViToEn(res);
+                // Get the current text in the TextArea
+                String currentText = fromField.getText();
+
+                // Set the character limit you desire (e.g., 100 characters)
+                int characterLimit = 2;
+
+                // Check if the current text exceeds the character limit
+                if (currentText.length() >= characterLimit) {
+                    // Consume the event to prevent further input
+                    System.out.println("Too");
+                    keyEvent.consume();
+                } else {
+                    String res = fromField.getText();
+                    if (enToVi && !res.isEmpty()) {
+                        currentString = translateEnToVi(res);
+                    } else if (!enToVi && !res.isEmpty()) {
+                        currentString = translateViToEn(res);
+                    } else {
+                        currentString = "";
+                    }
                 }
-                toField.setText(toTrans);
+                toField.setText(currentString);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
 
         });
+        speakButton.setOnAction(event -> {
+            try {
+                if (enToVi) {
+                    Speech.play(fromField.getText());
+                } else {
+                    Speech.play(currentString);
+                }
 
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     public void onSwichClicked() {
