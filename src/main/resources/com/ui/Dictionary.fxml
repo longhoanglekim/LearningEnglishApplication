@@ -111,7 +111,7 @@
       </center>
       <left>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="225.0" BorderPane.alignment="CENTER">
-               <HBox prefHeight="40.0" prefWidth="225.0" styleClass="search-box" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <HBox fx:id="searchHBox" prefHeight="40.0" prefWidth="225.0" styleClass="search-box" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                    <opaqueInsets>
                        <Insets left="10.0" />
                    </opaqueInsets>

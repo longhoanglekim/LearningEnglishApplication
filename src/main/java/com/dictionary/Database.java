@@ -6,8 +6,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 public class Database extends Dictionary {
-    public Connection databaseLink;
-    public boolean isInitialized = false;
+    private Connection databaseLink;
 
     /**
      * Get database connection from a database.
@@ -29,24 +28,6 @@ public class Database extends Dictionary {
     }
 
     /**
-     * Get data from database and add to current local dictionary.
-     * Must be called after {@link Database#getDatabaseConnection()}.
-     */
-    /*public void getDataFromDatabase() {
-        String query = "SELECT * FROM tbl_edict";
-        try {
-            Statement statement = databaseLink.createStatement();
-            ResultSet queryOutput = statement.executeQuery(query);
-            while (queryOutput.next()) {
-                String target = queryOutput.getString("word");
-                String explain = queryOutput.getString("detail");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }*/
-
-    /**
      * Close database connection.
      */
     public void closeDatabaseConnection() {
@@ -61,7 +42,7 @@ public class Database extends Dictionary {
     public boolean initialize() {
         try {
             getDatabaseConnection();
-            isInitialized = true;
+            boolean isInitialized = true;
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
             //e.printStackTrace();
@@ -104,7 +85,7 @@ public class Database extends Dictionary {
      * @return Definition of the word / null if not found.
      */
     @Override
-    public Word lookUp(String word) {
+    public Word lookup(String word) {
         String query = "SELECT * FROM tbl_edict WHERE word = '" + word + "'";
         try {
             Statement statement = databaseLink.createStatement();
@@ -128,7 +109,7 @@ public class Database extends Dictionary {
     @Override
     public void addWord(Word word) {
         if (word == null) return;
-        if (lookUp(word.getTarget()) == null) return;
+        if (lookup(word.getTarget()) == null) return;
 
         String query = "INSERT INTO tbl_edict(word, pronounce, detail) VALUES (?, ?, ?)";
         try {
@@ -150,12 +131,12 @@ public class Database extends Dictionary {
      * @param word Word to remove.
      */
     @Override
-    public void removeWord(Word word) {
-        String query = "DELETE FROM tbl_edict WHERE word = '" + word.getTarget() + "'";
+    public void removeWord(String word) {
+        String query = "DELETE FROM tbl_edict WHERE word = '" + word + "'";
         try {
             PreparedStatement preparedStatement = databaseLink.prepareStatement(query);
             preparedStatement.executeUpdate();
-            System.out.println("Deleted word: " + word.getTarget());
+            System.out.println("Deleted word: " + word);
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
             e.printStackTrace();

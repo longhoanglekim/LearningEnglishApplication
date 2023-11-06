@@ -28,14 +28,16 @@ public class Local extends Dictionary {
     }
 
     private void loadDictionary() throws Exception {
-        File file = null;
+        File dict = null;
+        File irregular = null;
         try {
-            file = new File("./src/main/resources/data/dictionary.txt");
+            dict = new File("./src/main/resources/data/dictionary.txt");
+            irregular = new File("./src/main/resources/data/irregular.txt");
         } catch (Exception e) {
             throw new FileNotFoundException("Dictionary file not found.");
         }
         try {
-            Scanner sc = new Scanner(new FileReader(file));
+            Scanner sc = new Scanner(new FileReader(dict));
             while (sc.hasNextLine()) {
                 String line = sc.nextLine();
                 String[] wap = line.split("/");
@@ -89,8 +91,13 @@ public class Local extends Dictionary {
      * @return Definition of the word.
      */
     @Override
-    public Word lookUp(String word) {
-        return Trie.lookup(words, word);
+    public Word lookup(String word) {
+        Word result = Trie.lookup(words, word);
+        if (result != null) {
+            historyList.add(result.getTarget());
+            return result;
+        }
+        return null;
     }
 
     /**
@@ -109,7 +116,7 @@ public class Local extends Dictionary {
      * @param word Word to remove.
      */
     @Override
-    public void removeWord(Word word) {
+    public void removeWord(String word) {
 
     }
 

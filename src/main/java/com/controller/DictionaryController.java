@@ -1,5 +1,6 @@
 package com.controller;
 
+import com.dictionary.JFXSmoothScroll;
 import com.dictionary.Speech;
 import com.dictionary.Word;
 import com.ui.Model;
@@ -7,17 +8,15 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
-import org.controlsfx.control.NotificationPane;
 import org.controlsfx.control.Notifications;
-import org.controlsfx.control.textfield.TextFields;
 
 import java.net.URL;
 import java.util.*;
@@ -30,16 +29,16 @@ import static com.ui.View.dictionary;
  */
 public class DictionaryController implements Initializable {
     @FXML
-    FontAwesomeIconView bookmarkDefIcon;
+    private FontAwesomeIconView bookmarkDefIcon;
 
     @FXML
-    FontAwesomeIconView searchIcon;
+    private FontAwesomeIconView searchIcon;
 
     @FXML
-    FontAwesomeIconView historyIcon;
+    private FontAwesomeIconView historyIcon;
 
     @FXML
-    FontAwesomeIconView bookmarkIcon;
+    private FontAwesomeIconView bookmarkIcon;
 
     @FXML
     private Label targetField;
@@ -49,6 +48,9 @@ public class DictionaryController implements Initializable {
 
     @FXML
     private VBox definitionField;
+
+    @FXML
+    private HBox searchHBox;
 
     @FXML
     private TextField searchField;
@@ -77,7 +79,6 @@ public class DictionaryController implements Initializable {
     @FXML
     private Button speakButton;
 
-    //private Dictionary dictionary;
     private String currentWord;
     private ListViewType listViewType;
 
@@ -102,6 +103,8 @@ public class DictionaryController implements Initializable {
                 }
             }
         });
+        JFXSmoothScroll.smoothScrollingListView(listOfWord, 1.5);
+        JFXSmoothScroll.smoothHScrollingListView(listOfWord, 1.5);
         listOfWord.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 lookupWordListView();
@@ -130,17 +133,12 @@ public class DictionaryController implements Initializable {
      */
     public void lookupWordListView() {
         currentWord = listOfWord.getSelectionModel().getSelectedItem();
-        Word word = dictionary.lookUp(currentWord);
+        Word word = dictionary.lookup(currentWord);
         if (word == null) {
             return;
         }
         definitionField.getChildren().clear();
-        dictionary.getHistoryList().add(currentWord);
         setDefinitionField(word);
-        /*if(dictionary.getBookmarkList().contains(currentWord)){
-            colorFont.setFill(Paint.valueOf("#ff0000"));
-        }
-        else colorFont.setFill(Paint.valueOf("#000000"));*/
     }
 
     /**
@@ -148,12 +146,11 @@ public class DictionaryController implements Initializable {
      */
     public void lookupWordSearchField() {
         currentWord = searchField.getText();
-        Word word = dictionary.lookUp(currentWord);
+        Word word = dictionary.lookup(currentWord);
         if (word == null) {
             return;
         }
         definitionField.getChildren().clear();
-        dictionary.getHistoryList().add(currentWord);
         setDefinitionField(word);
     }
 
@@ -176,6 +173,15 @@ public class DictionaryController implements Initializable {
             String line = sc.nextLine();
             char firstChar = line.charAt(0);
             if (firstChar == '*') {
+                /*if (line.contains("động từ")) {
+                    Text irr = new Text("  Irregular: " + line.subSequence());
+                    irr.setId("wordirregular");
+                    result.setText(line.substring(1, 10));
+                    result.setId("wordtype");
+                    definitionField.getChildren().add(result);
+                    definitionField.getChildren().add(irr);
+                    continue;
+                }*/
                 result.setText(line.substring(1));
                 result.setId("wordtype");
             } else if (firstChar == '-') {
@@ -191,6 +197,7 @@ public class DictionaryController implements Initializable {
             }
             definitionField.getChildren().add(result);
         }
+
         if (!bookmarkButton.isVisible()) {
             bookmarkButton.setVisible(true);
         }
@@ -287,22 +294,17 @@ public class DictionaryController implements Initializable {
                     deleteButton.setVisible(true);
                 }
                 if (!newValue.equals(oldValue)) {
+                    // Force refresh the list view.
+                    listOfWord.getItems().clear();
                     List<String> target = null;
                     if (listViewType == ListViewType.SEARCH) {
                         target = dictionary.search(newValue);
-                    } else if (listViewType == ListViewType.HISTORY) {
+                    }/* else if (listViewType == ListViewType.HISTORY) {
                         target = dictionary.getHistoryList().search(newValue);
                     } else if (listViewType == ListViewType.BOOKMARK) {
                         target = dictionary.getBookmarkList().search(newValue);
-                    }
+                    }*/
                     if (target != null) {
-                        /*int n = target.size();
-                        for(int i = 0; i < n; ++i){
-                            if(dictionary.getBookmarkList().contains(target.get(i))){
-                                target.set(i,target.get(i) + " ♥");
-                            }
-                        }*/
-                        //add bookmark color
                         listOfWord.getItems().setAll(target);
                         listOfWord.scrollTo(0);
                     }
@@ -319,6 +321,10 @@ public class DictionaryController implements Initializable {
         listOfWord.getItems().clear();
         listViewType = ListViewType.SEARCH;
         setStyleListButton("searchList");
+        if (!searchHBox.isVisible()) {
+            searchHBox.setVisible(true);
+            AnchorPane.setTopAnchor(listOfWord, 40.0);
+        }
     }
 
     /**
@@ -329,6 +335,10 @@ public class DictionaryController implements Initializable {
         listOfWord.getItems().clear();
         if (!dictionary.getHistoryList().getList().isEmpty()) {
             listOfWord.getItems().addAll(dictionary.getHistoryList().getList());
+        }
+        if (searchHBox.isVisible()) {
+            searchHBox.setVisible(false);
+            AnchorPane.setTopAnchor(listOfWord, 0.0);
         }
         listViewType = ListViewType.HISTORY;
         setStyleListButton("historyList");
@@ -342,6 +352,10 @@ public class DictionaryController implements Initializable {
         listOfWord.getItems().clear();
         if (!dictionary.getBookmarkList().getList().isEmpty()) {
             listOfWord.getItems().addAll(dictionary.getBookmarkList().getList());
+        }
+        if (searchHBox.isVisible()) {
+            searchHBox.setVisible(false);
+            AnchorPane.setTopAnchor(listOfWord, 0.0);
         }
         listViewType = ListViewType.BOOKMARK;
         setStyleListButton("bookmarkList");

@@ -1,9 +1,7 @@
 package com.dictionary;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public abstract class Dictionary {
     protected Bookmark bookmarkList = new Bookmark();
@@ -34,7 +32,7 @@ public abstract class Dictionary {
      * @param word Word to look up.
      * @return Definition of the word.
      */
-    public abstract Word lookUp(String word);
+    public abstract Word lookup(String word);
 
     /**
      * Add a word to the dictionary.
@@ -46,7 +44,7 @@ public abstract class Dictionary {
      * Remove a word from the dictionary.
      * @param word Word to remove.
      */
-    public abstract void removeWord(Word word);
+    public abstract void removeWord(String word);
 
     /**
      * Edit a word in the dictionary.

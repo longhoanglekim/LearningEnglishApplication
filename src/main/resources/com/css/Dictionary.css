@@ -27,6 +27,11 @@
     -fx-fill: #147288;
 }
 
+#wordirregular {
+    -fx-font-size: 12px;
+    -fx-fill: #17a9b0;
+}
+
 #wordmean {
     -fx-font-size: 14px;
     -fx-fill: #191919;

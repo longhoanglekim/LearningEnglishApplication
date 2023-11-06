@@ -6,6 +6,7 @@ import java.util.Scanner;
 public class Word {
     private String target;
     private String pronounce;
+    private String irregular;
     private String explain;
     private ArrayList<String> definition = new ArrayList<>();
 
@@ -65,6 +66,16 @@ public class Word {
 
     public void setDefinition(ArrayList<String> definition) {
         this.definition = definition;
+    }
+
+
+
+    public String getIrregular() {
+        return irregular;
+    }
+
+    public void setIrregular(String irregular) {
+        this.irregular = irregular;
     }
 
     @Override
