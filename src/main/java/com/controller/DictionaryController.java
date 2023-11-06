@@ -1,6 +1,5 @@
 package com.controller;
 
-import com.dictionary.JFXSmoothScroll;
 import com.dictionary.Speech;
 import com.dictionary.Word;
 import com.ui.Model;
@@ -96,6 +95,7 @@ public class DictionaryController implements Initializable {
         deleteButton.setVisible(false);
         bookmarkButton.setVisible(false);
         speakButton.setVisible(false);
+        // Set action for list view and search field.
         searchField.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 if (listViewType == ListViewType.SEARCH) {
@@ -103,14 +103,17 @@ public class DictionaryController implements Initializable {
                 }
             }
         });
-        JFXSmoothScroll.smoothScrollingListView(listOfWord, 1.5);
-        JFXSmoothScroll.smoothHScrollingListView(listOfWord, 1.5);
         listOfWord.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
+                System.out.println("Enter");
                 lookupWordListView();
             }
         });
-        // Set button action for definition field.
+        listOfWord.setOnMouseClicked(event -> {
+            lookupWordListView();
+        });
+
+        // Set button action in definition field.
         bookmarkButton.setOnAction(event -> configBookmark());
         speakButton.setOnAction(event -> {
             try {
@@ -173,15 +176,15 @@ public class DictionaryController implements Initializable {
             String line = sc.nextLine();
             char firstChar = line.charAt(0);
             if (firstChar == '*') {
-                /*if (line.contains("động từ")) {
-                    Text irr = new Text("  Irregular: " + line.subSequence());
+                if (line.contains("động từ")) {
+                    Text irr = new Text("  Irregular: " + word.getIrregular());
                     irr.setId("wordirregular");
-                    result.setText(line.substring(1, 10));
+                    result.setText(line.substring(1));
                     result.setId("wordtype");
                     definitionField.getChildren().add(result);
                     definitionField.getChildren().add(irr);
                     continue;
-                }*/
+                }
                 result.setText(line.substring(1));
                 result.setId("wordtype");
             } else if (firstChar == '-') {

@@ -30,6 +30,7 @@ public class Local extends Dictionary {
     private void loadDictionary() throws Exception {
         File dict = null;
         File irregular = null;
+        Word newWord;
         try {
             dict = new File("./src/main/resources/data/dictionary.txt");
             irregular = new File("./src/main/resources/data/irregular.txt");
@@ -60,11 +61,21 @@ public class Local extends Dictionary {
                 } else {
                     pronounce = '/' + wap[1] + '/';
                 }
-                Word newWord = new Word(target, pronounce, explain.toString());
-                //words.put(newWord.getTarget(), newWord);
+                newWord = new Word(target, pronounce, explain.toString());
                 words.insert(words, newWord);
             }
+            Scanner sc_irregular = new Scanner(new FileReader(irregular));
+            while (sc_irregular.hasNextLine()) {
+                String line = sc_irregular.nextLine();
+                String[] wap = line.split("\\s");
+                String target = wap[0];
+                String irregular_form = wap[1] + " " + wap[2];
+                if (Trie.lookup(words, target) != null) {
+                    Trie.lookup(words, target).setIrregular(irregular_form);
+                }
+            }
         } catch (Exception e) {
+            System.err.println(e.getMessage());
             throw new Exception("Cannot read dictionary file.");
         }
     }
