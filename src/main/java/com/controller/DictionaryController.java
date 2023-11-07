@@ -2,8 +2,11 @@ package com.controller;
 
 import com.dictionary.Speech;
 import com.dictionary.Word;
+import com.thread.searchTask;
 import com.ui.Model;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -19,6 +22,9 @@ import org.controlsfx.control.Notifications;
 
 import java.net.URL;
 import java.util.*;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 import static com.ui.View.dictionary;
 
@@ -80,6 +86,7 @@ public class DictionaryController implements Initializable {
 
     private String currentWord;
     private ListViewType listViewType;
+    private searchTask searchTask;
 
     /**
      * Initialize the controller, updating the search view list.
@@ -91,6 +98,7 @@ public class DictionaryController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setStyleProperty();
         setStyleListButton("searchList");
+        searchField.requestFocus();
         // Set button action for search field and list view.
         deleteButton.setVisible(false);
         bookmarkButton.setVisible(false);
@@ -173,10 +181,11 @@ public class DictionaryController implements Initializable {
         int indexBlock = 1;
         while (sc.hasNextLine()) {
             Text result = new Text();
+            Hyperlink hyperlink = new Hyperlink();
             String line = sc.nextLine();
             char firstChar = line.charAt(0);
             if (firstChar == '*') {
-                if (line.contains("động từ")) {
+                /*if (line.contains("động từ")) {
                     Text irr = new Text("  Irregular: " + word.getIrregular());
                     irr.setId("wordirregular");
                     result.setText(line.substring(1));
@@ -184,7 +193,7 @@ public class DictionaryController implements Initializable {
                     definitionField.getChildren().add(result);
                     definitionField.getChildren().add(irr);
                     continue;
-                }
+                }*/
                 result.setText(line.substring(1));
                 result.setId("wordtype");
             } else if (firstChar == '-') {
@@ -192,7 +201,10 @@ public class DictionaryController implements Initializable {
                 result.setId("wordmean");
             } else if (firstChar == '=') {
                 String[] tmp = line.split("\\+");
-                result.setText("\t\t٠ " + tmp[0].substring(1) + ":" + tmp[1]);
+                Text result2 = new Text("\t\t٠ " + tmp[0].substring(1));
+                result2.setId("wordexample");
+                definitionField.getChildren().add(result2);
+                result.setText("\t\t " + tmp[1]);
                 result.setId("wordexample");
             } else if (firstChar == '!') {
                 result.setText("\t\t٠ " + line.substring(1));
@@ -299,19 +311,20 @@ public class DictionaryController implements Initializable {
                 if (!newValue.equals(oldValue)) {
                     // Force refresh the list view.
                     listOfWord.getItems().clear();
-                    List<String> target = null;
-                    if (listViewType == ListViewType.SEARCH) {
-                        target = dictionary.search(newValue);
-                    }/* else if (listViewType == ListViewType.HISTORY) {
-                        target = dictionary.getHistoryList().search(newValue);
-                    } else if (listViewType == ListViewType.BOOKMARK) {
-                        target = dictionary.getBookmarkList().search(newValue);
-                    }*/
-                    if (target != null) {
-                        listOfWord.getItems().setAll(target);
+                    if (searchTask != null && searchTask.isRunning()) {
+                        searchTask.cancel();
+                    }
+                    searchTask = new searchTask(newValue);
+                    Thread thread = new Thread(searchTask);
+                    thread.setDaemon(true);
+                    thread.start();
+                }
+                searchTask.setOnSucceeded(event -> {
+                    if (searchTask.getValue() != null) {
+                        listOfWord.getItems().setAll(searchTask.getValue());
                         listOfWord.scrollTo(0);
                     }
-                }
+                });
             }
         });
     }

@@ -64,7 +64,7 @@ public class Local extends Dictionary {
                 newWord = new Word(target, pronounce, explain.toString());
                 words.insert(words, newWord);
             }
-            Scanner sc_irregular = new Scanner(new FileReader(irregular));
+            /*Scanner sc_irregular = new Scanner(new FileReader(irregular));
             while (sc_irregular.hasNextLine()) {
                 String line = sc_irregular.nextLine();
                 String[] wap = line.split("\\s");
@@ -73,7 +73,7 @@ public class Local extends Dictionary {
                 if (Trie.lookup(words, target) != null) {
                     Trie.lookup(words, target).setIrregular(irregular_form);
                 }
-            }
+            }*/
         } catch (Exception e) {
             System.err.println(e.getMessage());
             throw new Exception("Cannot read dictionary file.");

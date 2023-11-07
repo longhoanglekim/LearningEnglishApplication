@@ -9,14 +9,12 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 
 public class View {
@@ -31,14 +29,14 @@ public class View {
 
     public View() {
         selectedMenuItem = new SimpleStringProperty("");
-        //dictionary = new Database();
+//        dictionary = new Database();
 //        if (!dictionary.initialize()) {
             dictionary = new Local();
             if (!dictionary.initialize()) {
                 System.out.println("Cannot initialize dictionary");
                 Platform.exit();
             }
-        //}
+//        }
     }
 
     public StringProperty getSelectedMenuItem() {
@@ -54,7 +52,7 @@ public class View {
             try {
                 dictionaryPane = new FXMLLoader(getClass().getResource("Dictionary.fxml")).load();
             } catch (IOException e) {
-                e.printStackTrace();
+                Logger.getLogger(View.class.getName()).info("Cannot load dictionary data.");
             }
         }
         return dictionaryPane;
@@ -69,7 +67,7 @@ public class View {
             try {
                 dashboardPane = new FXMLLoader(getClass().getResource("Dashboard.fxml")).load();
             } catch (IOException e) {
-                e.printStackTrace();
+                Logger.getLogger(View.class.getName()).info("Cannot load dashboard pane - FXML.");
             }
         }
         return dashboardPane;
@@ -84,7 +82,7 @@ public class View {
             try {
                 translatePane = new FXMLLoader(getClass().getResource("Translate.fxml")).load();
             } catch (IOException e) {
-                e.printStackTrace();
+                Logger.getLogger(View.class.getName()).info("Cannot load translate pane - FXML.");
             }
         }
         return translatePane;
@@ -99,7 +97,7 @@ public class View {
             try {
                 gamePane = new FXMLLoader(getClass().getResource("Game.fxml")).load();
             } catch (IOException e) {
-                e.printStackTrace();
+                Logger.getLogger(View.class.getName()).info("Cannot load game pane - FXML.");
             }
         }
         return gamePane;
@@ -114,7 +112,7 @@ public class View {
             try {
                 settingPane = new FXMLLoader(getClass().getResource("Setting.fxml")).load();
             } catch (IOException e) {
-                e.printStackTrace();
+                Logger.getLogger(View.class.getName()).info("Cannot load setting pane - FXML.");
             }
         }
         return settingPane;
@@ -132,7 +130,7 @@ public class View {
         try {
             scene = new Scene(loader.load());
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger.getLogger(View.class.getName()).info("Cannot load window view - FXML.");
         }
         Stage stage = new Stage();
         stage.setScene(scene);
