@@ -65,12 +65,12 @@ public class Database extends Dictionary {
     @Override
     public List<String> search(String word) {
         ArrayList<String> result = new ArrayList<>();
-        String query = "SELECT word FROM tbl_edict WHERE word LIKE '" + word + "%' ORDER BY word asc";
+        String query = "SELECT word FROM tbl_edict WHERE word regexp'^" + word + ".*' ORDER BY word asc";
         try {
             Statement statement = databaseLink.createStatement();
             ResultSet queryOutput = statement.executeQuery(query);
             while (queryOutput.next()) {
-                String target = queryOutput.getString("word");
+                String target = queryOutput.getString(1);
                 result.add(target);
             }
         } catch (Exception e) {

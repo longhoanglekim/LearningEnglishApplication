@@ -1,3 +1,34 @@
 .grid-pane {
     -fx-border-color: black;
+    -fx-border-radius: 2em;
+}
+
+.text-area {
+    -fx-border-color: none;
+    -fx-border-radius: 2em;
+    -fx-background-color: transparent;
+    -fx-background-radius: 2em;
+}
+
+.text-area .content {
+    -fx-background-color: transparent;
+}
+
+.text-area .content:focused {
+    -fx-border-color: none;
+}
+
+.button {
+    -fx-background-color: transparent;
+    -fx-border-color: none;
+    -fx-border-radius: 2em;
+    -fx-background-radius: 2em;
+}
+
+.button:hover {
+    -fx-background-color: #e0e0e0;
+}
+
+.button:pressed {
+    -fx-background-color: #e0e0e0;
 }

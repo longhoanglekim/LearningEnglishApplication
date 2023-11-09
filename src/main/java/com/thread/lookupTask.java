@@ -3,7 +3,7 @@ package com.thread;
 import com.dictionary.Word;
 import javafx.concurrent.Task;
 
-import static com.ui.View.dictionary;
+import static com.ui.Model.dictionary;
 
 public class lookupTask extends Task<Word> {
     private String word;

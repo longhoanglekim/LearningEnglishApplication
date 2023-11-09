@@ -1,12 +1,9 @@
 package com.thread;
 
 import javafx.concurrent.Task;
-import javafx.concurrent.WorkerStateEvent;
-import javafx.event.EventHandler;
-
 import java.util.List;
 
-import static com.ui.View.dictionary;
+import static com.ui.Model.dictionary;
 
 public class searchTask extends Task<List<String>> {
     private String word;
@@ -21,6 +18,7 @@ public class searchTask extends Task<List<String>> {
         if (isCancelled()) {
             return null;
         }
+        System.out.println(result.size());
         return result;
     }
 }

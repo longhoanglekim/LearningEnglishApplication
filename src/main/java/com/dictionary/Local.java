@@ -19,9 +19,9 @@ public class Local extends Dictionary {
         words = new Trie();
         try {
             loadDictionary();
+            System.out.println("Total words loaded: " + Trie.getSize(words));
         } catch (Exception e) {
             System.err.println(e.getMessage());
-            //Logger.getLogger(Local.class.getName()).warning(e.getMessage());
             return false;
         }
         return true;

@@ -16,6 +16,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.logging.Logger;
 
+import static com.ui.Model.dictionary;
+
 
 public class View {
     private final StringProperty selectedMenuItem;
@@ -25,18 +27,8 @@ public class View {
     private AnchorPane gamePane;
     private AnchorPane settingPane;
 
-    public static Dictionary dictionary;
-
     public View() {
         selectedMenuItem = new SimpleStringProperty("");
-//        dictionary = new Database();
-//        if (!dictionary.initialize()) {
-            dictionary = new Local();
-            if (!dictionary.initialize()) {
-                System.out.println("Cannot initialize dictionary");
-                Platform.exit();
-            }
-//        }
     }
 
     public StringProperty getSelectedMenuItem() {
