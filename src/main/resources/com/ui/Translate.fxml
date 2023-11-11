@@ -45,7 +45,7 @@
                      <FontAwesomeIconView glyphName="VOLUME_UP" size="25" />
                  </graphic>
              </Button>
-            <Button fx:id="swapButton" minWidth="50.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="25.0" GridPane.columnIndex="2">
+            <Button fx:id="switchButton" minWidth="50.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="25.0" GridPane.columnIndex="2">
                <graphic>
                   <FontAwesomeIconView accessibleRole="BUTTON" focusTraversable="true" glyphName="EXCHANGE" size="30" text="" textAlignment="CENTER" wrappingWidth="36.6000354886055">
                      <cursor>

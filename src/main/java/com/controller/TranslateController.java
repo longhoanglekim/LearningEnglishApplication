@@ -1,13 +1,13 @@
 package com.controller;
 
-import com.dictionary.Speech;
+import com.dictionary.TextToSpeech;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
 import java.net.URL;
@@ -35,7 +35,7 @@ public class TranslateController implements Initializable {
     public Label labelToLanguage;
 
     @FXML
-    public Button swapButton;
+    public Button switchButton;
     Image imageVi;
     Image imageEn;
     boolean enToVi = true;
@@ -71,34 +71,18 @@ public class TranslateController implements Initializable {
         speakButton.setOnAction(event -> {
             try {
                 if (enToVi) {
-                    Speech.play(fromField.getText());
+                    TextToSpeech.play(fromField.getText());
                 } else {
-                    Speech.play(currentString);
+                    TextToSpeech.play(fromField.getText());
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         });
-
+        switchButton.setOnAction(event -> switchLanguage());
     }
 
     public void switchLanguage() {
-        if(enToVi) {
-            labelFromLanguage.setText("Vietnamese");
-            labelToLanguage.setText("English");
-/*            imageFromLanguage.setImage(imageVi);
-            imageToLanguage.setImage(imageEn);*/
-            enToVi = false;
-        } else {
-            labelFromLanguage.setText("English");
-            labelToLanguage.setText("Vietnamese");
-/*            imageFromLanguage.setImage(imageEn);
-            imageToLanguage.setImage(imageVi);*/
-            enToVi = true;
-        }
-    }
-
-    public void swapLanguage() {
         String temp = fromField.getText();
         fromField.setText(toField.getText());
         toField.setText(temp);
@@ -106,10 +90,12 @@ public class TranslateController implements Initializable {
             labelFromLanguage.setText("Vietnamese");
             labelToLanguage.setText("English");
             enToVi = false;
+            GridPane.setConstraints(speakButton, 0, 2);
         } else {
             labelFromLanguage.setText("English");
             labelToLanguage.setText("Vietnamese");
             enToVi = true;
+            GridPane.setConstraints(speakButton, 2, 2);
         }
     }
 }

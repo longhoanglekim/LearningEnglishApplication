@@ -1,6 +1,6 @@
 package com.controller;
 
-import com.dictionary.Speech;
+import com.dictionary.TextToSpeech;
 import com.dictionary.Word;
 import com.thread.searchTask;
 import com.ui.Model;
@@ -121,7 +121,7 @@ public class DictionaryController implements Initializable {
         bookmarkButton.setOnAction(event -> configBookmark());
         speakButton.setOnAction(event -> {
             try {
-                Speech.play(currentWord);
+                TextToSpeech.play(currentWord);
             } catch (Exception e) {
                 e.printStackTrace();
             }
