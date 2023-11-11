@@ -24,8 +24,8 @@ public class GameController implements Initializable {
     @FXML
     TextArea guessLine;
     private String currentGuess;
-    private int currentWrongTime;
-    private boolean isCharacterEntered = false;
+    private int currentWrongTime = 0;
+
     private String answer;
     private List<String> answerList = new ArrayList<>();
 
@@ -47,25 +47,36 @@ public class GameController implements Initializable {
         }
         int randomIndex = new Random().nextInt(answerList.size());
         answer = answerList.get(randomIndex);
-        String tmp = new String(new char[answer.length()]).replace('\0', '_');
-        guessLine.setText(tmp);
-        guessChar.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                event.consume();
-                processEnteredChar(guessChar.getText());
-
-                guessChar.clear();
+        char[] arr = new char[answer.length()];
+        for (int i = 0; i < answer.length(); i++) {
+            if (answer.charAt(i) >= 'a' && answer.charAt(i) <= 'z') {
+                arr[i] = '_';
             } else {
-                String typedCharacter = event.getText();
-                if (typedCharacter.length() == 1) {
-                    // If there is already a character, clear it before appending the new one
-                    if (!guessChar.getText().isEmpty()) {
-                        guessChar.clear();
-                    }
-
+                arr[i] = answer.charAt(i);
+            }
+        }
+        currentGuess = new String(arr);
+        guessLine.setText(currentGuess);
+        guessChar.setOnKeyPressed(event -> {
+            if (currentWrongTime < 5) {
+                if (event.getCode() == KeyCode.ENTER) {
+                    event.consume();
+                    processEnteredChar(guessChar.getText());
+                    guessChar.clear();
                 } else {
-                    System.out.println("Please enter a valid letter.");
+                    String typedCharacter = event.getText();
+                    if (typedCharacter.length() == 1) {
+                        // If there is already a character, clear it before appending the new one
+                        if (!guessChar.getText().isEmpty()) {
+                            guessChar.clear();
+                        }
+                    } else {
+                        System.out.println("Please enter a valid letter.");
+                    }
                 }
+            } else {
+                // Nếu currentWrongTime vượt quá 5, bạn có thể thực hiện các hành động khác ở đây hoặc không thực hiện gì cả.
+                System.out.println("Game over! You've reached the maximum number of wrong guesses.");
             }
         });
     }
@@ -80,9 +91,18 @@ public class GameController implements Initializable {
         guessChar.setText(enteredChar);
         if (answer.contains(String.valueOf(enteredChar.charAt(0)))) {
             System.err.println("Yes");
+            char tmp = enteredChar.charAt(0);
+            char[] charArray = currentGuess.toCharArray();
+            for (int i = 0; i < charArray.length; i++) {
+                if (answer.charAt(i) == tmp) {
+                    charArray[i] = tmp;
+                }
+            }
+            currentGuess = new String(charArray);
+            guessLine.setText(currentGuess);
         } else {
             System.err.println("No");
+            System.err.println(++currentWrongTime);
         }
-        isCharacterEntered = false;
     }
 }
