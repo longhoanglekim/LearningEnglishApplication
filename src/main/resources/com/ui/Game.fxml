@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.GameController">
+   <children>
+      <TextArea fx:id="guessLine" editable="false" layoutX="187.0" layoutY="176.0" prefHeight="99.0" prefWidth="167.0">
+         <style>
+            -fx-font-size: 30;
+            -fx-alignment: bottom-center;
+         </style>
+         <font>
+            <Font size="96.0" />
+         </font>
+      </TextArea>
+      <TextArea fx:id="guessChar" layoutX="117.0" layoutY="49.0" prefHeight="62.0" prefWidth="73.0" />
+      <Label layoutX="34.0" layoutY="64.0" prefHeight="48.0" prefWidth="56.0" text="Đoán từ" />
+   </children>
+</AnchorPane>

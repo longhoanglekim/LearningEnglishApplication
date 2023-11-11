@@ -1,3 +1,4 @@
+kiang
 b
 a
 quanta
@@ -46,5 +47,3 @@ can
 whack
 1-bytecharacter
 1tomanyrelationship
-1-bytecharacterstring
-1-bytecharactercode
