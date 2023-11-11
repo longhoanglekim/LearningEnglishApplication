@@ -8,21 +8,21 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class TextToSpeech {
-    private static Media getMedia(String target) throws IOException {
+    private static Media getMedia(String target, String lang) throws IOException {
         String targetModified = target.replaceAll(" ", "%20");
         targetModified = targetModified.replaceAll("\n", "%20");
         String urlStr =
                 "https://translate.google.com/translate_tts?ie=UTF-8&q="
                 + targetModified
-                + "&tl=en&client=tw-ob";
+                + "&tl=" + lang +"&client=tw-ob";
         URL url = new URL(urlStr);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestProperty("User-Agent", "Mozilla/5.0");
         return new Media(urlStr);
     }
 
-    public static void play(String text) throws IOException {
-        Media media = getMedia(text);
+    public static void play(String text, String lang) throws IOException {
+        Media media = getMedia(text, lang);
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         mediaPlayer.play();
     }

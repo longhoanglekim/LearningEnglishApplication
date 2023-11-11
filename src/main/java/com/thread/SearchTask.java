@@ -5,10 +5,10 @@ import java.util.List;
 
 import static com.ui.Model.dictionary;
 
-public class searchTask extends Task<List<String>> {
+public class SearchTask extends Task<List<String>> {
     private String word;
 
-    public searchTask(String word) {
+    public SearchTask(String word) {
         this.word = word;
     }
 

@@ -2,7 +2,7 @@ package com.controller;
 
 import com.dictionary.TextToSpeech;
 import com.dictionary.Word;
-import com.thread.searchTask;
+import com.thread.SearchTask;
 import com.ui.Model;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.fxml.FXML;
@@ -82,7 +82,7 @@ public class DictionaryController implements Initializable {
 
     private String currentWord;
     private ListViewType listViewType;
-    private searchTask searchTask;
+    private SearchTask searchTask;
 
     /**
      * Initialize the controller, updating the search view list.
@@ -121,7 +121,7 @@ public class DictionaryController implements Initializable {
         bookmarkButton.setOnAction(event -> configBookmark());
         speakButton.setOnAction(event -> {
             try {
-                TextToSpeech.play(currentWord);
+                TextToSpeech.play(currentWord, "en");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -310,7 +310,7 @@ public class DictionaryController implements Initializable {
                     if (searchTask != null && searchTask.isRunning()) {
                         searchTask.cancel();
                     }
-                    searchTask = new searchTask(newValue);
+                    searchTask = new SearchTask(newValue);
                     Thread thread = new Thread(searchTask);
                     thread.setDaemon(true);
                     thread.start();
