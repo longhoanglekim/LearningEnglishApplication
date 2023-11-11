@@ -1,12 +1,10 @@
 package com.controller;
 
-import com.dictionary.Speech;
+import com.dictionary.TextToSpeech;
 import com.dictionary.Word;
 import com.thread.searchTask;
 import com.ui.Model;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-import javafx.application.Platform;
-import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -21,12 +19,10 @@ import javafx.scene.text.Text;
 import org.controlsfx.control.Notifications;
 
 import java.net.URL;
-import java.util.*;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
+import java.util.ResourceBundle;
+import java.util.Scanner;
 
-import static com.ui.View.dictionary;
+import static com.ui.Model.dictionary;
 
 /**
  * Controller for main view.
@@ -125,7 +121,7 @@ public class DictionaryController implements Initializable {
         bookmarkButton.setOnAction(event -> configBookmark());
         speakButton.setOnAction(event -> {
             try {
-                Speech.play(currentWord);
+                TextToSpeech.play(currentWord);
             } catch (Exception e) {
                 e.printStackTrace();
             }

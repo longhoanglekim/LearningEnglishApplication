@@ -1,15 +1,13 @@
 package com.controller;
 
-import com.dictionary.Speech;
+import com.dictionary.TextToSpeech;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
 import java.net.URL;
@@ -32,11 +30,14 @@ public class TranslateController implements Initializable {
         public ImageView imageToLanguage;*/
     @FXML
     public Label labelFromLanguage;
+
     @FXML
     public Label labelToLanguage;
+
     @FXML
-    public ListView<String> historyTranslate;
-    Image imageVi, imageEn;
+    public Button switchButton;
+    Image imageVi;
+    Image imageEn;
     boolean enToVi = true;
     private String currentString;
     private static int LIMIT = 2;
@@ -45,60 +46,56 @@ public class TranslateController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         imageVi = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/icon/Vietnam.png")));
         imageEn = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/icon/UK.png")));
-        historyTranslate.setVisible(false);
         fromField.styleProperty().bind(FontSizeManager.getInstance().fontSizeProperty().asString("-fx-font-size: %dpx;"));
         toField.styleProperty().bind(FontSizeManager.getInstance().fontSizeProperty().asString("-fx-font-size: %dpx;"));
         labelFromLanguage.styleProperty().bind(FontSizeManager.getInstance().fontSizeProperty().asString("-fx-font-size: %dpx;"));;
         labelToLanguage.styleProperty().bind(FontSizeManager.getInstance().fontSizeProperty().asString("-fx-font-size: %dpx;"));
 
-        fromField.addEventFilter(KeyEvent.KEY_RELEASED, keyEvent -> {
+        fromField.textProperty().addListener((observableValue, oldVal, newVal) -> {
             try {
-
-                String res = fromField.getText();
-                if (enToVi && !res.isEmpty()) {
-                    currentString = translateEnToVi(res);
-                } else if (!enToVi && !res.isEmpty()) {
-                    currentString = translateViToEn(res);
+                if (newVal == null || newVal.isEmpty()) {
+                    toField.setText("");
+                    return;
+                }
+                if (newVal.equals(oldVal)) return;
+                if (enToVi) {
+                    currentString = translateEnToVi(newVal);
                 } else {
-                    currentString = "";
+                    currentString = translateViToEn(newVal);
                 }
                 toField.setText(currentString);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-
         });
         speakButton.setOnAction(event -> {
             try {
                 if (enToVi) {
-                    Speech.play(fromField.getText());
+                    TextToSpeech.play(fromField.getText());
                 } else {
-                    Speech.play(currentString);
+                    TextToSpeech.play(fromField.getText());
                 }
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
         });
+        switchButton.setOnAction(event -> switchLanguage());
     }
 
-    public void onSwichClicked() {
+    public void switchLanguage() {
+        String temp = fromField.getText();
+        fromField.setText(toField.getText());
+        toField.setText(temp);
         if(enToVi) {
             labelFromLanguage.setText("Vietnamese");
             labelToLanguage.setText("English");
-/*            imageFromLanguage.setImage(imageVi);
-            imageToLanguage.setImage(imageEn);*/
             enToVi = false;
+            GridPane.setConstraints(speakButton, 0, 2);
         } else {
             labelFromLanguage.setText("English");
             labelToLanguage.setText("Vietnamese");
-/*            imageFromLanguage.setImage(imageEn);
-            imageToLanguage.setImage(imageVi);*/
             enToVi = true;
+            GridPane.setConstraints(speakButton, 2, 2);
         }
     }
-    public void onHistoryClicked() {
-        historyTranslate.setVisible(true);
-    }
-
 }

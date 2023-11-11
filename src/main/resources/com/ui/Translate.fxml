@@ -12,47 +12,51 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1140.0" stylesheets="@../css/Dictionary.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.TranslateController">
+<AnchorPane prefHeight="600.0" prefWidth="1140.0" stylesheets="@../css/Translate.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.TranslateController">
    <children>
-      <GridPane layoutX="50.0" layoutY="37.0" prefHeight="287.0" prefWidth="940.0" style="-fx-border-color: black;" AnchorPane.bottomAnchor="162.8" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="150.0">
+      <GridPane layoutX="50.0" layoutY="37.0" prefHeight="287.0" prefWidth="940.0" style="-fx-border-color: black;" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="150.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="455.1999816894531" minWidth="0.0" prefWidth="0.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="900.0" minWidth="10.0" prefWidth="450.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="55.0" minWidth="10.0" prefWidth="55.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="900.0" minWidth="10.0" prefWidth="450.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="900.0" minWidth="10.0" prefWidth="380.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="75.80001220703127" minWidth="10.0" prefWidth="50.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="900.0" minWidth="10.0" prefWidth="380.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints maxHeight="259.8000030517578" minHeight="10.0" prefHeight="52.80000305175781" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="264.7999908447266" minHeight="0.0" prefHeight="226.40001831054687" vgrow="SOMETIMES" />
-            <RowConstraints fillHeight="false" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" valignment="CENTER" vgrow="NEVER" />
+          <RowConstraints fillHeight="false" maxHeight="259.8000030517578" minHeight="10.0" prefHeight="52.80000305175781" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="10000.0" minHeight="0.0" prefHeight="226.40001831054687" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" valignment="CENTER" vgrow="NEVER" />
           <RowConstraints maxHeight="54.39996337890625" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label fx:id="labelToLanguage" prefHeight="18.0" prefWidth="101.0" text="Vietnamese" GridPane.columnIndex="3">
+            <Label fx:id="labelToLanguage" alignment="CENTER" prefHeight="36.0" prefWidth="102.0" text="Vietnamese" GridPane.columnIndex="3" GridPane.halignment="CENTER">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <FontAwesomeIconView accessibleRole="BUTTON" focusTraversable="true" glyphName="EXCHANGE" onMouseClicked="#onSwichClicked" size="30" text="" wrappingWidth="36.6000354886055" GridPane.columnIndex="2">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <effect>
-                  <Blend />
-               </effect>
-            </FontAwesomeIconView>
+            <Label fx:id="labelFromLanguage" alignment="CENTER" prefHeight="36.0" prefWidth="112.0" text="English" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
             <TextArea fx:id="toField" editable="false" wrapText="true" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
-            <TextArea fx:id="fromField" wrapText="true" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
-             <Button fx:id="speakButton" mnemonicParsing="false" prefWidth="60.0" styleClass="normal-button" text="US" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <TextArea fx:id="fromField" maxHeight="100000.0" maxWidth="100000.0" wrapText="true" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
+             <Button fx:id="speakButton" mnemonicParsing="false" prefWidth="60.0" styleClass="normal-button" text="US" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="NEVER">
                  <graphic>
                      <FontAwesomeIconView glyphName="VOLUME_UP" size="25" />
                  </graphic>
              </Button>
-            <Label fx:id="labelFromLanguage" alignment="CENTER" prefHeight="36.0" prefWidth="112.0" text="English" GridPane.columnIndex="1">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
+            <Button fx:id="switchButton" minWidth="50.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="25.0" GridPane.columnIndex="2">
+               <graphic>
+                  <FontAwesomeIconView accessibleRole="BUTTON" focusTraversable="true" glyphName="EXCHANGE" size="30" text="" textAlignment="CENTER" wrappingWidth="36.6000354886055">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <effect>
+                        <Blend />
+                     </effect>
+                  </FontAwesomeIconView>
+               </graphic>
+            </Button>
          </children>
       </GridPane>
    </children>

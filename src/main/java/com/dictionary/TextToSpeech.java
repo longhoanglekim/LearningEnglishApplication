@@ -7,11 +7,13 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class Speech {
+public class TextToSpeech {
     private static Media getMedia(String target) throws IOException {
+        String targetModified = target.replaceAll(" ", "%20");
+        targetModified = targetModified.replaceAll("\n", "%20");
         String urlStr =
                 "https://translate.google.com/translate_tts?ie=UTF-8&q="
-                + target
+                + targetModified
                 + "&tl=en&client=tw-ob";
         URL url = new URL(urlStr);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
