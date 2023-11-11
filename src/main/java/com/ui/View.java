@@ -83,6 +83,7 @@ public class View {
                 translatePane = new FXMLLoader(getClass().getResource("Translate.fxml")).load();
             } catch (IOException e) {
                 Logger.getLogger(View.class.getName()).info("Cannot load translate pane - FXML.");
+                e.printStackTrace();
             }
         }
         return translatePane;

@@ -1,3 +1,8 @@
+quanta
+quandary
+pancake
+panic
+lookup
 look
 lo
 love
@@ -42,4 +47,3 @@ whack
 1-bytecharacterstring
 1-bytecharactercode
 nonsense
-way

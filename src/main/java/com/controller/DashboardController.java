@@ -57,10 +57,6 @@ public class DashboardController implements Initializable {
         setStyleButtonOnClick("bookmark");
     }
 
-    public void onHistoryClicked() {
-        Model.getInstance().getView().getSelectedMenuItem().setValue("History");
-        setStyleButtonOnClick("history");
-    }
 
     public void onGameClicked() {
         Model.getInstance().getView().getSelectedMenuItem().setValue("Game");
