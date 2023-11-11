@@ -1,28 +1,47 @@
+.background {
+    -fx-background-color: #F5F5F5;
+}
+
+.anchor-pane-from {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 1em;
+    -fx-border-color: #E0E0E0;
+    -fx-border-radius: 1em;
+}
+
+.anchor-pane-to {
+    -fx-background-color: #F5F5F5;
+    -fx-background-radius: 1em;
+    -fx-border-color: #E0E0E0;
+    -fx-border-radius: 1em;
+}
+
 .grid-pane {
-    -fx-border-color: black;
-    -fx-border-radius: 2em;
-}
-
-.text-area {
     -fx-border-color: none;
-    -fx-border-radius: 2em;
-    -fx-background-color: transparent;
-    -fx-background-radius: 2em;
+    -fx-background-color: #FFFFFF;
 }
 
-.text-area .content {
-    -fx-background-color: transparent;
+.text-area-from {
+    -fx-background-color: #FFFFFF;
 }
 
-.text-area .content:focused {
-    -fx-border-color: none;
+.text-area-from .content {
+    -fx-background-color: #FFFFFF;
+}
+
+.text-area-to {
+    -fx-background-color: #F5F5F5;
+}
+
+.text-area-to .content {
+    -fx-background-color: #F5F5F5;
 }
 
 .button {
     -fx-background-color: transparent;
     -fx-border-color: none;
-    -fx-border-radius: 2em;
-    -fx-background-radius: 2em;
+    -fx-border-radius: 2.5em;
+    -fx-background-radius: 2.5em;
 }
 
 .button:hover {

@@ -20,9 +20,9 @@ public class Translator {
      * @return the translation text in en.
      * @throws IOException .
      */
-    public static String translateViToEn(String text) throws IOException {
+   /* public static String translateViToEn(String text) throws IOException {
         return splitJson(translate("vi", "en", text));
-    }
+    }*/
 
     /**
      * Translate text from en to vi.
@@ -30,9 +30,9 @@ public class Translator {
      * @return the translation text in vi.
      * @throws IOException dfs.
      */
-    public static String translateEnToVi(String text) throws IOException {
+    /*public static String translateEnToVi(String text) throws IOException {
         return splitJson(translate("en", "vi", text));
-    }
+    }*/
 
 
     /**
@@ -46,7 +46,7 @@ public class Translator {
      * @param text     the text to be translated
      * @return the translation text in langTo
      */
-    private static String translate(String langFrom, String langTo, String text)
+    public static String translate(String langFrom, String langTo, String text)
             throws IOException {
         String urlStr =
                 "https://translate.googleapis.com/translate_a/single?client=gtx&sl="
@@ -65,7 +65,7 @@ public class Translator {
             response.append(inputLine);
         }
         in.close();
-        return response.toString();
+        return splitJson(response.toString());
     }
 
     public static String splitJson(String json) {
