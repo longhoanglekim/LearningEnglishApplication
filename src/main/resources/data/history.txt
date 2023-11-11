@@ -1,3 +1,11 @@
+kiang
+b
+a
+quanta
+quandary
+pancake
+panic
+lookup
 look
 lo
 love
@@ -39,7 +47,3 @@ can
 whack
 1-bytecharacter
 1tomanyrelationship
-1-bytecharacterstring
-1-bytecharactercode
-nonsense
-way
