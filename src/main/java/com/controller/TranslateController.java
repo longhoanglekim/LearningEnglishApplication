@@ -1,13 +1,16 @@
 package com.controller;
 
-import com.dictionary.TextToSpeech;
-import com.thread.TranslateTask;
+import com.task.TextToSpeechTask;
+import com.task.TranslateTask;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.media.MediaPlayer;
 
 import java.net.URL;
 import java.util.*;
@@ -21,14 +24,23 @@ public class TranslateController implements Initializable {
     private Button toSpeakButton;
 
     @FXML
+    private FontAwesomeIconView fromSpeakIcon;
+
+    @FXML
+    private FontAwesomeIconView toSpeakIcon;
+
+    @FXML
     private TextArea fromField;
 
     @FXML
     private TextArea toField;
-    /*    @FXML
-        public ImageView imageFromLanguage;
-        @FXML
-        public ImageView imageToLanguage;*/
+
+    @FXML
+    public ImageView imageFrom;
+
+    @FXML
+    public ImageView imageTo;
+
     @FXML
     private Label labelFromLanguage;
 
@@ -41,6 +53,8 @@ public class TranslateController implements Initializable {
     @FXML
     private Label limitLabel;
 
+    TextToSpeechTask speechTask;
+
     TranslateTask translateTask;
     Image imageVi;
     Image imageEn;
@@ -52,10 +66,11 @@ public class TranslateController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         imageVi = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/icon/Vietnam.png")));
         imageEn = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/icon/UK.png")));
-        fromField.styleProperty().bind(FontSizeManager.getInstance().fontSizeProperty().asString("-fx-font-size: %dpx;"));
-        toField.styleProperty().bind(FontSizeManager.getInstance().fontSizeProperty().asString("-fx-font-size: %dpx;"));
-        labelFromLanguage.styleProperty().bind(FontSizeManager.getInstance().fontSizeProperty().asString("-fx-font-size: %dpx;"));;
-        labelToLanguage.styleProperty().bind(FontSizeManager.getInstance().fontSizeProperty().asString("-fx-font-size: %dpx;"));
+
+        imageFrom = new ImageView(imageEn);
+        imageTo = new ImageView(imageVi);
+
+        limitLabel.setText("0/" + CHARACTER_LIMIT);
 
         fromField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.length() <= CHARACTER_LIMIT) {
@@ -70,24 +85,35 @@ public class TranslateController implements Initializable {
                     toField.setText(result);
                 });
                 translateTask.setOnFailed(event -> {
-                    toField.setText("No internet connection");
+                    toField.setText("");
                 });
                 new Thread(translateTask).start();
             } else {
                 fromField.setText(oldValue);
             }
+            if (newValue.length() > 100) {
+                fromField.setStyle("-fx-font-size: 1.2em;");
+                toField.setStyle("-fx-font-size: 1.2em;");
+            } else {
+                fromField.setStyle("-fx-font-size: 1.5em;");
+                toField.setStyle("-fx-font-size: 1.5em;");
+            }
             limitLabel.setText(newValue.length() + "/" + CHARACTER_LIMIT);
         });
         fromSpeakButton.setOnAction(event -> {
             try {
-                TextToSpeech.play(fromField.getText(), enToVi ? "en" : "vi");
+                //TextToSpeech.play(fromField.getText(), enToVi ? "en" : "vi");
+                speechTask = new TextToSpeechTask(fromField.getText(), enToVi ? "en" : "vi");
+                new Thread(speechTask).start();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         });
         toSpeakButton.setOnAction(event -> {
             try {
-                TextToSpeech.play(toField.getText(), enToVi ? "vi" : "en");
+                //TextToSpeech.play(toField.getText(), enToVi ? "vi" : "en");
+                speechTask = new TextToSpeechTask(toField.getText(), enToVi ? "vi" : "en");
+                new Thread(speechTask).start();
             } catch (Exception e) {
                 e.printStackTrace();
             }

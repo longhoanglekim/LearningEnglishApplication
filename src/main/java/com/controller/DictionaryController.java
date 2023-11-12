@@ -1,8 +1,8 @@
 package com.controller;
 
-import com.dictionary.TextToSpeech;
 import com.dictionary.Word;
-import com.thread.SearchTask;
+import com.task.SearchTask;
+import com.task.TextToSpeechTask;
 import com.ui.Model;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.fxml.FXML;
@@ -83,6 +83,7 @@ public class DictionaryController implements Initializable {
     private String currentWord;
     private ListViewType listViewType;
     private SearchTask searchTask;
+    private TextToSpeechTask speechTask;
 
     /**
      * Initialize the controller, updating the search view list.
@@ -106,6 +107,10 @@ public class DictionaryController implements Initializable {
                     lookupWordSearchField();
                 }
             }
+            if (event.getCode() == KeyCode.DOWN) {
+                listOfWord.requestFocus();
+                listOfWord.getSelectionModel().select(0);
+            }
         });
         listOfWord.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
@@ -121,7 +126,12 @@ public class DictionaryController implements Initializable {
         bookmarkButton.setOnAction(event -> configBookmark());
         speakButton.setOnAction(event -> {
             try {
-                TextToSpeech.play(currentWord, "en");
+                //TextToSpeech.play(currentWord, "en");
+                if (speechTask != null) {
+                    speechTask.cancel();
+                }
+                speechTask = new TextToSpeechTask(currentWord, "en");
+                new Thread(speechTask).start();
             } catch (Exception e) {
                 e.printStackTrace();
             }

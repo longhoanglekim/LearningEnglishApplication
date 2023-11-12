@@ -1,24 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.effect.Blend?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1140.0" styleClass="anchor-pane" stylesheets="@../css/Translate.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.TranslateController">
+<AnchorPane prefHeight="600.0" prefWidth="1140.0" styleClass="background" stylesheets="@../css/Translate.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.TranslateController">
    <children>
-      <GridPane layoutX="50.0" layoutY="37.0" prefHeight="287.0" prefWidth="940.0" styleClass="grid-pane" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="150.0">
+      <GridPane layoutX="50.0" layoutY="37.0" prefHeight="287.0" prefWidth="940.0" styleClass="grid-pane" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="80.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="455.1999816894531" minWidth="0.0" prefWidth="0.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="900.0" minWidth="10.0" prefWidth="380.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="75.80001220703127" minWidth="10.0" prefWidth="50.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="900.0" minWidth="10.0" prefWidth="380.0" />
         </columnConstraints>
         <rowConstraints>
@@ -31,11 +36,25 @@
                <font>
                   <Font size="14.0" />
                </font>
+               <graphic>
+                  <ImageView fx:id="imageTo" fitHeight="31.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <viewport>
+                        <Rectangle2D height="2.0" minX="2.0" minY="2.0" width="2.0" />
+                     </viewport>
+                  </ImageView>
+               </graphic>
             </Label>
             <Label fx:id="labelFromLanguage" alignment="CENTER" prefHeight="36.0" prefWidth="112.0" text="Tiếng Anh" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                <font>
                   <Font size="14.0" />
                </font>
+               <graphic>
+                  <ImageView fx:id="imageFrom" fitHeight="31.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <viewport>
+                        <Rectangle2D height="2.0" minX="2.0" minY="2.0" width="2.0" />
+                     </viewport>
+                  </ImageView>
+               </graphic>
             </Label>
             <Button fx:id="switchButton" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" GridPane.columnIndex="2">
                <graphic>
@@ -55,7 +74,7 @@
                   <Label fx:id="limitLabel" text="Text" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
                    <Button fx:id="fromSpeakButton" layoutY="265.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" styleClass="normal-button" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0">
                        <graphic>
-                           <FontAwesomeIconView glyphName="VOLUME_UP" size="25" />
+                           <FontAwesomeIconView fx:id="fromSpeakIcon" glyphName="VOLUME_UP" size="25" />
                        </graphic>
                    </Button>
                </children>
@@ -65,12 +84,106 @@
                   <TextArea fx:id="toField" editable="false" styleClass="text-area-to" wrapText="true" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
                   <Button fx:id="toSpeakButton" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefWidth="50.0" styleClass="normal-button" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0">
                      <graphic>
-                        <FontAwesomeIconView glyphName="VOLUME_UP" size="25" />
+                        <FontAwesomeIconView fx:id="toSpeakIcon" glyphName="VOLUME_UP" size="25" />
                      </graphic>
                   </Button>
                </children>
             </AnchorPane>
          </children>
       </GridPane>
+      <HBox layoutX="2.0" layoutY="21.0" prefHeight="70.0" prefWidth="1140.0" styleClass="hbox" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Text id="blue" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="google-fonts" text="G">
+               <HBox.margin>
+                  <Insets left="50.0" top="15.0" />
+               </HBox.margin>
+            </Text>
+            <Text id="red" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="google-fonts" text="o">
+               <HBox.margin>
+                  <Insets top="15.0" />
+               </HBox.margin>
+            </Text>
+            <Text id="yellow" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="google-fonts" text="o">
+               <HBox.margin>
+                  <Insets top="15.0" />
+               </HBox.margin>
+            </Text>
+            <Text id="blue" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="google-fonts" text="g">
+               <HBox.margin>
+                  <Insets top="15.0" />
+               </HBox.margin>
+            </Text>
+            <Text id="green" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="google-fonts" text="l">
+               <HBox.margin>
+                  <Insets top="15.0" />
+               </HBox.margin>
+            </Text>
+            <Text id="red" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="google-fonts" text="e" wrappingWidth="20.021484375">
+               <HBox.margin>
+                  <Insets top="15.0" />
+               </HBox.margin>
+            </Text>
+            <Text id="gray" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="google-fonts" text="T">
+               <HBox.margin>
+                  <Insets left="10.0" top="15.0" />
+               </HBox.margin>
+            </Text>
+            <Text id="gray" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="google-fonts" text="r">
+               <HBox.margin>
+                  <Insets top="15.0" />
+               </HBox.margin>
+            </Text>
+            <Text id="gray" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="google-fonts" text="a">
+               <HBox.margin>
+                  <Insets top="15.0" />
+               </HBox.margin>
+            </Text>
+            <Text id="gray" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="google-fonts" text="n">
+               <HBox.margin>
+                  <Insets top="15.0" />
+               </HBox.margin>
+            </Text>
+            <Text id="gray" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="google-fonts" text="s">
+               <HBox.margin>
+                  <Insets top="15.0" />
+               </HBox.margin>
+            </Text>
+            <Text id="gray" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="google-fonts" text="l">
+               <HBox.margin>
+                  <Insets top="15.0" />
+               </HBox.margin>
+            </Text>
+            <Text id="gray" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="google-fonts" text="a">
+               <HBox.margin>
+                  <Insets top="15.0" />
+               </HBox.margin>
+            </Text>
+            <Text id="gray" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="google-fonts" text="t">
+               <HBox.margin>
+                  <Insets top="15.0" />
+               </HBox.margin>
+            </Text>
+            <Text id="gray" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="google-fonts" text="e" wrappingWidth="20.021484375">
+               <HBox.margin>
+                  <Insets top="15.0" />
+               </HBox.margin>
+            </Text>
+            <Text id="gray" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="small-google-fonts" text="A">
+               <HBox.margin>
+                  <Insets top="15.0" />
+               </HBox.margin>
+            </Text>
+            <Text id="gray" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="small-google-fonts" text="P">
+               <HBox.margin>
+                  <Insets top="15.0" />
+               </HBox.margin>
+            </Text>
+            <Text id="gray" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="small-google-fonts" text="I">
+               <HBox.margin>
+                  <Insets top="15.0" />
+               </HBox.margin>
+            </Text>
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

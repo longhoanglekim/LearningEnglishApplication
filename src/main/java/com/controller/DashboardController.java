@@ -2,19 +2,33 @@ package com.controller;
 
 import com.ui.Model;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import javafx.animation.FadeTransition;
+import javafx.animation.Transition;
+import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
 import javafx.scene.control.Button;
+import javafx.scene.layout.VBox;
 
 public class DashboardController implements Initializable {
     @FXML
-    public Button dictionary;
-    public Button translate;
-    public Button game;
-    public Button setting;
+    private Button dictionary;
 
-    public Button barButton;
+    @FXML
+    private Button translate;
+
+    @FXML
+    private Button game;
+
+    @FXML
+    private Button setting;
+
+    @FXML
+    private Button barButton;
+
+    @FXML
+    private VBox buttonVBox;
 
     public FontAwesomeIconView homeIcon;
     public FontAwesomeIconView historyIcon;
@@ -26,6 +40,11 @@ public class DashboardController implements Initializable {
     @Override
     public void initialize(java.net.URL url, java.util.ResourceBundle resourceBundle) {
         setStyleButtonOnClick("home");
+        barButton.setOnAction(actionEvent -> onBarClicked());
+        dictionary.setOnAction(actionEvent -> onDictionaryClicked());
+        translate.setOnAction(actionEvent -> onTranslateClicked());
+        game.setOnAction(actionEvent -> onGameClicked());
+        setting.setOnAction(actionEvent -> onSettingClicked());
     }
 
     public void onBarClicked() {

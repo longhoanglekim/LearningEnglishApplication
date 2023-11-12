@@ -1,14 +1,14 @@
-package com.thread;
+package com.task;
 
 import com.dictionary.Word;
 import javafx.concurrent.Task;
 
 import static com.ui.Model.dictionary;
 
-public class lookupTask extends Task<Word> {
+public class LookupTask extends Task<Word> {
     private String word;
 
-    public lookupTask(String word) {
+    public LookupTask(String word) {
         this.word = word;
     }
 

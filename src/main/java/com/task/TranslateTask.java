@@ -1,10 +1,9 @@
-package com.thread;
+package com.task;
 
 import com.dictionary.Translator;
 import javafx.concurrent.Task;
 
 import java.io.IOException;
-import java.net.ConnectException;
 
 public class TranslateTask extends Task<String> {
     private String text;

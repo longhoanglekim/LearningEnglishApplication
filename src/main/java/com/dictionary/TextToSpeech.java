@@ -8,6 +8,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class TextToSpeech {
+    static MediaPlayer mediaPlayer;
     private static Media getMedia(String target, String lang) throws IOException {
         String targetModified = target.replaceAll(" ", "%20");
         targetModified = targetModified.replaceAll("\n", "%20");
@@ -23,7 +24,18 @@ public class TextToSpeech {
 
     public static void play(String text, String lang) throws IOException {
         Media media = getMedia(text, lang);
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        stop();
+        mediaPlayer = new MediaPlayer(media);
         mediaPlayer.play();
+    }
+
+    public static MediaPlayer getMediaPlayer() {
+        return mediaPlayer;
+    }
+
+    public static void stop() {
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+        }
     }
 }

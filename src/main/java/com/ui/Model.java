@@ -10,7 +10,7 @@ public class Model {
 
     public static Dictionary dictionary;
 
-    public Model() {
+    private Model() {
         /*dictionary = new Database();
         if (!dictionary.initialize()) {*/
         dictionary = new Local();

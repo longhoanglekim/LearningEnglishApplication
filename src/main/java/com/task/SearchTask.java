@@ -1,4 +1,4 @@
-package com.thread;
+package com.task;
 
 import javafx.concurrent.Task;
 import java.util.List;
