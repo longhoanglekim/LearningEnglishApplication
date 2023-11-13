@@ -99,6 +99,13 @@ public class DictionaryManagement {
      */
     public static void dictionaryExportToFile() {
         File new_file = new File("src/main/java/com/dictionary/demo.txt");
+        if (!new_file.exists()) {
+            try {
+                new_file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         try {
             FileWriter writer = new FileWriter(new_file);
             for (Word i : Dictionary.words) {

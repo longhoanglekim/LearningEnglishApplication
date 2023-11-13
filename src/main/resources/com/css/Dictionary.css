@@ -34,7 +34,7 @@
 
 #wordmean {
     -fx-font-size: 14px;
-    -fx-fill: #191919;
+    -fx-fill: #090909;
 }
 
 #wordexample {
@@ -97,7 +97,7 @@
 }
 
 .search-box {
-    -fx-background-color: #F4F4F4;
+    -fx-background-color: white;
 }
 
 .search-field:focused .search-box {
@@ -117,42 +117,46 @@
     -fx-background-color: transparent;
 }
 
-.scroll-pane .scroll-bar:horizontal ,
-.scroll-pane .scroll-bar:vertical{
-    -fx-background-color:transparent;
+.increment-arrow,
+.decrement-arrow {
+    -fx-background-color: black;
 }
 
-.scroll-pane .increment-button ,.scroll-pane .decrement-button {
-    -fx-background-color:transparent;
-    -fx-border-color:derive(rgb(128, 128, 128),80%);
-}
-
-.scroll-pane .scroll-bar:horizontal .track ,
-.scroll-pane .scroll-bar:vertical .track{
-    -fx-background-color: transparent;
-    -fx-border-color:derive(rgb(128, 128, 128),80%);
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track,
+.increment-button,
+.decrement-button {
+    -fx-background-color: #C9C9C9;
+    -fx-background-insets: 0, 0, 0, 1;
     -fx-background-radius: 0em;
+    -fx-opacity: 0.7;
 }
 
-.scroll-pane .scroll-bar:horizontal .thumb,
-.scroll-pane .scroll-bar:vertical .thumb {
+.scroll-bar:horizontal:hover .track,
+.scroll-bar:horizontal:pressed .track,
+.scroll-bar:vertical:hover .track,
+.scroll-bar:vertical:pressed .track{
+    -fx-background-color: #A9A9A9;
+    -fx-opacity: 0.5;
+}
+
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
     -fx-background-color:derive(black,90%);
-    -fx-background-insets: 0, 0, 0;
+    -fx-background-insets: 0, 0, 0, 1;
     -fx-background-radius: 0em;
 }
 
-.scroll-pane .scroll-bar .thumb:hover,
-.scroll-pane .scroll-bar .thumb:pressed{
-    -fx-background-color: derive(black,50%);
+.scroll-bar .thumb:hover,
+.increment-button:hover,
+.decrement-button:hover {
+    -fx-background-color: derive(black,80%);
 }
 
-.scroll-pane .scroll-bar:horizontal:hover .track ,
-.scroll-pane .scroll-bar:horizontal:pressed .track ,
-.scroll-pane .scroll-bar:vertical:hover .track,
-.scroll-pane .scroll-bar:vertical:pressed .track{
-    -fx-background-color: derive(#434343,20%);
-    -fx-opacity: 0.2;
-    -fx-background-radius: 0em;
+.scroll-bar .thumb:pressed,
+.increment-button:pressed,
+.decrement-button:pressed {
+    -fx-background-color: derive(black,60%);
 }
 
 .vbox {
@@ -177,62 +181,11 @@
     -fx-text-fill: white;
 }
 
-/** CSS **/
 .list-view {
-    -fx-border-color:derive(rgb(128, 128, 128), 80%);
+    -fx-background-insets: 0;
 }
 
-/* The main scrollbar CSS class of ListView */
-.list-view .scroll-bar:horizontal ,
-.list-view .scroll-bar:vertical{
-    -fx-background-color:transparent;
-}
-
-/* The increment and decrement button CSS class of scrollbar */
-.list-view .increment-button ,.list-view .decrement-button {
-    -fx-background-color:transparent;
-    -fx-border-color:derive(rgb(128, 128, 128),80%);
-}
-
-/* The main scrollbar **track** CSS class  */
-.list-view .scroll-bar:horizontal .track ,
-.list-view .scroll-bar:vertical .track{
-    -fx-background-color: transparent;
-    -fx-border-color:derive(rgb(128, 128, 128),80%);
-    -fx-background-radius: 0em;
-}
-
-/* The main scrollbar **thumb** CSS class which we drag every time (movable) */
-.list-view .scroll-bar:horizontal .thumb,
-.list-view .scroll-bar:vertical .thumb {
-    -fx-background-color:derive(black,90%);
-    -fx-background-insets: 0, 0, 0;
-    -fx-background-radius: 0em;
-}
-
-/* ------------------------------------------------------------------------------------- */
-/** EVENT CSS **/
-/* ------------------------------------------------------------------------------------- */
-
-/* The main scrollbar **track** CSS class on event of "hover" and "pressed" */
-
-.list-view .scroll-bar:horizontal:hover .track ,
-.list-view .scroll-bar:horizontal:pressed .track ,
-.list-view .scroll-bar:vertical:hover .track,
-.list-view .scroll-bar:vertical:pressed .track{
-    -fx-background-color: derive(#434343,20%);
-    -fx-opacity: 0.2;
-    -fx-background-radius: 0em;
-}
-
-/* The main scrollbar **thumb** CSS class on event of "hover" and "pressed" */
-.list-view .scroll-bar .thumb:hover,
-.list-view .scroll-bar .thumb:pressed{
-    -fx-background-color: derive(black,50%);
-}
-
-.list-view .increment-button:hover ,.list-view .decrement-button:hover {
-    -fx-background-color:derive(rgb(128, 128, 128),100%);
-    -fx-border-color:derive(rgb(128, 128, 128),80%);
-    -fx-padding:10px;
+#searchHBox {
+    -fx-border-color: #d2204a;
+    -fx-border-width: 0.5 0.5 1 0.5;
 }

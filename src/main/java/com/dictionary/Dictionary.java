@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.List;
 
 public abstract class Dictionary {
+    protected int size;
     protected Bookmark bookmarkList = new Bookmark();
     protected History historyList = new History();
 
@@ -71,6 +72,14 @@ public abstract class Dictionary {
      */
     public History getHistoryList() {
         return historyList;
+    }
+
+    /**
+     * Get the size of the dictionary.
+     * @return size of the dictionary.
+     */
+    public int getSize() {
+        return size;
     }
 
     public void close() {

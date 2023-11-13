@@ -123,3 +123,12 @@
 #gray {
     -fx-fill: #787878;
 }
+
+.notification {
+    -fx-font-size: 18px;
+    -fx-font-style: italic;
+}
+
+.info-icon {
+    -fx-fill: #4285F4;
+}

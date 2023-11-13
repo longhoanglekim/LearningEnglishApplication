@@ -5,10 +5,14 @@ import com.task.SearchTask;
 import com.task.TextToSpeechTask;
 import com.ui.Model;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.KeyCode;
@@ -16,11 +20,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import org.controlsfx.control.Notifications;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.Scanner;
 
 import static com.ui.Model.dictionary;
 
@@ -95,7 +99,6 @@ public class DictionaryController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setStyleProperty();
         setStyleListButton("searchList");
-        searchField.requestFocus();
         // Set button action for search field and list view.
         deleteButton.setVisible(false);
         bookmarkButton.setVisible(false);
@@ -112,15 +115,20 @@ public class DictionaryController implements Initializable {
                 listOfWord.getSelectionModel().select(0);
             }
         });
+        searchField.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                searchHBox.setId("searchHBox");
+            } else {
+                searchHBox.setId("");
+            }
+        });
         listOfWord.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 System.out.println("Enter");
                 lookupWordListView();
             }
         });
-        listOfWord.setOnMouseClicked(event -> {
-            lookupWordListView();
-        });
+        listOfWord.setOnMouseClicked(event -> lookupWordListView());
 
         // Set button action in definition field.
         bookmarkButton.setOnAction(event -> configBookmark());
@@ -143,6 +151,8 @@ public class DictionaryController implements Initializable {
         historyList.setOnAction(event -> historyListView());
         bookmarkList.setOnAction(event -> bookmarkListView());
         onActionSearchField();
+
+        Platform.runLater(() -> searchField.requestFocus());
     }
 
     /**
@@ -181,44 +191,26 @@ public class DictionaryController implements Initializable {
     public void setDefinitionField(Word word) {
         targetField.setText(word.getTarget());
         pronounceField.setText(word.getPronounce());
-
-        String explain = word.getExplain();
-        Scanner sc = new Scanner(explain);
-        int indexBlock = 1;
-        while (sc.hasNextLine()) {
-            Text result = new Text();
-            Hyperlink hyperlink = new Hyperlink();
-            String line = sc.nextLine();
-            char firstChar = line.charAt(0);
+        definitionField.setTranslateX(10);
+        for (String s : word.getDefinition()) {
+            Text result = new Text(s.substring(1).trim());
+            TextFlow textFlow = new TextFlow(result);
+            char firstChar = s.charAt(0);
             if (firstChar == '*') {
-                /*if (line.contains("động từ")) {
-                    Text irr = new Text("  Irregular: " + word.getIrregular());
-                    irr.setId("wordirregular");
-                    result.setText(line.substring(1));
-                    result.setId("wordtype");
-                    definitionField.getChildren().add(result);
-                    definitionField.getChildren().add(irr);
-                    continue;
-                }*/
-                result.setText(line.substring(1));
+                VBox.setMargin(textFlow, new javafx.geometry.Insets(0, 10, 0, 10));
                 result.setId("wordtype");
             } else if (firstChar == '-') {
-                result.setText("\t" + indexBlock++ + ". " + line.substring(1));
+                VBox.setMargin(textFlow, new javafx.geometry.Insets(0, 10, 0, 30));
                 result.setId("wordmean");
             } else if (firstChar == '=') {
-                String[] tmp = line.split("\\+");
-                Text result2 = new Text("\t\t٠ " + tmp[0].substring(1));
-                result2.setId("wordexample");
-                definitionField.getChildren().add(result2);
-                result.setText("\t\t " + tmp[1]);
+                VBox.setMargin(textFlow, new javafx.geometry.Insets(0, 10, 0, 50));
                 result.setId("wordexample");
             } else if (firstChar == '!') {
-                result.setText("\t\t٠ " + line.substring(1));
+                VBox.setMargin(textFlow, new javafx.geometry.Insets(0, 10, 0, 50));
                 result.setId("wordexample");
             }
-            definitionField.getChildren().add(result);
+            definitionField.getChildren().add(textFlow);
         }
-
         if (!bookmarkButton.isVisible()) {
             bookmarkButton.setVisible(true);
         }
