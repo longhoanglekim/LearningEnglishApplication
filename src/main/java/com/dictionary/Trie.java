@@ -1,9 +1,6 @@
 package com.dictionary;
 
-import java.lang.invoke.MethodHandles;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -34,10 +31,10 @@ public class Trie {
         if (tmp.isEndOfWord) {
             String tmpExplain = tmp.word.getExplain();
             tmp.word.setExplain(tmpExplain + "\n" + word.getExplain());
-            //System.out.println("Duplicate word: " + word.getTarget());
         } else {
             tmp.isEndOfWord = true;
             tmp.word = word;
+
         }
     }
 
@@ -55,12 +52,21 @@ public class Trie {
         tmp.word = null;
     }
 
-    private static void dfs(Trie root, ArrayList<String> result) {
+    private static void dfsTarget(Trie root, ArrayList<String> result) {
         if (root.isEndOfWord) {
             result.add(root.word.getTarget());
         }
         for (Character x : root.map.keySet()) {
-            dfs(root.map.get(x), result);
+            dfsTarget(root.map.get(x), result);
+        }
+    }
+
+    private static void dfsWord(Trie root, ArrayList<Word> res) {
+        if (root.isEndOfWord) {
+            res.add(root.word);
+        }
+        for (Character x : root.map.keySet()) {
+            dfsWord(root.map.get(x), res);
         }
     }
 
@@ -77,14 +83,20 @@ public class Trie {
         }
         if (tmp.isEndOfWord) result.add(tmp.word.getTarget());
         for (Character x : tmp.map.keySet()) {
-            dfs(tmp.map.get(x), result);
+            dfsTarget(tmp.map.get(x), result);
         }
         return result;
     }
 
     public static ArrayList<String> getAllWordsTarget(Trie root) {
         ArrayList<String> result = new ArrayList<>();
-        dfs(root, result);
+        dfsTarget(root, result);
+        return result;
+    }
+
+    public static ArrayList<Word> getAllWords(Trie root) {
+        ArrayList<Word> result = new ArrayList<>();
+        dfsWord(root, result);
         return result;
     }
 
@@ -101,12 +113,12 @@ public class Trie {
         }
 
        if (tmp.isEndOfWord) return tmp.word;
-        return null;
+       return null;
     }
 
     public static int getSize(Trie root) {
         ArrayList<String> result = new ArrayList<>();
-        dfs(root, result);
+        dfsTarget(root, result);
         return result.size();
     }
 }

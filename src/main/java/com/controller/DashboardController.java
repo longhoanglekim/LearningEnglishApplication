@@ -2,27 +2,29 @@ package com.controller;
 
 import com.ui.Model;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-import javafx.animation.FadeTransition;
-import javafx.animation.Transition;
-import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 
+import static com.ui.Model.dictionary;
+
 public class DashboardController implements Initializable {
     @FXML
-    private Button dictionary;
+    private Button dictionaryButton;
 
     @FXML
-    private Button translate;
+    private Button translateButton;
 
     @FXML
-    private Button game;
+    private Button gameButton;
 
     @FXML
-    private Button setting;
+    private Button settingButton;
+
+    @FXML
+    private Button exportButton;
 
     @FXML
     private Button barButton;
@@ -41,10 +43,11 @@ public class DashboardController implements Initializable {
     public void initialize(java.net.URL url, java.util.ResourceBundle resourceBundle) {
         setStyleButtonOnClick("home");
         barButton.setOnAction(actionEvent -> onBarClicked());
-        dictionary.setOnAction(actionEvent -> onDictionaryClicked());
-        translate.setOnAction(actionEvent -> onTranslateClicked());
-        game.setOnAction(actionEvent -> onGameClicked());
-        setting.setOnAction(actionEvent -> onSettingClicked());
+        dictionaryButton.setOnAction(actionEvent -> onDictionaryClicked());
+        translateButton.setOnAction(actionEvent -> onTranslateClicked());
+        gameButton.setOnAction(actionEvent -> onGameClicked());
+        settingButton.setOnAction(actionEvent -> onSettingClicked());
+        exportButton.setOnAction(actionEvent -> onExportClicked());
     }
 
     public void onBarClicked() {
@@ -89,45 +92,52 @@ public class DashboardController implements Initializable {
 
     public void setTextVisible(boolean visible) {
         if (visible) {
-            dictionary.setText("Dictionary");
-            translate.setText("Translate");
-            game.setText("Game");
-            setting.setText("Setting");
+            dictionaryButton.setText("Dictionary");
+            translateButton.setText("Translate");
+            gameButton.setText("Game");
+            settingButton.setText("Setting");
+            exportButton.setText("Export");
         } else {
-            dictionary.setText("");
-            translate.setText("");
-            game.setText("");
-            setting.setText("");
+            dictionaryButton.setText("");
+            translateButton.setText("");
+            gameButton.setText("");
+            settingButton.setText("");
+            exportButton.setText("");
         }
     }
 
     public void setWidthBar(int width) {
-        dictionary.setPrefWidth(width);
-        translate.setPrefWidth(width);
-        game.setPrefWidth(width);
-        setting.setPrefWidth(width);
+        dictionaryButton.setPrefWidth(width);
+        translateButton.setPrefWidth(width);
+        gameButton.setPrefWidth(width);
+        settingButton.setPrefWidth(width);
+        exportButton.setPrefWidth(width);
     }
 
     public void setStyleButtonOnClick(String button) {
         if (button.equals("home")) {
-            dictionary.setId("button");
+            dictionaryButton.setId("button");
         } else {
-            dictionary.setId("");
+            dictionaryButton.setId("");
         }
         if (button.equals("translate")) {
-            translate.setId("button");
+            translateButton.setId("button");
         } else {
-            translate.setId("");
+            translateButton.setId("");
         }
         if (button.equals("game")) {
-            game.setId("button");
+            gameButton.setId("button");
         } else {
-            game.setId("");
+            gameButton.setId("");
         }
         if (button.equals("setting")) {
-            setting.setId("button");
+            settingButton.setId("button");
         } else {
-            setting.setId("");
+            settingButton.setId("");
         }
+    }
+
+    public void onExportClicked() {
+        dictionary.export();
     }
 }

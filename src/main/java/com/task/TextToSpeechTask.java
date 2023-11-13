@@ -18,4 +18,8 @@ public class TextToSpeechTask extends Task<Void> {
         TextToSpeech.play(text, lang);
         return null;
     }
+
+    public void stop() {
+        TextToSpeech.stop();
+    }
 }
