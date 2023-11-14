@@ -65,19 +65,19 @@
 .normal-button {
     -fx-background-color: none;
     -fx-text-fill: #191919;
-    -fx-background-radius: 0em;
+    -fx-background-radius: 3em;
 }
 
 .normal-button:hover {
     -fx-background-color: #bdc2c5;
     -fx-border-width: none;
-    -fx-background-radius: 0em;
+    -fx-background-radius: 3em;
     -fx-background-insets: 0.1em;
 }
 .normal-button:pressed {
     -fx-background-color: #a4a8ab;
     -fx-border-width: none;
-    -fx-background-radius: 0em;
+    -fx-background-radius: 3em;
     -fx-background-insets: 0.1em;
 }
 
@@ -99,11 +99,6 @@
 .search-box {
     -fx-background-color: white;
 }
-
-.search-field:focused .search-box {
-    -fx-border-color: #d2204a;
-}
-
 
 .scroll-pane {
     -fx-background-color: transparent;

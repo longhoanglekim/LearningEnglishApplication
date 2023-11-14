@@ -115,7 +115,7 @@
                    <opaqueInsets>
                        <Insets left="10.0" />
                    </opaqueInsets>
-                   <TextField id="search_field" fx:id="searchField" onKeyPressed="#lookupWordSearchField" prefHeight="40.0" prefWidth="190.0" promptText="Search" styleClass="search-field" stylesheets="@../css/Dashboard.css">
+                   <TextField id="search_field" fx:id="searchField" prefHeight="40.0" prefWidth="190.0" promptText="Search" styleClass="search-field" stylesheets="@../css/Dashboard.css">
                        <font>
                            <Font size="14.0" />
                        </font>
@@ -123,7 +123,7 @@
                            <Insets />
                        </HBox.margin>
                    </TextField>
-               <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#onDeleteClick" prefHeight="40.0" prefWidth="20.0" styleClass="normal-button">
+               <Button fx:id="deleteButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="20.0" styleClass="normal-button">
                   <graphic>
                      <FontAwesomeIconView glyphName="TIMES" size="25" wrappingWidth="20.0" />
                   </graphic>
@@ -134,7 +134,7 @@
                      <Insets />
                   </opaqueInsets>
                </Button>
-               <Button fx:id="copyButton" minHeight="-Infinity" mnemonicParsing="false" onAction="#onCopyClick" prefHeight="40.0" prefWidth="20.0" styleClass="normal-button">
+               <Button fx:id="copyButton" minHeight="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="20.0" styleClass="normal-button">
                   <graphic>
                      <FontAwesomeIconView glyphName="COPY" size="20" wrappingWidth="20.0" />
                   </graphic>

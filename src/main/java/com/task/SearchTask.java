@@ -6,14 +6,14 @@ import java.util.List;
 import static com.ui.Model.dictionary;
 
 public class SearchTask extends Task<List<String>> {
-    private String word;
+    private final String word;
 
     public SearchTask(String word) {
         this.word = word;
     }
 
     @Override
-    protected List<String> call() throws Exception {
+    protected List<String> call() {
         List<String> result = dictionary.search(word);
         if (isCancelled()) {
             return null;

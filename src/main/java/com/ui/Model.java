@@ -1,5 +1,6 @@
 package com.ui;
 
+import com.dictionary.Database;
 import com.dictionary.Dictionary;
 import com.dictionary.Local;
 import javafx.application.Platform;
@@ -11,14 +12,14 @@ public class Model {
     public static Dictionary dictionary;
 
     private Model() {
-        /*dictionary = new Database();
-        if (!dictionary.initialize()) {*/
+//        dictionary = new Database();
+//        if (!dictionary.initialize()) {
         dictionary = new Local();
         if (!dictionary.initialize()) {
             System.out.println("Cannot initialize dictionary");
             Platform.exit();
         }
-        /*}*/
+//        }
         view = new View();
     }
 

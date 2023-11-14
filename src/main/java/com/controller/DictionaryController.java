@@ -1,6 +1,7 @@
 package com.controller;
 
 import com.dictionary.Word;
+import com.task.LookupTask;
 import com.task.SearchTask;
 import com.task.TextToSpeechTask;
 import com.ui.Model;
@@ -9,10 +10,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.KeyCode;
@@ -88,6 +86,7 @@ public class DictionaryController implements Initializable {
     private ListViewType listViewType;
     private SearchTask searchTask;
     private TextToSpeechTask speechTask;
+    private LookupTask lookupTask;
 
     /**
      * Initialize the controller, updating the search view list.
@@ -103,11 +102,15 @@ public class DictionaryController implements Initializable {
         deleteButton.setVisible(false);
         bookmarkButton.setVisible(false);
         speakButton.setVisible(false);
+
+
+
         // Set action for list view and search field.
         searchField.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 if (listViewType == ListViewType.SEARCH) {
-                    lookupWordSearchField();
+                    currentWord = searchField.getText();
+                    LookupWord();
                 }
             }
             if (event.getCode() == KeyCode.DOWN) {
@@ -124,11 +127,23 @@ public class DictionaryController implements Initializable {
         });
         listOfWord.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
-                System.out.println("Enter");
-                lookupWordListView();
+                currentWord = listOfWord.getSelectionModel().getSelectedItem();
+                LookupWord();
+            }
+            if (event.getCode() == KeyCode.PAGE_DOWN) {
+                listOfWord.scrollTo(listOfWord.getSelectionModel().getSelectedIndex());
+            }
+            if (event.getCode() == KeyCode.PAGE_UP) {
+                listOfWord.scrollTo(listOfWord.getSelectionModel().getSelectedIndex());
+            }
+            if (event.getCode() == KeyCode.UP && listOfWord.getSelectionModel().getSelectedIndex() == 0) {
+                searchField.requestFocus();
             }
         });
-        listOfWord.setOnMouseClicked(event -> lookupWordListView());
+        listOfWord.setOnMouseClicked(event -> {
+            currentWord = listOfWord.getSelectionModel().getSelectedItem();
+            LookupWord();
+        });
 
         // Set button action in definition field.
         bookmarkButton.setOnAction(event -> configBookmark());
@@ -150,35 +165,33 @@ public class DictionaryController implements Initializable {
         searchList.setOnAction(event -> searchListView());
         historyList.setOnAction(event -> historyListView());
         bookmarkList.setOnAction(event -> bookmarkListView());
+        copyButton.setOnAction(event -> onCopyClick());
+        deleteButton.setOnAction(event -> onDeleteClick());
         onActionSearchField();
 
         Platform.runLater(() -> searchField.requestFocus());
     }
 
     /**
-     * Get the current word in list view and show its definition.
+     * Get the current word and show its definition.
      */
-    public void lookupWordListView() {
-        currentWord = listOfWord.getSelectionModel().getSelectedItem();
-        Word word = dictionary.lookup(currentWord);
-        if (word == null) {
+    public void LookupWord() {
+        if (currentWord == null) {
             return;
         }
-        definitionField.getChildren().clear();
-        setDefinitionField(word);
-    }
-
-    /**
-     * Get the current word in search field and show its definition.
-     */
-    public void lookupWordSearchField() {
-        currentWord = searchField.getText();
-        Word word = dictionary.lookup(currentWord);
-        if (word == null) {
-            return;
+        if (lookupTask != null && lookupTask.isRunning()) {
+            lookupTask.cancel();
         }
-        definitionField.getChildren().clear();
-        setDefinitionField(word);
+        lookupTask = new LookupTask(currentWord);
+        lookupTask.setOnSucceeded(event -> {
+            if (lookupTask.getValue() != null) {
+                definitionField.getChildren().clear();
+                setDefinitionField(lookupTask.getValue());
+            }
+        });
+        Thread thread = new Thread(lookupTask);
+        thread.setDaemon(true);
+        thread.start();
     }
 
     /**
@@ -197,7 +210,7 @@ public class DictionaryController implements Initializable {
             TextFlow textFlow = new TextFlow(result);
             char firstChar = s.charAt(0);
             if (firstChar == '*') {
-                VBox.setMargin(textFlow, new javafx.geometry.Insets(0, 10, 0, 10));
+                VBox.setMargin(textFlow, new javafx.geometry.Insets(0, 10, 0, 5));
                 result.setId("wordtype");
             } else if (firstChar == '-') {
                 VBox.setMargin(textFlow, new javafx.geometry.Insets(0, 10, 0, 30));
@@ -264,28 +277,6 @@ public class DictionaryController implements Initializable {
             listOfWord.getItems().addAll(dictionary.getBookmarkList().getList());
         }
     }
-    /*public void updateListViewBookMark(){
-        listOfWord.getItems().clear();
-        List<String> target = null;
-        String newValue = searchField.getText();
-        if (listViewType == ListViewType.SEARCH) {
-            target = dictionary.search(newValue);
-        } else if (listViewType == ListViewType.HISTORY) {
-            target = dictionary.searchHistory(newValue);
-        } else if (listViewType == ListViewType.BOOKMARK) {
-            target = dictionary.searchBookmark(newValue);
-        }
-        if (target != null) {
-            int n = target.size();
-            for (int i = 0; i < n; ++i) {
-                if (dictionary.getBookmarkList().contains(target.get(i))) {
-                    target.set(i, target.get(i) + " ♥");
-                }
-            }
-            //add bookmark color
-            listOfWord.getItems().addAll(target);
-        }
-    }*/
 
     /**
      * Search the dictionary and update the list view.

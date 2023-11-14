@@ -6,14 +6,14 @@ import javafx.concurrent.Task;
 import static com.ui.Model.dictionary;
 
 public class LookupTask extends Task<Word> {
-    private String word;
+    private final String word;
 
     public LookupTask(String word) {
         this.word = word;
     }
 
     @Override
-    protected Word call() throws Exception {
+    protected Word call() {
         Word result = dictionary.lookup(word);
         if (isCancelled()) {
             return null;

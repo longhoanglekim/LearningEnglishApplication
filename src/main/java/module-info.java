@@ -15,6 +15,7 @@ module com.ui {
     requires java.desktop;
 
     opens com.ui to javafx.fxml;
+    exports com.dictionary;
     exports com.ui;
     exports com.controller;
     opens com.controller to javafx.fxml;

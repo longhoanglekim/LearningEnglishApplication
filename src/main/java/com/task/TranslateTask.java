@@ -6,9 +6,9 @@ import javafx.concurrent.Task;
 import java.io.IOException;
 
 public class TranslateTask extends Task<String> {
-    private String text;
-    private String langFrom;
-    private String langTo;
+    private final String text;
+    private final String langFrom;
+    private final String langTo;
 
     public TranslateTask(String text, String langFrom, String langTo) {
         this.text = text;
@@ -17,8 +17,8 @@ public class TranslateTask extends Task<String> {
     }
 
     @Override
-    protected String call() throws Exception {
-        String result = null;
+    protected String call() {
+        String result;
         try {
             result = Translator.translate(langFrom, langTo, text);
         } catch (IOException e) {
