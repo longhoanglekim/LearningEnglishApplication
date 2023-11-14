@@ -1,9 +1,6 @@
 package com.ui;
 
 import com.controller.WindowController;
-import com.dictionary.Database;
-import com.dictionary.Dictionary;
-import com.dictionary.Local;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -112,9 +109,9 @@ public class View {
     }
 
     /**
-     * Show window view with default: LEFT = Dashboard, CENTER = Dictionary.
+     * Create a stage 'window' with default borderPane: LEFT = Dashboard, CENTER = Dictionary.
      */
-    public void showView() {
+    public void createView() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Window.fxml"));
         WindowController controller = new WindowController();
         loader.setController(controller);
@@ -140,4 +137,19 @@ public class View {
         });
     }
 
+    /**
+     * Show window view.
+     */
+    public void showView() {
+        Stage stage = (Stage) dashboardPane.getScene().getWindow();
+        stage.show();
+    }
+
+    /**
+     * Hide window view.
+     */
+    public void hideView() {
+        Stage stage = (Stage) dashboardPane.getScene().getWindow();
+        stage.hide();
+    }
 }

@@ -29,6 +29,10 @@ public class Local extends Dictionary {
         return true;
     }
 
+    /**
+     * Load the dictionary from a file.
+     * @throws Exception If the dictionary file is not found.
+     */
     private void loadDictionary() throws Exception {
         File dict;
         File irregular = null;
@@ -84,6 +88,12 @@ public class Local extends Dictionary {
         }
     }
 
+    /**
+     * Get all words's target in the dictionary.
+     * @return ArrayList of all words's target in the dictionary.
+     * @see Trie#getAllWordsTarget(Trie)
+     * @see Word
+     */
     public List<String> getAllWordsTarget() {
         return Trie.getAllWordsTarget(words);
     }

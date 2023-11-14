@@ -90,6 +90,10 @@ public class DashboardController implements Initializable {
         setStyleButtonOnClick("setting");
     }
 
+    /**
+     * Set text for all button in bar (When resize the HBox)
+     * @param visible true if visible, false if not
+     */
     public void setTextVisible(boolean visible) {
         if (visible) {
             dictionaryButton.setText("Dictionary");
@@ -106,6 +110,10 @@ public class DashboardController implements Initializable {
         }
     }
 
+    /**
+     * Set width for all button in bar (Resizing the HBox)
+     * @param width width of button
+     */
     public void setWidthBar(int width) {
         dictionaryButton.setPrefWidth(width);
         translateButton.setPrefWidth(width);
@@ -114,6 +122,10 @@ public class DashboardController implements Initializable {
         exportButton.setPrefWidth(width);
     }
 
+    /**
+     * Set style for button when clicked
+     * @param button button clicked
+     */
     public void setStyleButtonOnClick(String button) {
         if (button.equals("home")) {
             dictionaryButton.setId("button");

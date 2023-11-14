@@ -15,6 +15,12 @@ public class Trie {
         word = null;
     }
 
+    /**
+     * Insert a word to the trie.
+     * @param root Root of the trie.
+     * @param word Word to insert.
+     * @see Trie#remove(Trie, String)
+     */
     public static void insert(Trie root, Word word) {
         Trie tmp = root;
         String target = word.getTarget();
@@ -38,6 +44,12 @@ public class Trie {
         }
     }
 
+    /**
+     * Remove a word from the trie.
+     * @param root Root of the trie.
+     * @param target Word to remove.
+     * @see Trie#insert(Trie, Word)
+     */
     public static void remove(Trie root, String target) {
         Trie tmp = root;
         for (int i = 0; i < target.length(); i++) {
@@ -61,6 +73,7 @@ public class Trie {
         }
     }
 
+
     private static void dfsWord(Trie root, ArrayList<Word> res) {
         if (root.isEndOfWord) {
             res.add(root.word);
@@ -70,6 +83,15 @@ public class Trie {
         }
     }
 
+    /**
+     * Search for a pre'suffix' word in the trie.
+     * @param root Root of the trie.
+     * @param target Word to search for.
+     * @return ArrayList of words that start with the given string.
+     * @see Trie#getAllWords(Trie)
+     * @see Trie#dfsTarget(Trie, ArrayList)
+     * @see Trie#lookup(Trie, String)
+     */
     public static ArrayList<String> search(Trie root, String target) {
         ArrayList<String> result = new ArrayList<>();
         Trie tmp = root;
@@ -88,18 +110,39 @@ public class Trie {
         return result;
     }
 
+    /**
+     * Get all words's target in the trie.
+     * @param root Root of the trie.
+     * @return ArrayList of all words in the trie.
+     * @see Trie#getAllWords(Trie)
+     * @see Trie#dfsTarget(Trie, ArrayList)
+     */
     public static ArrayList<String> getAllWordsTarget(Trie root) {
         ArrayList<String> result = new ArrayList<>();
         dfsTarget(root, result);
         return result;
     }
 
+    /**
+     * Get all words in the trie.
+     * @param root Root of the trie.
+     * @return ArrayList of all words in the trie.
+     * @see Trie#getAllWordsTarget(Trie)
+     * @see Trie#dfsWord(Trie, ArrayList)
+     */
     public static ArrayList<Word> getAllWords(Trie root) {
         ArrayList<Word> result = new ArrayList<>();
         dfsWord(root, result);
         return result;
     }
 
+    /**
+     * Look up a word in the trie.
+     * @param root Root of the trie.
+     * @param target Word to look up.
+     * @return Definition of the word.
+     * @see Trie#search(Trie, String)
+     */
     public static Word lookup(Trie root, String target) {
         if (target == null || target.isEmpty()) return null;
         Trie tmp = root;
@@ -116,6 +159,12 @@ public class Trie {
        return null;
     }
 
+    /**
+     * Get size of the dictionary by dfs all the trie.
+     * @param root Root of the trie.
+     * @return Size of the trie.
+     * @see Trie#dfsTarget(Trie, ArrayList)
+     */
     public static int getSize(Trie root) {
         ArrayList<String> result = new ArrayList<>();
         dfsTarget(root, result);
