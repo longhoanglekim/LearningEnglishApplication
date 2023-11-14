@@ -12,6 +12,7 @@ module com.ui {
     requires javafx.media;
     requires java.net.http;
     requires languagetool.core;
+    requires java.desktop;
 
     opens com.ui to javafx.fxml;
     exports com.ui;
