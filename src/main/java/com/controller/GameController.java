@@ -11,6 +11,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
 import javafx.scene.media.AudioClip;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -66,6 +68,9 @@ public class GameController implements Initializable {
         for (Label l: listLabel) {
             Hbox.getChildren().add(l);
         }
+        Hbox.setLayoutY(520);
+        System.out.println(Hbox.getLayoutX() + " " + Hbox.getLayoutY());
+        //Hbox.setLayoutY();
     }
 
     public List<String> readFile(String Path, File file) throws FileNotFoundException {
@@ -126,7 +131,6 @@ public class GameController implements Initializable {
             // ...
             handleClickEvent(clickedButton);
             clickedButton.setVisible(false);
-
         });
 
         // Bắt đầu hiệu ứng
@@ -153,7 +157,10 @@ public class GameController implements Initializable {
         if (!find) {
             // Draw hangman
             currentWrongTime++;
-            updateImage();
+            if (currentWrongTime < 10) {
+                updateImage();
+            }
+
         } else {
             playSoundCorrectAnswer();
         }
@@ -180,12 +187,12 @@ public class GameController implements Initializable {
     }
 
     public void updateImage() {
+        playSoundDrawing();
         FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1), listImageview.get(currentWrongTime));
         fadeTransition.setFromValue(0.0);
         fadeTransition.setToValue(1.0);
         fadeTransition.play();
-        if(currentWrongTime > 9) currentWrongTime = 0;
-        playSoundDrawing();
+        //if(currentWrongTime > 9) currentWrongTime = 0;
     }
     public void playSoundCorrectAnswer() {
         File file = new File(soundCorrect);
@@ -197,4 +204,5 @@ public class GameController implements Initializable {
         AudioClip audioClip = new AudioClip(file.toURI().toString());
         audioClip.play();
     }
+    
 }
