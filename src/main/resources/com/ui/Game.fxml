@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.image.Image?>
@@ -10,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="960.0" styleClass="Game.css" stylesheets="@../css/Game.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.GameController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="960.0" styleClass="Game.css" stylesheets="@../css/Game.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.GameController">
    <children>
       <Button fx:id="buttonA" layoutX="60.0" layoutY="208.0" mnemonicParsing="false" onAction="#addClickEvent" prefHeight="25.0" prefWidth="34.0">
          <graphic>
@@ -320,5 +321,10 @@
          </image>
       </ImageView>
       <ImageView fx:id="imageHang" fitHeight="263.0" fitWidth="193.0" layoutX="430.0" layoutY="173.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="resetButton" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="10.0" minHeight="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="50.0" textFill="WHITE">
+         <graphic>
+            <FontAwesomeIconView fx:id="resetIcon" glyphName="REPEAT" size="30" styleClass="fontawesome-icon" textAlignment="CENTER" wrappingWidth="30.0" />
+         </graphic>
+      </Button>
    </children>
 </AnchorPane>
