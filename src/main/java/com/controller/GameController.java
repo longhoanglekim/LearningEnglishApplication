@@ -6,10 +6,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
+import javafx.scene.layout.Pane;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -59,6 +61,11 @@ public class GameController implements Initializable {
 
     List<ImageView> listImageview;
 
+    List<Image> listImageHang;
+    @FXML
+    public ImageView imageHang;
+
+    public static final int frameHang = 14;
 
     public void updateListLabel(String s, int index) {
         listLabel.get(index).setText(s);
@@ -157,9 +164,7 @@ public class GameController implements Initializable {
         if (!find) {
             // Draw hangman
             currentWrongTime++;
-            if (currentWrongTime < 10) {
-                updateImage();
-            }
+            updateImage();
 
         } else {
             playSoundCorrectAnswer();
@@ -178,6 +183,12 @@ public class GameController implements Initializable {
         listImageview.add(image8);
         listImageview.add(image9);
         listImageview.add(image10);
+
+        listImageHang = new ArrayList<>();
+        for(int i = 0; i < frameHang; i++) {
+            Image tmp = new Image(getClass().getResource("/com/hangman/t" + (frameHang - i - 1) + ".png").toString());
+            listImageHang.add(tmp);
+        }
     }
 
     public void setOpacity() {
@@ -187,13 +198,34 @@ public class GameController implements Initializable {
     }
 
     public void updateImage() {
-        playSoundDrawing();
-        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1), listImageview.get(currentWrongTime));
-        fadeTransition.setFromValue(0.0);
-        fadeTransition.setToValue(1.0);
-        fadeTransition.play();
-        //if(currentWrongTime > 9) currentWrongTime = 0;
+        if(currentWrongTime > 9){
+            animationHang();
+        } else {
+            playSoundDrawing();
+            FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.3), listImageview.get(currentWrongTime - 1));
+            fadeTransition.setFromValue(0.0);
+            fadeTransition.setToValue(1.0);
+            fadeTransition.play();
+        }
+
     }
+    // bai 64 sxtk
+    public void animationHang() {
+        for(int i = 3; i < 10; i++) {
+            listImageview.get(i).setOpacity(0.0);
+        }
+        imageHang.setImage(listImageHang.get(0));
+        Timeline timeline = new Timeline();
+        for (int i = 0; i < listImageHang.size(); i++) {
+            int finalI = i;
+            timeline.getKeyFrames().add(new KeyFrame(Duration.millis(i * 70),
+                    e -> imageHang.setImage(listImageHang.get(finalI))));
+        }
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.setCycleCount(1);
+        timeline.playFromStart();
+    }
+
     public void playSoundCorrectAnswer() {
         File file = new File(soundCorrect);
         AudioClip audioClip = new AudioClip(file.toURI().toString());

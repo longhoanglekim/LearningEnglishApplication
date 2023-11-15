@@ -319,5 +319,6 @@
             <Image url="@../hangman/10.png" />
          </image>
       </ImageView>
+      <ImageView fx:id="imageHang" fitHeight="263.0" fitWidth="193.0" layoutX="430.0" layoutY="173.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>
