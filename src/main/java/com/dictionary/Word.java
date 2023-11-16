@@ -7,6 +7,7 @@ public class Word {
     private String target;
     private String pronounce;
     private String explain;
+    boolean canBeautify;
     private ArrayList<String> definition = new ArrayList<>();
 
     /**
@@ -19,13 +20,18 @@ public class Word {
         this.target = target;
         this.pronounce = pronounce;
         this.explain = explain;
-        beautifyDefinition();
+        try {
+            beautifyDefinition();
+            canBeautify = true;
+        } catch (Exception e) {
+            System.err.println("Can't beautify");
+        }
     }
 
     /**
      * Modify the definition of the word to make it more readable when rendering.
      */
-    private void beautifyDefinition() {
+    private void beautifyDefinition() throws Exception {
         Scanner sc = new Scanner(explain);
         String s;
         int indexBlock = 1;
@@ -71,6 +77,10 @@ public class Word {
 
     public ArrayList<String> getDefinition() {
         return definition;
+    }
+
+    public boolean getStatus() {
+        return canBeautify;
     }
 
     @Override

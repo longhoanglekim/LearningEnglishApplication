@@ -9,6 +9,7 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.input.Clipboard;
@@ -82,6 +83,12 @@ public class DictionaryController implements Initializable {
     @FXML
     private Button speakButton;
 
+    @FXML
+    private TextField tfield;
+
+    @FXML
+    private TextField pfield;
+
     private String currentWord;
     private ListViewType listViewType;
     private SearchTask searchTask;
@@ -103,7 +110,10 @@ public class DictionaryController implements Initializable {
         bookmarkButton.setVisible(false);
         speakButton.setVisible(false);
 
-
+        tfield.setId("word");
+        pfield.setId("word");
+        tfield.setEditable(false);
+        pfield.setEditable(false);
 
         // Set action for list view and search field.
         searchField.setOnKeyPressed(event -> {
@@ -202,28 +212,37 @@ public class DictionaryController implements Initializable {
      * @param word Word to show.
      */
     public void setDefinitionField(Word word) {
-        targetField.setText(word.getTarget());
-        pronounceField.setText(word.getPronounce());
+        //targetField.setText(word.getTarget());
+        //pronounceField.setText(word.getPronounce());
+        tfield.setText(word.getTarget());
+        pfield.setText(word.getPronounce());
         definitionField.setTranslateX(10);
-        for (String s : word.getDefinition()) {
-            Text result = new Text(s.substring(1).trim());
-            TextFlow textFlow = new TextFlow(result);
-            char firstChar = s.charAt(0);
-            if (firstChar == '*') {
-                VBox.setMargin(textFlow, new javafx.geometry.Insets(0, 10, 0, 5));
-                result.setId("wordtype");
-            } else if (firstChar == '-') {
-                VBox.setMargin(textFlow, new javafx.geometry.Insets(0, 10, 0, 30));
-                result.setId("wordmean");
-            } else if (firstChar == '=') {
-                VBox.setMargin(textFlow, new javafx.geometry.Insets(0, 10, 0, 50));
-                result.setId("wordexample");
-            } else if (firstChar == '!') {
-                VBox.setMargin(textFlow, new javafx.geometry.Insets(0, 10, 0, 50));
-                result.setId("wordexample");
+        if (!word.getStatus()) {
+            TextArea result = new TextArea(word.getExplain());
+            VBox.setMargin(result, new Insets(0, 0, 0, 0));
+            definitionField.getChildren().add(result);
+        } else {
+            for (String s : word.getDefinition()) {
+                Text result = new Text(s.substring(1).trim());
+                TextFlow textFlow = new TextFlow(result);
+                char firstChar = s.charAt(0);
+                if (firstChar == '*') {
+                    VBox.setMargin(textFlow, new javafx.geometry.Insets(0, 10, 0, 5));
+                    result.setId("wordtype");
+                } else if (firstChar == '-') {
+                    VBox.setMargin(textFlow, new javafx.geometry.Insets(0, 10, 0, 30));
+                    result.setId("wordmean");
+                } else if (firstChar == '=') {
+                    VBox.setMargin(textFlow, new javafx.geometry.Insets(0, 10, 0, 50));
+                    result.setId("wordexample");
+                } else if (firstChar == '!') {
+                    VBox.setMargin(textFlow, new javafx.geometry.Insets(0, 10, 0, 50));
+                    result.setId("wordexample");
+                }
+                definitionField.getChildren().add(textFlow);
             }
-            definitionField.getChildren().add(textFlow);
         }
+            //     0 1 2 5
         if (!bookmarkButton.isVisible()) {
             bookmarkButton.setVisible(true);
         }

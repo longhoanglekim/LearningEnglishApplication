@@ -31,10 +31,11 @@
 }
 
 .vbox {
-    -fx-background-color: #3d80c9;
+    -fx-background-color: linear-gradient(to bottom, #3d80c9, #a63dc9) ;
 }
 
 .hbox {
+
     -fx-background-color: #3d80c9;
 }
 

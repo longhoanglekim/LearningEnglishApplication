@@ -21,10 +21,18 @@
     -fx-fill: #f1f1f1;
 }
 
+#word {
+    -fx-background-color: transparent;
+    -fx-border-width: 0em;
+    -fx-font-size: 20px;
+}
+
 #wordtype {
+    -fx-background-color: transparent;
+    -fx-border-width: 0em;
     -fx-font-weight: bold;
     -fx-font-size: 16px;
-    -fx-fill: #147288;
+    -fx-text-fill: #147288;
 }
 
 #wordirregular {
@@ -33,14 +41,18 @@
 }
 
 #wordmean {
+    -fx-background-color: transparent;
+    -fx-border-width: 0em;
     -fx-font-size: 14px;
-    -fx-fill: #090909;
+    -fx-text-fill: #090909;
 }
 
 #wordexample {
+    -fx-background-color: transparent;
+    -fx-border-width: 0em;
     -fx-font-style: italic;
     -fx-font-size: 14px;
-    -fx-fill: #191919;
+    -fx-text-fill: #191919;
 }
 
 
