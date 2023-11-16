@@ -5,7 +5,6 @@ import javafx.animation.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -13,10 +12,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
-import javafx.scene.layout.Pane;
 import javafx.scene.media.AudioClip;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
+
 import javafx.util.Duration;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -28,6 +25,7 @@ public class GameController implements Initializable {
     private static final String HANGMAN_PATH = "src/main/resources/data/hangman.txt";
     private static final String soundCorrect = "src/main/resources/com/sound/correctAnswer.mp3";
     private static final String soundDrawing = "src/main/resources/com/sound/drawing.mp3";
+    private static final String soundHang = "src/main/resources/com/sound/man_scream.mp3";
     public Button resetButton;
     public FontAwesomeIconView resetIcon;
 
@@ -177,7 +175,6 @@ public class GameController implements Initializable {
 
         } else {
             playSoundCorrectAnswer();
-
         }
     }
 
@@ -215,6 +212,13 @@ public class GameController implements Initializable {
     public void updateImage() {
         if(currentWrongTime == 10){
             animationHang();
+            for (int i = 0; i < listLabel.size(); i++) {
+                if(listLabel.get(i).getText().equals("__")) {
+                    listLabel.get(i).setText(Character.toString(Character.toUpperCase(answer.charAt(i))));
+                    listLabel.get(i).setStyle("-fx-text-fill: red;");
+                }
+            }
+/*            updateHbox();*/
             resetButton.setVisible(true);
             resetIcon.setVisible(true);
             System.out.println("Lose");
@@ -230,17 +234,18 @@ public class GameController implements Initializable {
     }
     // play the animation of Hang man.
     public void animationHang() {
+        playSoundHang();
         for(int i = 3; i < 10; i++) {
             listImageview.get(i).setOpacity(0.0);
         }
+        imageHang.setOpacity(1);
         imageHang.setImage(listImageHang.get(0));
         Timeline timeline = new Timeline();
         for (int i = 0; i < listImageHang.size(); i++) {
             int finalI = i;
-            timeline.getKeyFrames().add(new KeyFrame(Duration.millis(i * 70),
+            timeline.getKeyFrames().add(new KeyFrame(Duration.millis(i * 80),
                     e -> imageHang.setImage(listImageHang.get(finalI))));
         }
-        timeline.setCycleCount(Animation.INDEFINITE);
         timeline.setCycleCount(1);
         timeline.playFromStart();
     }
@@ -256,8 +261,15 @@ public class GameController implements Initializable {
         audioClip.play();
     }
 
+    public void playSoundHang() {
+        File file = new File(soundHang);
+        AudioClip audioClip = new AudioClip(file.toURI().toString());
+        audioClip.play();
+    }
+
     public void reset() {
         System.out.println("reset");
+        imageHang.setOpacity(0.0);
         buttonA.setVisible(true);
         buttonB.setVisible(true);
         buttonC.setVisible(true);
@@ -313,7 +325,6 @@ public class GameController implements Initializable {
         updateHbox();
         initListImage();
         setOpacity();
-        imageHang.setOpacity(0.0);
     }
 
     private boolean wining() {
