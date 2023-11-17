@@ -12,6 +12,8 @@ import static com.ui.Model.dictionary;
 
 public class DashboardController implements Initializable {
     @FXML
+    public Button flashcardButton;
+    @FXML
     private Button dictionaryButton;
 
     @FXML
@@ -48,6 +50,7 @@ public class DashboardController implements Initializable {
         gameButton.setOnAction(actionEvent -> onGameClicked());
         settingButton.setOnAction(actionEvent -> onSettingClicked());
         exportButton.setOnAction(actionEvent -> onExportClicked());
+        flashcardButton.setOnAction(actionEvent -> onFlashcardClicked());
     }
 
     public void onBarClicked() {
@@ -90,6 +93,11 @@ public class DashboardController implements Initializable {
         setStyleButtonOnClick("setting");
     }
 
+    public void onFlashcardClicked() {
+        Model.getInstance().getView().getSelectedMenuItem().setValue("Flashcard");
+        setStyleButtonOnClick("Flashcard");
+    }
+
     /**
      * Set text for all button in bar (When resize the HBox)
      * @param visible true if visible, false if not
@@ -101,12 +109,14 @@ public class DashboardController implements Initializable {
             gameButton.setText("Game");
             settingButton.setText("Setting");
             exportButton.setText("Export");
+            flashcardButton.setText("Flashcard");
         } else {
             dictionaryButton.setText("");
             translateButton.setText("");
             gameButton.setText("");
             settingButton.setText("");
             exportButton.setText("");
+            flashcardButton.setText("");
         }
     }
 
@@ -120,6 +130,7 @@ public class DashboardController implements Initializable {
         gameButton.setPrefWidth(width);
         settingButton.setPrefWidth(width);
         exportButton.setPrefWidth(width);
+        flashcardButton.setPrefWidth(width);
     }
 
     /**
@@ -146,6 +157,11 @@ public class DashboardController implements Initializable {
             settingButton.setId("button");
         } else {
             settingButton.setId("");
+        }
+        if (button.equals("Flashcard")) {
+            flashcardButton.setId("button");
+        } else {
+            flashcardButton.setId("");
         }
     }
 

@@ -270,36 +270,12 @@ public class GameController implements Initializable {
     public void reset() {
         System.out.println("reset");
         imageHang.setOpacity(0.0);
-        buttonA.setVisible(true);
-        buttonB.setVisible(true);
-        buttonC.setVisible(true);
-        buttonD.setVisible(true);
-        buttonE.setVisible(true);
-        buttonF.setVisible(true);
-        buttonG.setVisible(true);
-        buttonH.setVisible(true);
-        buttonI.setVisible(true);
-        buttonJ.setVisible(true);
-        buttonK.setVisible(true);
-        buttonL.setVisible(true);
-        buttonM.setVisible(true);
-        buttonN.setVisible(true);
-        buttonO.setVisible(true);
-        buttonP.setVisible(true);
-        buttonQ.setVisible(true);
-        buttonR.setVisible(true);
-        buttonS.setVisible(true);
-        buttonT.setVisible(true);
-        buttonU.setVisible(true);
-        buttonV.setVisible(true);
-        buttonW.setVisible(true);
-        buttonX.setVisible(true);
-        buttonY.setVisible(true);
-        buttonZ.setVisible(true);
+        for (Button button : Arrays.asList(buttonA, buttonB, buttonC, buttonD, buttonE, buttonF, buttonG, buttonH, buttonI, buttonJ, buttonK, buttonL, buttonM, buttonN, buttonO, buttonP, buttonQ, buttonR, buttonS, buttonT, buttonU, buttonV, buttonW, buttonX, buttonY, buttonZ)) {
+            button.setVisible(true);
+        }
         System.out.println("reset");
         currentWrongTime = 0;
         startConfig();
-
     }
 
     /**

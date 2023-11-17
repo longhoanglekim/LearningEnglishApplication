@@ -23,6 +23,7 @@ public class View {
     private AnchorPane translatePane;
     private AnchorPane gamePane;
     private AnchorPane settingPane;
+    private AnchorPane flashcardPane;
 
     public View() {
         selectedMenuItem = new SimpleStringProperty("");
@@ -106,6 +107,17 @@ public class View {
             }
         }
         return settingPane;
+    }
+
+    public AnchorPane getFlashcardPane() {
+        if (flashcardPane == null) {
+            try {
+                flashcardPane = new FXMLLoader(getClass().getResource("Flashcard.fxml")).load();
+            } catch (IOException e) {
+                Logger.getLogger(View.class.getName()).info("Cannot load Flashcard pane - FXML.");
+            }
+        }
+        return flashcardPane;
     }
 
     /**

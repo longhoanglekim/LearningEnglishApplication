@@ -1,3 +1,12 @@
+la-breaker
+l-dopa
+l-plate
+l.s.d
+laager
+la-di-da
+la
+l-asparaginase
+word
 kiang
 b
 a
@@ -38,12 +47,3 @@ foist
 foism
 fogydom
 fog-signal
-focallength
-fob
-foam
-fo'c'sle
-why
-can
-whack
-1-bytecharacter
-1tomanyrelationship

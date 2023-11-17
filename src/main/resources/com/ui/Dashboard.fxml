@@ -49,10 +49,18 @@
             <FontAwesomeIconView glyphName="COG" size="30" styleClass="fontawesome-icon" textAlignment="CENTER" wrappingWidth="30.0" />
          </graphic>
       </Button>
+      <Button fx:id="flashcardButton" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#onFlashcardClicked" prefHeight="30.0" prefWidth="50.0" textFill="WHITE">
+         <VBox.margin>
+            <Insets left="5.0" top="5.0" />
+         </VBox.margin>
+         <graphic>
+            <FontAwesomeIconView glyphName="BOLT" size="30" styleClass="fontawesome-icon" textAlignment="CENTER" wrappingWidth="30.0" />
+         </graphic>
+      </Button>
    </VBox>
    <Button fx:id="exportButton" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="50.0" textFill="WHITE" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="5.0">
       <graphic>
-         <FontAwesomeIconView glyphName="FILE_TEXT" size="30" styleClass="fontawesome-icon" textAlignment="CENTER" wrappingWidth="30.0" />
+         <FontAwesomeIconView glyphName="FILE_TEXT" size="30" styleClass="fontawesome-icon" text="" textAlignment="CENTER" wrappingWidth="30.0" />
       </graphic>
    </Button>
 </AnchorPane>
