@@ -1,5 +1,6 @@
 package com.ui;
 
+import com.dictionary.Bookmark;
 import com.dictionary.Database;
 import com.dictionary.Dictionary;
 import com.dictionary.Local;
@@ -10,6 +11,7 @@ public class Model {
     private static Model instance;
 
     public static Dictionary dictionary;
+    public static Bookmark bookmark;
 
     private Model() {
 //        dictionary = new Database();
@@ -19,6 +21,7 @@ public class Model {
             System.out.println("Cannot initialize dictionary");
             Platform.exit();
         }
+        bookmark = new Bookmark();
 //        }
         view = new View();
     }
