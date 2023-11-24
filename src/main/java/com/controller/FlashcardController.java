@@ -33,6 +33,8 @@ public class FlashcardController implements Initializable {
         leftButton.setOnMouseClicked(this::onLeftButton);
         rightButton.setOnMouseClicked(this::onRightButton);
         cardPane.setOnMouseClicked(this::flipCard);
+        answerArea.setWrapText(true);
+        questionArea.setWrapText(true);
     }
 
     private void onRightButton(MouseEvent mouseEvent) {

@@ -6,11 +6,14 @@
     -fx-background-color: #2e3856;
 }
 .text-area {
-    -fx-alignment: center;
+    -
     -fx-control-inner-background: #2e3856;
+    -fx-content-display: center;
+}
+.text-area .content {
+    fx-alignment: center;
     -fx-border-color: transparent;
     -fx-border-width: 0;
-    -fx-content-display: center;
 }
 .label {
     -fx-text-fill: white;

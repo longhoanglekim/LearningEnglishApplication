@@ -112,7 +112,7 @@ public class View {
     public AnchorPane getFlashcardPane() {
         if (flashcardPane == null) {
             try {
-                flashcardPane = new FXMLLoader(getClass().getResource("FlashCardDemo.fxml")).load();
+                flashcardPane = new FXMLLoader(getClass().getResource("Flashcard.fxml")).load();
             } catch (IOException e) {
                 Logger.getLogger(View.class.getName()).info("Cannot load Flashcard pane - FXML.");
             }
