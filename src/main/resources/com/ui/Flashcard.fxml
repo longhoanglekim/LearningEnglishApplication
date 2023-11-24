@@ -13,9 +13,9 @@
 
 <?import javafx.scene.control.TextArea?>
 <AnchorPane stylesheets="@../css/flashcard.css" prefHeight="400.0" prefWidth="600.0" styleClass="anchor_pane" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.FlashcardController">
-    <Pane fx:id="cardPane" layoutX="93.0" layoutY="48.0" prefHeight="230.0" prefWidth="360.0" styleClass="card_pane">
-        <TextArea fx:id="answerArea" layoutX="8.0" layoutY="16.0" prefHeight="196.0" prefWidth="276.0" editable="false" styleClass="text-area"/>
-        <TextArea fx:id="questionArea" layoutX="101.0" layoutY="55.0" prefHeight="120.0" prefWidth="159.0" editable="false" styleClass="text-area"/>
+    <Pane fx:id="cardPane" layoutX="93.0" layoutY="48.0" prefHeight="230.0" prefWidth="360.0"  >
+        <TextArea fx:id="answerArea" layoutX="8.0" layoutY="16.0" prefHeight="196.0" prefWidth="344.0" editable="false" />
+        <TextArea fx:id="questionArea" layoutX="101.0" layoutY="100.0" prefHeight="20.0" prefWidth="132.0" editable="false" />
     </Pane>
     <Label fx:id="currentCardLabel" layoutX="280.0" layoutY="283.0" prefHeight="25.0" prefWidth="28.0" text="Label" />
     <Button fx:id="leftButton" layoutX="209.0" layoutY="283.0" mnemonicParsing="false">

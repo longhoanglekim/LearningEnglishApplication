@@ -1,10 +1,17 @@
 package com.controller;
 
 import com.dictionary.Word;
+import javafx.beans.value.ChangeListener;
 import javafx.fxml.Initializable;
+import javafx.geometry.Bounds;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Path;
+import javafx.scene.text.Text;
+
 import static com.ui.Model.dictionary;
 
 import java.util.ArrayList;
@@ -32,9 +39,13 @@ public class FlashcardController implements Initializable {
         currentCardLabel.setText((currentCard + 1) + "/" + cardQuestionList.size());
         leftButton.setOnMouseClicked(this::onLeftButton);
         rightButton.setOnMouseClicked(this::onRightButton);
+        cardPane.setStyle("-fx-background-color: #2e3856");
         cardPane.setOnMouseClicked(this::flipCard);
+        questionArea.setOnMouseClicked(this::flipCard);
+        answerArea.setOnMouseClicked(this::flipCard);
         answerArea.setWrapText(true);
         questionArea.setWrapText(true);
+        System.out.println(cardPane.getPrefHeight() + " " + cardPane.getPrefWidth());
     }
 
     private void onRightButton(MouseEvent mouseEvent) {
@@ -74,15 +85,43 @@ public class FlashcardController implements Initializable {
     }
 
     private void showAnswer() {
+        hackTextAreaLayout(answerArea);
         questionArea.setVisible(false);
         answerArea.setVisible(true);
         answerArea.setText(cardAnwserList.get(currentCard));
     }
 
     private void showQuestion() {
-
+        hackTextAreaLayout(questionArea);
         questionArea.setVisible(true);
         answerArea.setVisible(false);
         questionArea.setText(cardQuestionList.get(currentCard));
+    }
+    private void hackTextAreaLayout(TextArea textArea) {
+        textArea.applyCss();
+        textArea.layout();
+
+        ScrollPane textAreaScroller = (ScrollPane) textArea.lookup(".scroll-pane");
+        Text text = (Text) textArea.lookup(".text");
+
+        ChangeListener<? super Bounds> listener = (obs, oldBounds, newBounds) ->
+                centerTextIfNecessary(textAreaScroller, text);
+        textAreaScroller.viewportBoundsProperty().addListener(listener);
+        text.boundsInLocalProperty().addListener(listener);
+
+        textAreaScroller.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); // Optional: Hide horizontal scrollbar
+    }
+
+    private void centerTextIfNecessary(ScrollPane textAreaScroller, Text text) {
+        double textHeight = text.getBoundsInLocal().getHeight();
+        double viewportHeight = textAreaScroller.getViewportBounds().getHeight();
+        double offset = Math.max(0, (viewportHeight - textHeight) / 2);
+        text.setTranslateY(offset);
+        Parent content = (Parent) textAreaScroller.getContent();
+        for (Node n : content.getChildrenUnmodifiable()) {
+            if (n instanceof Path) { // caret
+                n.setTranslateY(offset);
+            }
+        }
     }
 }
