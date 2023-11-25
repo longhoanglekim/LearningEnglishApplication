@@ -17,12 +17,15 @@ public class TranslateTask extends Task<String> {
     }
 
     @Override
-    protected String call() {
+    protected String call() throws IOException {
+        if (text == null || text.isEmpty()) {
+            return null;
+        }
         String result;
         try {
             result = Translator.translate(langFrom, langTo, text);
         } catch (IOException e) {
-            return null;
+            throw new IOException("Error while translating");
         }
         if (isCancelled()) {
             return null;

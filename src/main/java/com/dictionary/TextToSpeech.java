@@ -29,10 +29,6 @@ public class TextToSpeech {
         mediaPlayer.play();
     }
 
-    public static MediaPlayer getMediaPlayer() {
-        return mediaPlayer;
-    }
-
     public static void stop() {
         if (mediaPlayer != null) {
             mediaPlayer.stop();

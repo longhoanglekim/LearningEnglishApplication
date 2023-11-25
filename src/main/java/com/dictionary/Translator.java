@@ -12,29 +12,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
 public class Translator {
-
-
-    /**
-     * Translate text from vi to en.
-     * @param text vi to translate.
-     * @return the translation text in en.
-     * @throws IOException .
-     */
-   /* public static String translateViToEn(String text) throws IOException {
-        return splitJson(translate("vi", "en", text));
-    }*/
-
-    /**
-     * Translate text from en to vi.
-     * @param text en to translate.
-     * @return the translation text in vi.
-     * @throws IOException dfs.
-     */
-    /*public static String translateEnToVi(String text) throws IOException {
-        return splitJson(translate("en", "vi", text));
-    }*/
-
-
     /**
      * Translate text from langFrom to langTo.
      *

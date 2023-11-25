@@ -87,4 +87,11 @@ public class Bookmark {
     public void remove(String target) {
         bookmarkList.remove(target);
     }
+
+    /**
+     * Clear bookmark.
+     */
+    public void clear() {
+        bookmarkList.clear();
+    }
 }

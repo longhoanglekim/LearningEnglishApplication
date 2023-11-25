@@ -1,6 +1,5 @@
 package com.dictionary;
 
-import javafx.scene.control.Alert;
 import javafx.stage.FileChooser;
 
 import java.io.*;
@@ -12,14 +11,13 @@ import java.util.regex.Pattern;
 public class Local extends Dictionary {
     private static final String VN_CHAR = "áàảãạăắằẳẵặâấầẩẫậđéèẻẽẹêếềểễệíìỉĩịóòỏõọôốồổỗộơớờởỡợúùủũụưứừửữựýỳỷỹỵđ";
     private static final String path = "./src/main/resources/data/Beta_dictionary.txt";
-    private static Trie words;
+    private static Trie words = new Trie();
     /**
      * Initialize the dictionary.
      */
 
     @Override
     public boolean initialize() {
-        words = new Trie();
         try {
             loadDictionary();
             size = Trie.getSize(words);
@@ -44,11 +42,12 @@ public class Local extends Dictionary {
         } catch (Exception e) {
             throw new FileNotFoundException("Dictionary file not found.");
         }
+
         try {
             Scanner sc = new Scanner(new FileReader(dict));
             while (sc.hasNextLine()) {
                 String line = sc.nextLine();
-                if (line.length() == 0) {
+                if (line.isEmpty()) {
                     continue;                //Skip empty line.
                 }
                 String[] wap = line.split("/");
@@ -94,8 +93,8 @@ public class Local extends Dictionary {
     }
 
     /**
-     * Get all words's target in the dictionary.
-     * @return ArrayList of all words's target in the dictionary.
+     * Get all word's targets in the dictionary.
+     * @return ArrayList of all word's target in the dictionary.
      * @see Trie#getAllWordsTarget(Trie)
      * @see Word
      */
@@ -104,7 +103,7 @@ public class Local extends Dictionary {
     }
 
     /**
-     * Search for a pre'suffix' word in the dictionary.
+     * Search for a pre-suffix word in the dictionary.
      *
      * @param word Word to search for.
      * @return ArrayList of words that start with the given string.
@@ -174,7 +173,7 @@ public class Local extends Dictionary {
      */
     @Override
     public void export(boolean defaultPath) {
-        File selectedDirectory = null;
+        File selectedDirectory;
         if (!defaultPath) {
             FileChooser directoryChooser = new FileChooser();
             directoryChooser.setTitle("Export dictionary");

@@ -219,7 +219,7 @@ public class DictionaryController implements Initializable {
                 speechTask = new TextToSpeechTask(currentWord, "en");
                 new Thread(speechTask).start();
             } catch (Exception e) {
-                e.printStackTrace();
+                System.err.println(e.getMessage() + "\nCaused: " + e.getCause());
             }
         });
 
@@ -297,10 +297,10 @@ public class DictionaryController implements Initializable {
 
         removeAllButton.setOnAction(event -> {
             if (listViewType == ListViewType.HISTORY) {
-                dictionary.getHistoryList().getList().clear();
+                dictionary.getHistoryList().clear();
                 listOfWord.getItems().clear();
             } else if (listViewType == ListViewType.BOOKMARK) {
-                dictionary.getBookmarkList().getList().clear();
+                dictionary.getBookmarkList().clear();
                 listOfWord.getItems().clear();
             }
         });
@@ -344,7 +344,7 @@ public class DictionaryController implements Initializable {
      * Get the current word and show its definition.
      */
     public void LookupWord() {
-        if (!giveAlert()) {
+        if (notGiveAlert()) {
             return;
         }
         mode = Mode.SEARCH;
@@ -427,7 +427,7 @@ public class DictionaryController implements Initializable {
     }
 
     public void setEditField() {
-        if (!giveAlert() || mode == Mode.EDIT) {
+        if (notGiveAlert() || mode == Mode.EDIT) {
             return;
         }
         if (currentWord == null) {
@@ -484,7 +484,7 @@ public class DictionaryController implements Initializable {
      * @see #definitionField
      */
     public void setAddField() {
-        if (!giveAlert() || mode == Mode.ADD) {
+        if (notGiveAlert() || mode == Mode.ADD) {
             return;
         }
         tfield.setText("");
@@ -518,7 +518,7 @@ public class DictionaryController implements Initializable {
     }
 
     public void setRemoveField() {
-        if (!giveAlert() || mode == Mode.REMOVE) {
+        if (notGiveAlert() || mode == Mode.REMOVE) {
             return;
         }
         if (currentWord == null) {
@@ -720,20 +720,16 @@ public class DictionaryController implements Initializable {
      * Cancel the current action.
      */
     public void onCancelEditClick() {
-        currentWordObject = dictionary.lookup(currentWord);
-        Node node = definitionField.getChildren().get(0);
-        if (node instanceof TextArea textArea) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Confirmation");
-            alert.setHeaderText("Detected changes.");
-            alert.setContentText("Are you sure you want to cancel editing this word?\nAll changes will be lost.");
-            Optional<ButtonType> buttonType = alert.showAndWait();
-            if (!buttonType.isPresent() || buttonType.get() == ButtonType.CANCEL) {
-                return;
-            }
-            setDefinitionField(currentWordObject);
-            mode = Mode.SEARCH;
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText("Cancel editing.");
+        alert.setContentText("Are you sure you want to cancel editing this word?\nAll changes will be lost.");
+        Optional<ButtonType> buttonType = alert.showAndWait();
+        if (!buttonType.isPresent() || buttonType.get() == ButtonType.CANCEL) {
+            return;
         }
+        setDefinitionField(currentWordObject);
+        mode = Mode.SEARCH;
 
     }
 
@@ -870,9 +866,9 @@ public class DictionaryController implements Initializable {
      * @see #mode
      * @return True if the user wants to cancel the current action.
      */
-    public boolean giveAlert() {
+    public boolean notGiveAlert() {
         if (mode == Mode.SEARCH) {
-            return true;
+            return false;
         }
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation");
@@ -884,11 +880,11 @@ public class DictionaryController implements Initializable {
         alert.getButtonTypes().setAll(ButtonType.NO, ButtonType.YES);
         Optional<ButtonType> buttonType = alert.showAndWait();
         if (!buttonType.isPresent()) {
-            return false;
+            return true;
         } else if (buttonType.get() == ButtonType.NO) {
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     static class HistoryCell extends ListCell<String> {

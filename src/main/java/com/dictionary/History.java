@@ -17,13 +17,12 @@ public class History {
         try {
             loadHistory();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            System.err.println(e.getMessage() + "\n" + e.getCause());
         }
     }
 
     /**
      * Load history from file.
-     * @throws FileNotFoundException
      */
     public void loadHistory() throws FileNotFoundException {
         File file = new File(HISTORY_PATH);
@@ -35,11 +34,11 @@ public class History {
         while (sc.hasNextLine()) {
             historyList.add(sc.nextLine());
         }
+        sc.close();
     }
 
     /**
      * Save history to file.
-     * @throws IOException
      */
     public void saveHistory() throws IOException {
         File file = new File(HISTORY_PATH);
@@ -77,9 +76,7 @@ public class History {
         if (historyList.size() == LIMIT) {
             historyList.remove(LIMIT - 1);
         }
-        if (historyList.contains(target)) {
-            historyList.remove(target);
-        }
+        historyList.remove(target);
         historyList.add(0, target);
     }
 
