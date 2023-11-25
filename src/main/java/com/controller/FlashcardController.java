@@ -1,27 +1,24 @@
 package com.controller;
 
 import com.dictionary.Word;
+import javafx.animation.Interpolator;
+import javafx.animation.RotateTransition;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
 import javafx.fxml.Initializable;
-import javafx.geometry.Bounds;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Path;
 import javafx.scene.text.Text;
-
+import javafx.scene.transform.Rotate;
+import javafx.util.Duration;
 import static com.ui.Model.dictionary;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class FlashcardController implements Initializable {
 
-    static int times = 0;
     public Button leftButton;
     public Button rightButton;
     static int currentCard = 0;
@@ -83,11 +80,14 @@ public class FlashcardController implements Initializable {
     }
 
     public void flipCard(MouseEvent mouseEvent) {
+        RotateTransition rotateTransition = createRotator(cardPane);
+
         if (questionArea.isVisible()) {
             showAnswer();
         } else {
             showQuestion();
         }
+        rotateTransition.play();
     }
 
     public void loadCard() {
@@ -130,12 +130,6 @@ public class FlashcardController implements Initializable {
 
         ScrollPane textAreaScroller = (ScrollPane) textArea.lookup(".scroll-pane");
         Text text = (Text) textArea.lookup(".text");
-        if (text == null) {
-            System.err.println("Text not found + " + times);
-        } else {
-            System.err.println("Text found + " + times);
-        }
-        times++;
         // Calculate the offset to center the text vertically
         double offset = (textArea.getHeight() - text.getBoundsInLocal().getHeight()) / 2;
 
@@ -167,4 +161,16 @@ public class FlashcardController implements Initializable {
         }
         return "động từ";
     }
+
+    private RotateTransition createRotator(Node card) {
+        RotateTransition rotator = new RotateTransition(Duration.millis(1000), card);
+        rotator.setAxis(Rotate.Y_AXIS);
+        rotator.setFromAngle(0);
+        rotator.setToAngle(360);
+        rotator.setInterpolator(Interpolator.LINEAR);
+        rotator.setCycleCount(1);
+
+        return rotator;
+    }
+
 }
