@@ -94,21 +94,6 @@ public class View {
         return gamePane;
     }
 
-    /**
-     * Get setting pane
-     * @return setting pane
-     */
-    public AnchorPane getSettingPane() {
-        if (settingPane == null) {
-            try {
-                settingPane = new FXMLLoader(getClass().getResource("Setting.fxml")).load();
-            } catch (IOException e) {
-                Logger.getLogger(View.class.getName()).info("Cannot load setting pane - FXML.");
-            }
-        }
-        return settingPane;
-    }
-
     public AnchorPane getFlashcardPane() {
         if (flashcardPane == null) {
             try {

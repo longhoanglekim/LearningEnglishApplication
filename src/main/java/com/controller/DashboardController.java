@@ -23,9 +23,6 @@ public class DashboardController implements Initializable {
     private Button gameButton;
 
     @FXML
-    private Button settingButton;
-
-    @FXML
     private Button exportButton;
 
     @FXML
@@ -48,7 +45,6 @@ public class DashboardController implements Initializable {
         dictionaryButton.setOnAction(actionEvent -> onDictionaryClicked());
         translateButton.setOnAction(actionEvent -> onTranslateClicked());
         gameButton.setOnAction(actionEvent -> onGameClicked());
-        settingButton.setOnAction(actionEvent -> onSettingClicked());
         exportButton.setOnAction(actionEvent -> onExportClicked());
         flashcardButton.setOnAction(actionEvent -> onFlashcardClicked());
     }
@@ -64,7 +60,7 @@ public class DashboardController implements Initializable {
             setTextVisible(true);
             setWidthBar(130);
             Model.getInstance().getView().getSelectedMenuItem().setValue("BarOpen");
-        };
+        }
     }
 
     public void onDictionaryClicked() {
@@ -77,20 +73,9 @@ public class DashboardController implements Initializable {
         setStyleButtonOnClick("translate");
     }
 
-    public void onBookmarkClicked() {
-        Model.getInstance().getView().getSelectedMenuItem().setValue("Bookmark");
-        setStyleButtonOnClick("bookmark");
-    }
-
-
     public void onGameClicked() {
         Model.getInstance().getView().getSelectedMenuItem().setValue("Game");
         setStyleButtonOnClick("game");
-    }
-
-    public void onSettingClicked() {
-        Model.getInstance().getView().getSelectedMenuItem().setValue("Setting");
-        setStyleButtonOnClick("setting");
     }
 
     public void onFlashcardClicked() {
@@ -107,14 +92,12 @@ public class DashboardController implements Initializable {
             dictionaryButton.setText("Dictionary");
             translateButton.setText("Translate");
             gameButton.setText("Game");
-            settingButton.setText("Setting");
             exportButton.setText("Export");
             flashcardButton.setText("Flashcard");
         } else {
             dictionaryButton.setText("");
             translateButton.setText("");
             gameButton.setText("");
-            settingButton.setText("");
             exportButton.setText("");
             flashcardButton.setText("");
         }
@@ -128,7 +111,6 @@ public class DashboardController implements Initializable {
         dictionaryButton.setPrefWidth(width);
         translateButton.setPrefWidth(width);
         gameButton.setPrefWidth(width);
-        settingButton.setPrefWidth(width);
         exportButton.setPrefWidth(width);
         flashcardButton.setPrefWidth(width);
     }
@@ -152,11 +134,6 @@ public class DashboardController implements Initializable {
             gameButton.setId("button");
         } else {
             gameButton.setId("");
-        }
-        if (button.equals("setting")) {
-            settingButton.setId("button");
-        } else {
-            settingButton.setId("");
         }
         if (button.equals("Flashcard")) {
             flashcardButton.setId("button");

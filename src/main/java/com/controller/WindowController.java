@@ -38,9 +38,6 @@ public class WindowController implements Initializable {
                 case "Game":
                     rootWindow.setCenter(Model.getInstance().getView().getGamePane());
                     break;
-                case "Setting":
-                    rootWindow.setCenter(Model.getInstance().getView().getSettingPane());
-                    break;
                 case "Flashcard":
                     rootWindow.setCenter(Model.getInstance().getView().getFlashcardPane());
                     break;

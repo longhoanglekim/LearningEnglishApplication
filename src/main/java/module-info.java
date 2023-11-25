@@ -10,9 +10,6 @@ module com.ui {
     requires de.jensd.fx.glyphs.fontawesome;
     requires com.google.gson;
     requires javafx.media;
-    requires java.net.http;
-    requires languagetool.core;
-    requires java.desktop;
 
     opens com.ui to javafx.fxml;
     exports com.dictionary;
