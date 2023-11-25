@@ -1,6 +1,7 @@
 package com.controller;
 
 import com.dictionary.Word;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
@@ -28,6 +29,7 @@ public class FlashcardController implements Initializable {
     public Pane cardPane;
     public TextArea answerArea;
     public TextArea questionArea;
+    public Button helpButton;
     List<String> cardAnwserList = new ArrayList<>();
     List<String> cardQuestionList = new ArrayList<>();
 
@@ -38,7 +40,6 @@ public class FlashcardController implements Initializable {
         answerArea.setText(cardAnwserList.get(currentCard));
 
         questionArea.setVisible(true);
-        hackTextAreaLayout(questionArea);
         answerArea.setVisible(false);
         currentCardLabel.setText((currentCard + 1) + "/" + cardQuestionList.size());
         leftButton.setOnMouseClicked(this::onLeftButton);
@@ -50,6 +51,17 @@ public class FlashcardController implements Initializable {
         answerArea.setWrapText(true);
         questionArea.setWrapText(true);
         System.out.println(cardPane.getPrefHeight() + " " + cardPane.getPrefWidth());
+        Platform.runLater(() -> {
+            hackTextAreaLayout(questionArea);
+        });
+        String tmp = answerArea.getText();
+        helpButton.setOnAction(event -> {
+            if (helpButton.getText().equals("Hiển thị gợi ý")) {
+                helpButton.setText(getProperty());
+            } else {
+                helpButton.setText("Hiển thị gợi ý");
+            }
+        });
     }
 
     private void onRightButton(MouseEvent mouseEvent) {
@@ -89,6 +101,7 @@ public class FlashcardController implements Initializable {
     }
 
     private void showAnswer() {
+        helpButton.setVisible(false);
         questionArea.setVisible(false);
         answerArea.setVisible(true);
 
@@ -97,6 +110,8 @@ public class FlashcardController implements Initializable {
     }
 
     private void showQuestion() {
+        helpButton.setVisible(true);
+        helpButton.setText("Hiển thị gợi ý");
         questionArea.setVisible(true);
         answerArea.setVisible(false);
         questionArea.setText(cardQuestionList.get(currentCard));
@@ -140,5 +155,16 @@ public class FlashcardController implements Initializable {
 
         // Optional: Hide horizontal scrollbar
         textAreaScroller.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+    }
+
+    private String getProperty() {
+        String text = cardAnwserList.get(currentCard);
+        if (text.contains("tính từ")) {
+            return "tính từ";
+        }
+        if (text.contains("danh từ")) {
+            return "danh từ";
+        }
+        return "động từ";
     }
 }

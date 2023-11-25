@@ -4,6 +4,7 @@ seed-bud
 seed
 dwale
 see-through
+lo
 square
 square bracket
 l-dopa
@@ -23,7 +24,6 @@ pancake
 panic
 lookup
 look
-lo
 w
 see
 hell
