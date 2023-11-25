@@ -12,15 +12,19 @@
     -fx-text-fill: white;
 }
 .text-area .content {
-    fx-alignment: center;
+    -fx-alignment: center;
     -fx-background-color: #2e3856;
-    -fx-border-color: #2e3856;
+    -fx-border-color: transparent;
     -fx-border-width: 0;
-    -fx-text-fill: white;
+    -fx-background-insets: 0;
 }
 .text-area .text {
     -fx-text-alignment: center;
+    -fx-text-fill: white;
 }
 .label {
+    -fx-text-fill: white;
+}
+.text {
     -fx-text-fill: white;
 }

@@ -4,6 +4,7 @@ import com.dictionary.Word;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
+import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
@@ -19,6 +20,7 @@ import java.util.List;
 
 public class FlashcardController implements Initializable {
 
+    static int times = 0;
     public Button leftButton;
     public Button rightButton;
     static int currentCard = 0;
@@ -34,7 +36,9 @@ public class FlashcardController implements Initializable {
         loadCard();
         questionArea.setText(cardQuestionList.get(currentCard));
         answerArea.setText(cardAnwserList.get(currentCard));
+
         questionArea.setVisible(true);
+        hackTextAreaLayout(questionArea);
         answerArea.setVisible(false);
         currentCardLabel.setText((currentCard + 1) + "/" + cardQuestionList.size());
         leftButton.setOnMouseClicked(this::onLeftButton);
@@ -85,43 +89,56 @@ public class FlashcardController implements Initializable {
     }
 
     private void showAnswer() {
-        hackTextAreaLayout(answerArea);
         questionArea.setVisible(false);
         answerArea.setVisible(true);
+
         answerArea.setText(cardAnwserList.get(currentCard));
+        hackTextAreaLayout(answerArea);
     }
 
     private void showQuestion() {
-        hackTextAreaLayout(questionArea);
         questionArea.setVisible(true);
         answerArea.setVisible(false);
         questionArea.setText(cardQuestionList.get(currentCard));
+        hackTextAreaLayout(questionArea);
     }
+
+    /**
+     * set the vertical alignment to center.
+     *
+     * @param textArea the text area.
+     */
     private void hackTextAreaLayout(TextArea textArea) {
+        // set css and layout.
         textArea.applyCss();
         textArea.layout();
 
         ScrollPane textAreaScroller = (ScrollPane) textArea.lookup(".scroll-pane");
         Text text = (Text) textArea.lookup(".text");
-
-        ChangeListener<? super Bounds> listener = (obs, oldBounds, newBounds) ->
-                centerTextIfNecessary(textAreaScroller, text);
-        textAreaScroller.viewportBoundsProperty().addListener(listener);
-        text.boundsInLocalProperty().addListener(listener);
-
-        textAreaScroller.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); // Optional: Hide horizontal scrollbar
-    }
-
-    private void centerTextIfNecessary(ScrollPane textAreaScroller, Text text) {
-        double textHeight = text.getBoundsInLocal().getHeight();
-        double viewportHeight = textAreaScroller.getViewportBounds().getHeight();
-        double offset = Math.max(0, (viewportHeight - textHeight) / 2);
-        text.setTranslateY(offset);
-        Parent content = (Parent) textAreaScroller.getContent();
-        for (Node n : content.getChildrenUnmodifiable()) {
-            if (n instanceof Path) { // caret
-                n.setTranslateY(offset);
-            }
+        if (text == null) {
+            System.err.println("Text not found + " + times);
+        } else {
+            System.err.println("Text found + " + times);
         }
+        times++;
+        // Calculate the offset to center the text vertically
+        double offset = (textArea.getHeight() - text.getBoundsInLocal().getHeight()) / 2;
+
+        // If the offset is negative, move the text to the top to ensure visibility
+        offset = Math.max(offset, 0);
+
+        // Set the translation to center the text vertically
+        text.setTranslateY(offset);
+
+        // Set the vertical alignment to center
+        text.setTextOrigin(VPos.TOP);
+
+        // Force an immediate layout update
+        textAreaScroller.getParent().requestLayout();
+
+        textAreaScroller.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); // Optional: Hide vertical scrollbar
+
+        // Optional: Hide horizontal scrollbar
+        textAreaScroller.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
     }
 }
