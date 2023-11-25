@@ -27,6 +27,13 @@
     -fx-font-size: 20px;
 }
 
+#wordpronounce {
+    -fx-background-color: transparent;
+    -fx-border-width: 0em;
+    -fx-font-size: 20px;
+    -fx-text-fill: #147288;
+}
+
 #wordtype {
     -fx-background-color: transparent;
     -fx-border-width: 0em;
@@ -77,22 +84,103 @@
 .normal-button {
     -fx-background-color: none;
     -fx-text-fill: #191919;
-    -fx-background-radius: 3em;
 }
 
 .normal-button:hover {
     -fx-background-color: #bdc2c5;
     -fx-border-width: none;
-    -fx-background-radius: 3em;
     -fx-background-insets: 0.1em;
 }
 .normal-button:pressed {
     -fx-background-color: #a4a8ab;
     -fx-border-width: none;
-    -fx-background-radius: 3em;
     -fx-background-insets: 0.1em;
 }
 
+.tool-button {
+    -fx-background-color: none;
+    -fx-text-fill: white;
+}
+
+.tool-button:hover {
+    -fx-background-color: #4d91d3;
+    -fx-border-width: none;
+}
+
+.tool-button:pressed {
+    -fx-background-color: #396da1;
+    -fx-border-width: none;
+    -fx-background-insets: 0.1em;
+}
+
+#saveButton {
+    -fx-background-color: #2b76bd;
+    -fx-text-fill: white;
+    -fx-border-width: 0em;
+}
+
+#saveButton:hover {
+    -fx-background-color: #4d91d3;
+    -fx-border-width: none;
+}
+
+#cancelButton {
+    -fx-background-color: #F1F1F1;
+    -fx-text-fill: #525252;
+    -fx-border-radius: 0.2em;
+    -fx-border-width: 0.1em;
+    -fx-border-color: #525252;
+}
+
+#cancelButton:hover {
+    -fx-text-fill: #2b76bd;
+    -fx-border-color: #2b76bd;
+}
+
+#formatInfoButton {
+    -fx-background-color: none;
+    -fx-background-radius: 2em;
+    -fx-border-width: 0em;
+}
+
+#formatInfoIcon {
+    -fx-fill: #46bb55;
+}
+
+#formatInfoIcon-selected {
+    -fx-fill: #299b38;
+}
+
+#validateIcon-accepted {
+    -fx-fill: #46bb55;
+}
+
+#validateIcon-rejected {
+    -fx-fill: #d2204a;
+}
+
+#editIcon {
+    -fx-fill: #F4F4F4;
+}
+
+#addIcon {
+    -fx-fill: #F4F4F4;
+}
+
+#removeIcon {
+    -fx-fill: #F4F4F4;
+}
+
+#removeButtonCell {
+    -fx-background-color: none;
+    -fx-background-radius: 0em;
+    -fx-border-width: 0em;
+}
+
+#removeButtonCell:hover {
+    -fx-background-color: #dadada;
+    -fx-border-width: none;
+}
 
 .button-bar {
     -fx-background-color: #2b76bd;
@@ -190,6 +278,24 @@
 
 .list-view {
     -fx-background-insets: 0;
+}
+
+.text-area {
+    -fx-background-color: #FFFFFF;
+    -fx-border-width: 0.1em;
+    -fx-border-color: #d08e9e;
+    -fx-text-fill: black;
+}
+
+.text-area:focused {
+    -fx-background-color: #FFFFFF;
+    -fx-border-width: 0.1em;
+    -fx-border-color: #d2204a;
+    -fx-text-fill: black;
+}
+
+.content {
+    -fx-background-color: #FFFFFF;
 }
 
 #searchHBox {

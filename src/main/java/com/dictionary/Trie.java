@@ -16,7 +16,7 @@ public class Trie {
     }
 
     /**
-     * Insert a word to the trie.
+     * Insert a word to the trie. If the word already exists, append the definition.
      * @param root Root of the trie.
      * @param word Word to insert.
      * @see Trie#remove(Trie, String)
@@ -50,7 +50,7 @@ public class Trie {
      * @param target Word to remove.
      * @see Trie#insert(Trie, Word)
      */
-    public static void remove(Trie root, String target) {
+    public static void remove(Trie root, String target) throws Exception {
         Trie tmp = root;
         for (int i = 0; i < target.length(); i++) {
             char x = target.charAt(i);

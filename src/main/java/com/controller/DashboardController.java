@@ -166,6 +166,6 @@ public class DashboardController implements Initializable {
     }
 
     public void onExportClicked() {
-        dictionary.export();
+        dictionary.export(false);
     }
 }

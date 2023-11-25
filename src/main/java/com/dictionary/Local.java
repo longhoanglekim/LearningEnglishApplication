@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 
 public class Local extends Dictionary {
     private static final String VN_CHAR = "áàảãạăắằẳẵặâấầẩẫậđéèẻẽẹêếềểễệíìỉĩịóòỏõọôốồổỗộơớờởỡợúùủũụưứừửữựýỳỷỹỵđ";
+    private static final String path = "./src/main/resources/data/Beta_dictionary.txt";
     private static Trie words;
     /**
      * Initialize the dictionary.
@@ -38,7 +39,7 @@ public class Local extends Dictionary {
         File irregular = null;
         Word newWord;
         try {
-            dict = new File("./src/main/resources/data/dictionary.txt");
+            dict = new File(path);
             irregular = new File("./src/main/resources/data/irregular.txt");
         } catch (Exception e) {
             throw new FileNotFoundException("Dictionary file not found.");
@@ -47,10 +48,14 @@ public class Local extends Dictionary {
             Scanner sc = new Scanner(new FileReader(dict));
             while (sc.hasNextLine()) {
                 String line = sc.nextLine();
+                if (line.length() == 0) {
+                    continue;                //Skip empty line.
+                }
                 String[] wap = line.split("/");
                 String target = wap[0].substring(1);    //Remove the '@' char.
+                //Remove the last space (for some words to group)
                 if (target.charAt(target.length() - 1) == ' ') {
-                    target = target.substring(0, target.length() - 1); //Remove the last space (for some words to group)
+                    target = target.substring(0, target.length() - 1);
                 }
                 String pronounce;
                 StringBuilder explain = new StringBuilder();
@@ -63,7 +68,6 @@ public class Local extends Dictionary {
                         explain.append(line_explain);
                     }
                 }
-                sc.skip("\\R?");        //  Skip the empty line/'\n' character.
                 if (wap.length == 1) {
                     pronounce = "";
                 } else {
@@ -82,6 +86,7 @@ public class Local extends Dictionary {
                     Trie.lookup(words, target).setIrregular(irregular_form);
                 }
             }*/
+            sc.close();
         } catch (Exception e) {
             System.err.println(e.getMessage());
             throw new Exception("Cannot read dictionary file.");
@@ -132,7 +137,7 @@ public class Local extends Dictionary {
      */
     @Override
     public void addWord(Word word) {
-
+        Trie.insert(words, word);
     }
 
     /**
@@ -142,7 +147,11 @@ public class Local extends Dictionary {
      */
     @Override
     public void removeWord(String word) {
-
+        try {
+            Trie.remove(words, word);
+        } catch (Exception e) {
+            System.err.println("Word not found: " + word);
+        }
     }
 
     /**
@@ -152,24 +161,33 @@ public class Local extends Dictionary {
      */
     @Override
     public void editWord(Word word) {
-
+        try {
+            Trie.remove(words, word.getTarget());
+        } catch (Exception e) {
+            System.err.println("Word not found: " + word.getTarget());
+        }
+        Trie.insert(words, word);
     }
 
     /**
      * Export the dictionary to a file/database.
      */
     @Override
-    public void export() {
-        FileChooser directoryChooser = new FileChooser();
-        directoryChooser.setTitle("Export dictionary");
-        directoryChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Text Document files", "*.txt"));
-        directoryChooser.setInitialFileName("Beta_dictionary.txt");
-        directoryChooser.setInitialDirectory(new File("./src/main/resources/data/"));
+    public void export(boolean defaultPath) {
+        File selectedDirectory = null;
+        if (!defaultPath) {
+            FileChooser directoryChooser = new FileChooser();
+            directoryChooser.setTitle("Export dictionary");
+            directoryChooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("Text Document files", "*.txt"));
+            directoryChooser.setInitialFileName("Beta_dictionary.txt");
+            directoryChooser.setInitialDirectory(new File("./src/main/resources/data/"));
 
-        File selectedDirectory = directoryChooser.showSaveDialog(null);
-        if (selectedDirectory == null) return;
-
+            selectedDirectory = directoryChooser.showSaveDialog(null);
+            if (selectedDirectory == null) return;
+        } else {
+            selectedDirectory = new File("./src/main/resources/data/Beta_dictionary.txt");
+        }
         try (FileWriter fileWriter = new FileWriter(selectedDirectory)) {
             for (Word word : Trie.getAllWords(words)) {
                 fileWriter.write(word.toString());

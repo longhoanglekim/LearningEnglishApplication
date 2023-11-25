@@ -143,7 +143,7 @@ public class View {
         stage.show();
         stage.setOnCloseRequest(event -> {
             dictionary.close();
-            System.out.println("Closing application");
+            System.out.println("Application closed!");
             Platform.exit();
             System.exit(0);
         });

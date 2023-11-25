@@ -7,7 +7,6 @@ public class Word {
     private String target;
     private String pronounce;
     private String explain;
-    boolean canBeautify;
     private ArrayList<String> definition = new ArrayList<>();
 
     /**
@@ -20,18 +19,19 @@ public class Word {
         this.target = target;
         this.pronounce = pronounce;
         this.explain = explain;
-        try {
-            beautifyDefinition();
-            canBeautify = true;
-        } catch (Exception e) {
-            System.err.println("Can't beautify");
-        }
+
+        beautifyWord();
     }
 
     /**
      * Modify the definition of the word to make it more readable when rendering.
+     * Define '-' as a block/meaning.
+     * Define '=' as a example in 2 language.
+     * Define '!' as a example of use.
+     * Define '*' as a part of speech.
+     * Define '|' as none type special.
      */
-    private void beautifyDefinition() throws Exception {
+    private void beautifyWord() {
         Scanner sc = new Scanner(explain);
         String s;
         int indexBlock = 1;
@@ -43,9 +43,11 @@ public class Word {
             } else if (firstChar == '=') {
                 String[] tmp = s.split("\\+");
                 s = "=٠ " + tmp[0].substring(1);
-                s += (tmp.length > 1) ? "\n" + tmp[1] : "";
+                s += (tmp.length > 1) ? "\n " + tmp[1] : "";
             } else if (firstChar == '!') {
                 s = "!- " + s.substring(1);
+            } else if (firstChar != '*') {
+                s = "|" + s;
             }
             definition.add(s);
         }
@@ -77,10 +79,6 @@ public class Word {
 
     public ArrayList<String> getDefinition() {
         return definition;
-    }
-
-    public boolean getStatus() {
-        return canBeautify;
     }
 
     @Override

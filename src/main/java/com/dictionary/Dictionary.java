@@ -56,7 +56,7 @@ public abstract class Dictionary {
     /**
      * Export the dictionary to a file/database.
      */
-    public abstract void export();
+    public abstract void export(boolean defaultPath);
 
     /**
      * Get the list of bookmark.
@@ -83,6 +83,7 @@ public abstract class Dictionary {
     }
 
     public void close() {
+        export(true);
         try {
             bookmarkList.saveBookmark();
         } catch (IOException e) {

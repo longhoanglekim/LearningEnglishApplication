@@ -1,18 +1,19 @@
 package com.dictionary;
 
+import javafx.collections.transformation.SortedList;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
 public class Database extends Dictionary {
-    private Connection databaseLink;
+    private static Connection databaseLink;
 
     /**
      * Get database connection from a database.
-     * @return database link.
      */
-    public Connection getDatabaseConnection() throws Exception {
+    public void getDatabaseConnection() throws Exception {
         String databaseName = "dictionary";
         String databaseUser = "root";
         String databasePassword = "lyhongduc123";
@@ -24,7 +25,6 @@ public class Database extends Dictionary {
             Logger.getLogger(Database.class.getName()).warning("SQLException: " + e.getMessage());
             throw new Exception("Cannot connect to database.");
         }
-        return databaseLink;
     }
 
     /**
@@ -150,15 +150,42 @@ public class Database extends Dictionary {
      */
     @Override
     public void editWord(Word word) {
-
+        String query = "UPDATE tbl_edict SET pronounce = ?, detail = ? WHERE word = ?";
+        try {
+            PreparedStatement preparedStatement = databaseLink.prepareStatement(query);
+            preparedStatement.setString(1, word.getPronounce());
+            preparedStatement.setString(2, word.getExplain());
+            preparedStatement.setString(3, word.getTarget());
+            preparedStatement.executeUpdate();
+            System.out.println("Edited word: " + word.getTarget());
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     /**
      * Export the dictionary to a file/database.
      */
     @Override
-    public void export() {
+    public void export(boolean defaultPath) {
+        List<Word> words = new ArrayList<>();
         String query = "SELECT * FROM tbl_edict";
+        try {
+            Statement statement = databaseLink.createStatement();
+            ResultSet queryOutput = statement.executeQuery(query);
+            while (queryOutput.next()) {
+                String target = queryOutput.getString("word");
+                String pronounce = queryOutput.getString("pronounce");
+                String explain = queryOutput.getString("detail");
+                Word word = new Word(target, pronounce, explain);
+                words.add(word);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        words.sort((o1, o2) -> o1.getTarget().compareTo(o2.getTarget()));
 
     }
 

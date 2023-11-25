@@ -16,104 +16,80 @@
 
 <AnchorPane stylesheets="@../css/Dictionary.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.DictionaryController">
    <BorderPane prefHeight="626.0" prefWidth="772.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-      <top>
-         <HBox prefHeight="40.0" prefWidth="772.0" styleClass="hbox" BorderPane.alignment="CENTER">
-            <children>
-               <HBox alignment="BASELINE_CENTER" prefHeight="40.0" prefWidth="225.0" styleClass="button-bar">
-                  <children>
-                   <Button fx:id="searchList" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#searchListView" styleClass="list-button" HBox.hgrow="NEVER">
-                        <graphic>
-                           <FontAwesomeIconView fx:id="searchIcon" glyphName="SEARCH" size="20">
-                              <styleClass>
-                                 <String fx:value="fontawesome-icon" />
-                                 <String fx:value="listbutton-fontawesome-icon" />
-                              </styleClass>
-                           </FontAwesomeIconView>
-                        </graphic>
-                        <HBox.margin>
-                           <Insets top="5.0" />
-                        </HBox.margin>
-                     </Button>
-                     <Button fx:id="historyList" mnemonicParsing="false" onAction="#historyListView" styleClass="list-button">
-                        <graphic>
-                           <FontAwesomeIconView fx:id="historyIcon" glyphName="HISTORY" size="20">
-                              <styleClass>
-                                 <String fx:value="fontawesome-icon" />
-                                 <String fx:value="listbutton-fontawesome-icon" />
-                              </styleClass>
-                           </FontAwesomeIconView>
-                        </graphic>
-                        <HBox.margin>
-                           <Insets top="5.0" />
-                        </HBox.margin>
-                     </Button>
-                     <Button fx:id="bookmarkList" mnemonicParsing="false" onAction="#bookmarkListView" styleClass="list-button">
-                        <graphic>
-                           <FontAwesomeIconView fx:id="bookmarkIcon" glyphName="BOOKMARK" size="20">
-                              <styleClass>
-                                 <String fx:value="fontawesome-icon" />
-                                 <String fx:value="listbutton-fontawesome-icon" />
-                              </styleClass>
-                           </FontAwesomeIconView>
-                        </graphic>
-                        <HBox.margin>
-                           <Insets top="5.0" />
-                        </HBox.margin>
-                     </Button>
-                  </children>
-               </HBox>
-               <FontAwesomeIconView glyphName="BOOK" size="30" styleClass="fontawesome-icon">
-                  <HBox.margin>
-                     <Insets left="10.0" top="5.0" />
-                  </HBox.margin>
-               </FontAwesomeIconView>
-               <Label styleClass="text" text="Definition">
-                  <HBox.margin>
-                     <Insets left="10.0" top="10.0" />
-                  </HBox.margin>
-                  <font>
-                     <Font size="15.0" />
-                  </font>
-               </Label>
-            </children>
-         </HBox>
-      </top>
       <center>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="576.0" prefWidth="542.0" styleClass="definitionArea" BorderPane.alignment="CENTER">
             <children>
-               <Label fx:id="targetField" layoutX="14.0" layoutY="120.0" minHeight="-Infinity" prefHeight="35.0" prefWidth="275.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="5.0">
-                  <font>
-                     <Font size="20.0" />
-                  </font>
-               </Label>
-               <Label fx:id="pronounceField" layoutX="14.0" layoutY="72.0" prefHeight="20.0" prefWidth="275.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="45.0">
-                  <font>
-                     <Font size="17.0" />
-                  </font>
-               </Label>
-               <ScrollPane fitToHeight="true" fitToWidth="true" layoutY="86.0" prefHeight="500.0" prefWidth="546.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0">
-                  <content>
-                     <VBox fx:id="definitionField" prefHeight="506.0" prefWidth="548.0" />
-                  </content>
-               </ScrollPane>
-               <Button fx:id="bookmarkButton" layoutX="424.0" layoutY="25.0" mnemonicParsing="false" styleClass="normal-button" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="25.0">
-                  <graphic>
-                     <FontAwesomeIconView fx:id="bookmarkDefIcon" glyphName="BOOKMARK" size="25" stroke="#db040400" text="" />
-                  </graphic>
-               </Button>
-               <Button fx:id="speakButton" layoutX="353.0" layoutY="25.0" mnemonicParsing="false" styleClass="normal-button" text="US" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="25.0">
-                  <graphic>
-                     <FontAwesomeIconView glyphName="VOLUME_UP" size="25" />
-                  </graphic>
-               </Button>
-               <TextField fx:id="pfield" layoutX="14.0" layoutY="46.0" prefHeight="26.0" prefWidth="275.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="45.0" />
-               <TextField fx:id="tfield" layoutX="14.0" layoutY="12.0" prefHeight="35.0" prefWidth="275.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="5.0" />
+               <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <children>
+                     <AnchorPane minHeight="-Infinity" prefHeight="40.0" prefWidth="546.0" styleClass="hbox">
+                        <children>
+                           <Label fx:id="currentFieldLabel" styleClass="text" text="Definition" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0">
+                              <font>
+                                 <Font size="15.0" />
+                              </font>
+                              <graphic>
+                                 <FontAwesomeIconView glyphName="BOOK" size="30" styleClass="fontawesome-icon" />
+                              </graphic>
+                           </Label>
+                           <HBox layoutX="142.0" layoutY="4.0" prefHeight="40.0" prefWidth="225.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <children>
+                                 <Button fx:id="editButton" alignment="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="75.0" styleClass="tool-button" text="Edit">
+                                    <graphic>
+                                       <FontAwesomeIconView fx:id="editIcon" glyphName="EDIT" size="20" />
+                                    </graphic>
+                                 </Button>
+                                 <Button fx:id="addButton" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="40.0" prefWidth="75.0" styleClass="tool-button" text="Add">
+                                    <graphic>
+                                       <FontAwesomeIconView fx:id="addIcon" glyphName="PLUS_CIRCLE" size="20" />
+                                    </graphic>
+                                 </Button>
+                                 <Button fx:id="removeButton" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="40.0" prefWidth="81.0" styleClass="tool-button" text="Remove">
+                                    <graphic>
+                                       <FontAwesomeIconView fx:id="removeIcon" glyphName="MINUS_CIRCLE" size="20" />
+                                    </graphic>
+                                 </Button>
+                              </children>
+                           </HBox>
+                        </children>
+                     </AnchorPane>
+                     <AnchorPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                        <children>
+                           <TextField id="word" fx:id="tfield" minHeight="-Infinity" prefHeight="35.0" prefWidth="275.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
+                           <TextField id="wordpronounce" fx:id="pfield" layoutY="26.0" minHeight="-Infinity" prefHeight="35.0" prefWidth="275.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="35.0" />
+                           <Button fx:id="speakButton" mnemonicParsing="false" styleClass="normal-button" text="US" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="25.0">
+                              <graphic>
+                                 <FontAwesomeIconView glyphName="VOLUME_UP" size="25" />
+                              </graphic>
+                           </Button>
+                           <Button fx:id="bookmarkButton" mnemonicParsing="false" styleClass="normal-button" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="25.0">
+                              <graphic>
+                                 <FontAwesomeIconView fx:id="bookmarkDefIcon" glyphName="BOOKMARK" size="25" stroke="#db040400" text="" />
+                              </graphic>
+                           </Button>
+                           <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="500.0" prefWidth="546.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0">
+                              <content>
+                                 <VBox fx:id="definitionField" prefHeight="506.0" prefWidth="548.0" />
+                              </content>
+                           </ScrollPane>
+                           <Button fx:id="cancelButton" cancelButton="true" layoutX="374.0" layoutY="17.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="60.0" text="Cancel" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="15.0" />
+                           <Button fx:id="saveButton" layoutX="432.0" layoutY="16.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="60.0" text="Save" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="15.0" />
+                           <Button fx:id="formatInfoButton" layoutX="502.0" layoutY="13.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="33.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="15.0">
+                              <graphic>
+                                 <FontAwesomeIconView fx:id="formatInfoIcon" fill="#30b942" glyphName="INFO_CIRCLE" size="25" />
+                              </graphic>
+                           </Button>
+                           <FontAwesomeIconView id="validateIcon-accepted" fx:id="validateIcon" glyphName="CHECK_CIRCLE" layoutX="274.0" layoutY="29.0" size="20" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="15.0" />
+                        </children>
+                     </AnchorPane>
+                  </children>
+               </VBox>
             </children>
          </AnchorPane>
       </center>
       <left>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="225.0" BorderPane.alignment="CENTER">
-               <HBox fx:id="searchHBox" prefHeight="40.0" prefWidth="225.0" styleClass="search-box" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <ListView fx:id="listOfWord" prefHeight="546.0" prefWidth="226.0" stylesheets="@../css/Dashboard.css" AnchorPane.topAnchor="80.0" />
+               <HBox fx:id="searchHBox" prefHeight="40.0" prefWidth="225.0" styleClass="search-box" AnchorPane.topAnchor="40.0">
                    <opaqueInsets>
                        <Insets left="10.0" />
                    </opaqueInsets>
@@ -145,7 +121,49 @@
                   </opaqueInsets>
                </Button>
                </HBox>
-                <ListView fx:id="listOfWord" layoutX="28.0" layoutY="40.0" prefHeight="546.0" prefWidth="226.0" stylesheets="@../css/Dashboard.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="41.0" />
+            <HBox fx:id="buttonHBox" alignment="BASELINE_CENTER" prefHeight="40.0" prefWidth="225.0" styleClass="button-bar">
+               <children>
+                <Button fx:id="searchList" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#searchListView" styleClass="list-button" HBox.hgrow="NEVER">
+                     <graphic>
+                        <FontAwesomeIconView fx:id="searchIcon" glyphName="SEARCH" size="20">
+                           <styleClass>
+                              <String fx:value="fontawesome-icon" />
+                              <String fx:value="listbutton-fontawesome-icon" />
+                           </styleClass>
+                        </FontAwesomeIconView>
+                     </graphic>
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="historyList" mnemonicParsing="false" onAction="#historyListView" styleClass="list-button">
+                     <graphic>
+                        <FontAwesomeIconView fx:id="historyIcon" glyphName="HISTORY" size="20">
+                           <styleClass>
+                              <String fx:value="fontawesome-icon" />
+                              <String fx:value="listbutton-fontawesome-icon" />
+                           </styleClass>
+                        </FontAwesomeIconView>
+                     </graphic>
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="bookmarkList" mnemonicParsing="false" onAction="#bookmarkListView" styleClass="list-button">
+                     <graphic>
+                        <FontAwesomeIconView fx:id="bookmarkIcon" glyphName="BOOKMARK" size="20">
+                           <styleClass>
+                              <String fx:value="fontawesome-icon" />
+                              <String fx:value="listbutton-fontawesome-icon" />
+                           </styleClass>
+                        </FontAwesomeIconView>
+                     </graphic>
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
             </AnchorPane>
       </left>
    </BorderPane>

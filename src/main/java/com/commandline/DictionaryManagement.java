@@ -34,18 +34,19 @@ public class DictionaryManagement {
      */
     public static void insertFromFile() {
         try {
-            File file = new File("src/main/java/com/dictionary/dictionaries.txt");
+            File file = new File("src/main/java/com/commandline/demo.txt");
             Scanner sc = new Scanner(file);
 
             while (sc.hasNextLine()) {
                 String data = sc.nextLine();
-                String[] word = data.split(" ", 2);
-                Word newWord = new Word(word[0], word[1]);
+                String[] word = data.split("\t");
+                Word newWord = new Word(word[0], word[word.length - 1]);
                 Dictionary.words.add(newWord);
             }
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred. No such file or dictionary.");
             e.printStackTrace();
+            System.exit(1);
         }
     }
 
@@ -53,16 +54,15 @@ public class DictionaryManagement {
      * Look up a word in dictionary.
      * @param word Word to look up.
      * @return Word's explain if found, "Not found" otherwise.
-     * @deprecated Use {@link DictionaryCommandline#dictionarySearcher(String)} instead.
      */
-    public static String dictionaryLookup(String word) {
+    public static Word dictionaryLookup(String word) {
         for (int i = 0; i < Dictionary.words.size(); i++) {
             String target = Dictionary.words.get(i).getWord_target();
             if (target.equals(word)) {
-                return Dictionary.words.get(i).getWord_explain();
+                return Dictionary.words.get(i);
             }
         }
-        return "Not found";
+        return null;
     }
 
     /**
@@ -98,7 +98,7 @@ public class DictionaryManagement {
      * Export current local dictionary to txt file.
      */
     public static void dictionaryExportToFile() {
-        File new_file = new File("src/main/java/com/dictionary/demo.txt");
+        File new_file = new File("src/main/java/com/commandline/demo.txt");
         if (!new_file.exists()) {
             try {
                 new_file.createNewFile();
@@ -109,7 +109,7 @@ public class DictionaryManagement {
         try {
             FileWriter writer = new FileWriter(new_file);
             for (Word i : Dictionary.words) {
-                writer.write(i.getWord_target() + " " + i.getWord_explain());
+                writer.write(i.getWord_target() + "\t" + i.getWord_explain());
                 writer.write("\n");
             }
             writer.close();

@@ -99,7 +99,7 @@ public class DictionaryCommandline {
             System.out.println("[6] Game");
             System.out.println("[7] Import from file");
             System.out.println("[8] Export to file");
-            System.out.println("Your action: ");
+            System.out.print("Your action: ");
 
             Scanner sc = new Scanner(System.in);
             int choice = sc.nextInt();
@@ -117,11 +117,16 @@ public class DictionaryCommandline {
                     showAllWords();
                     break;
                 case 4:
-                    System.out.println("Nhap tu ban muon tra cuu:");
+                    System.out.print("Nhap tu ban muon tra cuu: ");
                     sc.nextLine();
                     String lookup_word = sc.nextLine();
-                    System.out.print("Tu ban muon tra cuu la: ");
-                    System.out.println(DictionaryManagement.dictionaryLookup(lookup_word));
+                    Word word = DictionaryManagement.dictionaryLookup(lookup_word);
+                    if (word == null) {
+                        System.out.println("Từ không tồn tại!");
+                    } else {
+                        System.out.print("Từ bạn muốn tra cứu: ");
+                        System.out.println();
+                    }
                     break;
                 case 5:
                     System.out.println("Nhap tu ban muon tim:");
