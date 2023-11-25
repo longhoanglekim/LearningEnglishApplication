@@ -1,0 +1,30 @@
+/* your-styles.css */
+.anchor_pane {
+    -fx-background-color: #0a092d;
+}
+.card_pane {
+    -fx-background-color: #2e3856;
+}
+.text-area {
+    -
+    -fx-control-inner-background: #2e3856;
+    -fx-content-display: center;
+    -fx-text-fill: white;
+}
+.text-area .content {
+    -fx-alignment: center;
+    -fx-background-color: #2e3856;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-insets: 0;
+}
+.text-area .text {
+    -fx-text-alignment: center;
+    -fx-text-fill: white;
+}
+.label {
+    -fx-text-fill: white;
+}
+.text {
+    -fx-text-fill: white;
+}
