@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane stylesheets="@../css/Dictionary.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.DictionaryController">
@@ -78,7 +79,7 @@
                                  <FontAwesomeIconView fx:id="formatInfoIcon" fill="#30b942" glyphName="INFO_CIRCLE" size="25" />
                               </graphic>
                            </Button>
-                           <FontAwesomeIconView id="validateIcon-accepted" fx:id="validateIcon" glyphName="CHECK_CIRCLE" layoutX="274.0" layoutY="29.0" size="20" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="15.0" />
+                           <FontAwesomeIconView id="validateIcon-accepted" fx:id="validateIcon" glyphName="CHECK" layoutX="274.0" layoutY="29.0" size="20" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="15.0" />
                         </children>
                      </AnchorPane>
                   </children>
@@ -88,7 +89,7 @@
       </center>
       <left>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="225.0" BorderPane.alignment="CENTER">
-                <ListView fx:id="listOfWord" prefHeight="546.0" prefWidth="226.0" stylesheets="@../css/Dashboard.css" AnchorPane.topAnchor="80.0" />
+                <ListView fx:id="listOfWord" prefHeight="519.0" prefWidth="226.0" stylesheets="@../css/Dashboard.css" AnchorPane.bottomAnchor="40.0" AnchorPane.topAnchor="80.0" />
                <HBox fx:id="searchHBox" prefHeight="40.0" prefWidth="225.0" styleClass="search-box" AnchorPane.topAnchor="40.0">
                    <opaqueInsets>
                        <Insets left="10.0" />
@@ -164,6 +165,31 @@
                   </Button>
                </children>
             </HBox>
+            <HBox fx:id="listviewToolBar" alignment="CENTER" layoutX="13.0" layoutY="520.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <children>
+                <Button fx:id="removeSelectedButton" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="70.0" styleClass="round-button" text="Remove&#10;Selected">
+                     <graphic>
+                        <FontAwesomeIconView glyphName="TIMES_CIRCLE" size="25" />
+                     </graphic>
+                  </Button>
+                  <Button fx:id="removeAllButton" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="70.0" styleClass="round-button" text="Remove&#10;All" HBox.hgrow="NEVER">
+                     <graphic>
+                        <FontAwesomeIconView glyphName="TRASH" size="25" />
+                     </graphic>
+                  </Button>
+                  <Button fx:id="moveUpButton" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" styleClass="round-button">
+                     <graphic>
+                        <FontAwesomeIconView glyphName="ARROW_UP" size="25" />
+                     </graphic>
+                  </Button>
+                  <Button fx:id="moveDownButton" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" styleClass="round-button">
+                     <graphic>
+                        <FontAwesomeIconView glyphName="ARROW_DOWN" size="25" text="" />
+                     </graphic>
+                  </Button>
+               </children>
+            </HBox>
+            <Line fx:id="seperateLine" endX="100.0" layoutX="113.0" layoutY="586.0" startX="-100.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0" />
             </AnchorPane>
       </left>
    </BorderPane>

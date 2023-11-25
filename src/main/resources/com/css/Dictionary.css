@@ -73,13 +73,6 @@
     -fx-background-color: #4d91d3;
 }
 
-/*
-.listButton:pressed {
-    -fx-background-color: #9fa3a6;
-    -fx-border-width: 0em;
-}
-*/
-
 /*  Button   */
 .normal-button {
     -fx-background-color: none;
@@ -93,6 +86,30 @@
 }
 .normal-button:pressed {
     -fx-background-color: #a4a8ab;
+    -fx-border-width: none;
+    -fx-background-insets: 0.1em;
+}
+
+.round-button {
+    -fx-background-color: none;
+    -fx-font-size: 8px;
+    -fx-text-fill: #191919;
+}
+
+.round-button:hover {
+    -fx-background-color: #bdc2c5;
+    -fx-border-width: none;
+    -fx-background-insets: 0.1em;
+}
+
+.round-button:pressed {
+    -fx-background-color: #a4a8ab;
+    -fx-border-width: none;
+    -fx-background-insets: 0.1em;
+}
+
+.round-button:disabled {
+    -fx-background-color: #FFFFFF;
     -fx-border-width: none;
     -fx-background-insets: 0.1em;
 }
@@ -301,4 +318,8 @@
 #searchHBox {
     -fx-border-color: #d2204a;
     -fx-border-width: 0.5 0.5 1 0.5;
+}
+
+#listviewToolBar {
+    -fx-background-color: #FFFFFF;
 }

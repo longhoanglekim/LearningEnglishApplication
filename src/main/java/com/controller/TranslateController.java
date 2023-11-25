@@ -13,6 +13,8 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -29,6 +31,9 @@ public class TranslateController implements Initializable {
 
     @FXML
     private Button toSpeakButton;
+
+    @FXML
+    private Button copyToClipboardButton;
 
     @FXML
     private FontAwesomeIconView fromSpeakIcon;
@@ -146,6 +151,13 @@ public class TranslateController implements Initializable {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        });
+        copyToClipboardButton.setOnAction(event -> {
+            String text = toField.getText();
+            Clipboard clipboard = Clipboard.getSystemClipboard();
+            ClipboardContent clipboardContent = new ClipboardContent();
+            clipboardContent.putString(text);
+            clipboard.setContent(clipboardContent);
         });
         switchButton.setOnAction(event -> switchLanguage());
     }

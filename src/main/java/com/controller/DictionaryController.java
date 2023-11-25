@@ -19,11 +19,13 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import org.controlsfx.control.Notifications;
 
 import java.net.URL;
+import java.util.Collections;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -121,6 +123,24 @@ public class DictionaryController implements Initializable {
     @FXML
     private Button formatInfoButton;
 
+    @FXML
+    private HBox listviewToolBar;
+
+    @FXML
+    private Button removeSelectedButton;
+
+    @FXML
+    private Button removeAllButton;
+
+    @FXML
+    private Button moveUpButton;
+
+    @FXML
+    private Button moveDownButton;
+
+    @FXML
+    private Line seperateLine;
+
     private ListViewType listViewType;
     private Mode mode;
     private SearchTask searchTask;
@@ -140,13 +160,18 @@ public class DictionaryController implements Initializable {
         //setStyleProperty();
         setStyleListButton("searchList");
         // Set button action for search field and list view.
-        deleteButton.setVisible(false);
         bookmarkButton.setVisible(false);
         speakButton.setVisible(false);
         cancelButton.setVisible(false);
         saveButton.setVisible(false);
         formatInfoButton.setVisible(false);
         validateIcon.setVisible(false);
+        seperateLine.setVisible(false);
+        listviewToolBar.setVisible(false);
+        deleteButton.visibleProperty().bind(searchField.textProperty().isNotEmpty());
+        removeSelectedButton.disableProperty().bind(listOfWord.getSelectionModel().selectedItemProperty().isNull());
+        moveUpButton.disableProperty().bind(listOfWord.getSelectionModel().selectedItemProperty().isNull());
+        moveDownButton.disableProperty().bind(listOfWord.getSelectionModel().selectedItemProperty().isNull());
 
         tfield.setEditable(false);
         pfield.setEditable(false);
@@ -231,32 +256,74 @@ public class DictionaryController implements Initializable {
         });
         tfield.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == null || newValue.isEmpty()) {
-                validateIcon.glyphNameProperty().setValue("TIMES_CIRCLE");
+                validateIcon.glyphNameProperty().setValue("TIMES");
                 validateIcon.setId("validateIcon-rejected");
                 return;
             }
             if (mode == Mode.ADD) {
                 if (dictionary.lookup(newValue) != null) {
-                    validateIcon.glyphNameProperty().setValue("TIMES_CIRCLE");
+                    validateIcon.glyphNameProperty().setValue("TIMES");
                     validateIcon.setId("validateIcon-rejected");
                 } else {
-                    validateIcon.glyphNameProperty().setValue("CHECK_CIRCLE");
+                    validateIcon.glyphNameProperty().setValue("CHECK");
                     validateIcon.setId("validateIcon-accepted");
                 }
             } else if (mode == Mode.EDIT) {
                 if (newValue.equals(currentWord)) {
-                    validateIcon.glyphNameProperty().setValue("CHECK_CIRCLE");
+                    validateIcon.glyphNameProperty().setValue("CHECK");
                     validateIcon.setId("validateIcon-accepted");
                 } else {
                     currentWordObject = dictionary.lookup(tfield.getText());
                     if (currentWordObject != null) {
-                        validateIcon.glyphNameProperty().setValue("TIMES_CIRCLE");
+                        validateIcon.glyphNameProperty().setValue("TIMES");
                         validateIcon.setId("validateIcon-rejected");
                     } else {
-                        validateIcon.glyphNameProperty().setValue("CHECK_CIRCLE");
+                        validateIcon.glyphNameProperty().setValue("CHECK");
                         validateIcon.setId("validateIcon-accepted");
                     }
                 }
+            }
+        });
+
+        removeSelectedButton.setOnAction(event -> {
+            if (listViewType == ListViewType.HISTORY) {
+                dictionary.getHistoryList().remove(listOfWord.getSelectionModel().getSelectedItem());
+                listOfWord.getItems().remove(listOfWord.getSelectionModel().getSelectedItem());
+            } else if (listViewType == ListViewType.BOOKMARK) {
+                dictionary.getBookmarkList().remove(listOfWord.getSelectionModel().getSelectedItem());
+                listOfWord.getItems().remove(listOfWord.getSelectionModel().getSelectedItem());
+            }
+        });
+
+        removeAllButton.setOnAction(event -> {
+            if (listViewType == ListViewType.HISTORY) {
+                dictionary.getHistoryList().getList().clear();
+                listOfWord.getItems().clear();
+            } else if (listViewType == ListViewType.BOOKMARK) {
+                dictionary.getBookmarkList().getList().clear();
+                listOfWord.getItems().clear();
+            }
+        });
+
+        moveUpButton.setOnAction(event -> {
+            int index = listOfWord.getSelectionModel().getSelectedIndex();
+            if (index > 0) {
+                String temp = listOfWord.getItems().get(index - 1);
+                listOfWord.getItems().set(index - 1, listOfWord.getItems().get(index));
+                listOfWord.getItems().set(index, temp);
+                listOfWord.getSelectionModel().select(index - 1);
+                Collections.swap(dictionary.getBookmarkList().getList(), index - 1, index);
+            }
+        });
+
+        moveDownButton.setOnAction(event -> {
+            int index = listOfWord.getSelectionModel().getSelectedIndex();
+            if (index < listOfWord.getItems().size() - 1) {
+                String temp = listOfWord.getItems().get(index + 1);
+                listOfWord.getItems().set(index + 1, listOfWord.getItems().get(index));
+                listOfWord.getItems().set(index, temp);
+                listOfWord.getSelectionModel().select(index + 1);
+                Collections.swap(dictionary.getBookmarkList().getList(), index + 1, index);
             }
         });
 
@@ -269,7 +336,7 @@ public class DictionaryController implements Initializable {
         copyButton.setOnAction(event -> onCopyClick());
         deleteButton.setOnAction(event -> onDeleteClick());
         onActionSearchField();
-
+        searchListView();
         Platform.runLater(() -> searchField.requestFocus());
     }
 
@@ -532,13 +599,9 @@ public class DictionaryController implements Initializable {
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
             // Clear the list view if the search field is empty.
             if (newValue == null || newValue.isEmpty()) {
-                deleteButton.setVisible(false);
                 listOfWord.getItems().clear();
             // Otherwise, search the dictionary and update the list view.
             } else {
-                if (!deleteButton.isVisible()) {
-                    deleteButton.setVisible(true);
-                }
                 if (!newValue.equals(oldValue)) {
                     // Force refresh the list view.
                     listOfWord.getItems().clear();
@@ -573,6 +636,9 @@ public class DictionaryController implements Initializable {
             searchHBox.setVisible(true);
             AnchorPane.setTopAnchor(listOfWord, searchHBox.getHeight() + buttonHBox.getHeight());
         }
+        AnchorPane.setBottomAnchor(listOfWord, 0.0);
+        listviewToolBar.setVisible(false);
+        seperateLine.setVisible(false);
     }
 
     /**
@@ -589,6 +655,13 @@ public class DictionaryController implements Initializable {
             searchHBox.setVisible(false);
             AnchorPane.setTopAnchor(listOfWord, buttonHBox.getHeight());
         }
+        AnchorPane.setBottomAnchor(listOfWord, listviewToolBar.getHeight());
+        listviewToolBar.setVisible(true);
+        listviewToolBar.getChildren().remove(moveUpButton);
+        listviewToolBar.getChildren().remove(moveDownButton);
+        //removeSelectedButton.setDisable(true);
+        seperateLine.setVisible(true);
+
         listViewType = ListViewType.HISTORY;
         setStyleListButton("historyList");
     }
@@ -597,6 +670,9 @@ public class DictionaryController implements Initializable {
      * Update the list view to bookmark view.
      */
     public void bookmarkListView() {
+        if (listViewType == ListViewType.BOOKMARK) {
+            return;
+        }
         searchField.clear();
         listOfWord.getItems().clear();
         if (!dictionary.getBookmarkList().getList().isEmpty()) {
@@ -607,6 +683,17 @@ public class DictionaryController implements Initializable {
             searchHBox.setVisible(false);
             AnchorPane.setTopAnchor(listOfWord, buttonHBox.getHeight());
         }
+        AnchorPane.setBottomAnchor(listOfWord, listviewToolBar.getHeight());
+        listviewToolBar.setVisible(true);
+        if (!listviewToolBar.getChildren().contains(moveUpButton)) {
+            listviewToolBar.getChildren().add(moveUpButton);
+        }
+        if (!listviewToolBar.getChildren().contains(moveDownButton)) {
+            listviewToolBar.getChildren().add(moveDownButton);
+        }
+
+        seperateLine.setVisible(true);
+
         listViewType = ListViewType.BOOKMARK;
         setStyleListButton("bookmarkList");
     }
