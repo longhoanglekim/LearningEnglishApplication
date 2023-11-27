@@ -2,6 +2,7 @@ package com.commandline;
 
 import java.util.*;
 
+
 public class DictionaryCommandline {
     /**
      * Show all words in dictionary.
@@ -57,28 +58,23 @@ public class DictionaryCommandline {
             set.add(Dictionary.words.get(n));
         }
         Iterator<Word> iterator = set.iterator();
-        boolean shouldEnd = false;
         while (iterator.hasNext()) {
             Word element = iterator.next();
-            System.out.print(element.getWord_explain() + " la: ");
-            String guess = sc.nextLine();
-            while (!guess.equals(element.getWord_target())) {
-                count++;
+            System.out.println(element.getWord_explain() + " la: ");
+
+            boolean isCorrect = showChoiceGame(element.getWord_target());
+            if (!isCorrect) {
                 System.out.print("Sai co ket thuc?, y/n ");
                 if(sc.nextLine().equals("y")) {
-                    shouldEnd = true;
                     break;
                 }
-                System.out.print("Doan lai la: ");
-                guess = sc.nextLine();
+                count++;
             }
-            System.out.println("good!");
-            if(shouldEnd) break;
+
         }
         System.out.println("ban dung: " + (count + 5) + " lan de hoan thanh");
         System.out.println("Choi tiep?, y/n");
-        if(sc.nextLine().equals("y")) return true;
-        return false;
+        return sc.nextLine().equals("y");
     }
 
     /**
@@ -151,4 +147,33 @@ public class DictionaryCommandline {
             }
         }
     }
+
+    private boolean showChoiceGame(String answer) {
+        Hashtable<Integer, String> hashtable = new Hashtable<>();
+        int choice = new Random().nextInt(4);
+        for (int i = 0; i < 4; i++) {
+            if (i == choice) {
+                hashtable.put(i + 1, answer);
+            } else {
+                int random = new Random().nextInt(Dictionary.words.size());
+                while (Dictionary.words.get(random).getWord_target().equals(answer) || hashtable.containsValue(Dictionary.words.get(random).getWord_target())) {
+                    random = new Random().nextInt(Dictionary.words.size());
+                }
+                hashtable.put(i + 1, Dictionary.words.get(random).getWord_target());
+            }
+        }
+        for (int i = 0; i < 4; i++) {
+            System.out.println((i + 1) + ". " + hashtable.get(i + 1));
+        }
+        System.out.print("Chon dap an [1/2/3/4]: ");
+        int input = new Scanner(System.in).nextInt();
+        if (input == choice + 1) {
+            System.out.println("Dung");
+            return true;
+        } else {
+            System.out.println("Sai vcl");
+            return false;
+        }
+    }
+
 }
