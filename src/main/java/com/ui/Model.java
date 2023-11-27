@@ -11,18 +11,17 @@ public class Model {
     private static Model instance;
 
     public static Dictionary dictionary;
-    public static Bookmark bookmark;
+
 
     private Model() {
-//        dictionary = new Database();
-//        if (!dictionary.initialize()) {
-        dictionary = new Local();
-        if (!dictionary.initialize()) {
-            System.out.println("Cannot initialize dictionary");
-            Platform.exit();
-        }
-        bookmark = new Bookmark();
-//        }
+        //dictionary = new Database();
+        //if (!dictionary.initialize()) {
+            dictionary = new Local();
+            if (!dictionary.initialize()) {
+                System.out.println("Cannot initialize dictionary");
+                Platform.exit();
+            }
+        //}
         view = new View();
     }
 

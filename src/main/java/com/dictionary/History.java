@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class History {
-    private static final String HISTORY_PATH = "src/main/resources/data/history.txt";
+    private static final String HISTORY_PATH = "src/main/resources/data/txt/history.txt";
     private static final int LIMIT = 50;
     private final List<String> historyList = new ArrayList<>();
 

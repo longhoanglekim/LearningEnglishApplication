@@ -1,6 +1,7 @@
 package com.task;
 
 import javafx.concurrent.Task;
+
 import java.util.List;
 
 import static com.ui.Model.dictionary;
@@ -15,10 +16,11 @@ public class SearchTask extends Task<List<String>> {
     @Override
     protected List<String> call() {
         List<String> result = dictionary.search(word);
+        updateMessage(word);
         if (isCancelled()) {
             return null;
         }
-        System.out.println(result.size());
+        System.out.println(word + ": " + result.size());
         return result;
     }
 }

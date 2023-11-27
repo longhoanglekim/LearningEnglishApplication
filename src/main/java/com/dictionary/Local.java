@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 public class Local extends Dictionary {
     private static final String VN_CHAR = "áàảãạăắằẳẵặâấầẩẫậđéèẻẽẹêếềểễệíìỉĩịóòỏõọôốồổỗộơớờởỡợúùủũụưứừửữựýỳỷỹỵđ";
-    private static final String path = "./src/main/resources/data/Beta_dictionary.txt";
+    private static final String path = "./src/main/resources/data/txt/dictionary.txt";
     private static Trie words = new Trie();
     /**
      * Initialize the dictionary.
@@ -123,7 +123,7 @@ public class Local extends Dictionary {
     public Word lookup(String word) {
         Word result = Trie.lookup(words, word);
         if (result != null) {
-            historyList.add(result.getTarget());
+            historyList.add(ACTION.LLOOKUP + result.getTarget());
             return result;
         }
         return null;
@@ -137,6 +137,7 @@ public class Local extends Dictionary {
     @Override
     public void addWord(Word word) {
         Trie.insert(words, word);
+        historyList.add(ACTION.LADD + word.getTarget());
     }
 
     /**
@@ -148,6 +149,7 @@ public class Local extends Dictionary {
     public void removeWord(String word) {
         try {
             Trie.remove(words, word);
+            historyList.add(ACTION.LREMOVE + word);
         } catch (Exception e) {
             System.err.println("Word not found: " + word);
         }
@@ -162,6 +164,7 @@ public class Local extends Dictionary {
     public void editWord(Word word) {
         try {
             Trie.remove(words, word.getTarget());
+            historyList.add(ACTION.LEDIT + word.getTarget());
         } catch (Exception e) {
             System.err.println("Word not found: " + word.getTarget());
         }
@@ -179,13 +182,13 @@ public class Local extends Dictionary {
             directoryChooser.setTitle("Export dictionary");
             directoryChooser.getExtensionFilters().addAll(
                     new FileChooser.ExtensionFilter("Text Document files", "*.txt"));
-            directoryChooser.setInitialFileName("Beta_dictionary.txt");
-            directoryChooser.setInitialDirectory(new File("./src/main/resources/data/"));
+            directoryChooser.setInitialFileName("dictionary_basic.txt");
+            directoryChooser.setInitialDirectory(new File("./src/main/resources/data/txt"));
 
             selectedDirectory = directoryChooser.showSaveDialog(null);
             if (selectedDirectory == null) return;
         } else {
-            selectedDirectory = new File("./src/main/resources/data/Beta_dictionary.txt");
+            selectedDirectory = new File("./src/main/resources/data/txt/dictionary_basic.txt");
         }
         try (FileWriter fileWriter = new FileWriter(selectedDirectory)) {
             for (Word word : Trie.getAllWords(words)) {
@@ -196,5 +199,11 @@ public class Local extends Dictionary {
         } catch (IOException e) {
             Logger.getLogger("Can not export dictionary. Caused by: " + e.getMessage());
         }
+    }
+
+    @Override
+    public void close() {
+        export(true);
+        super.close();
     }
 }

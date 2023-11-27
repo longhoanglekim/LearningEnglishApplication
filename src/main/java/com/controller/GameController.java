@@ -1,7 +1,9 @@
 package com.controller;
 
+import com.game.Hangman;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.animation.*;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -22,7 +24,6 @@ import java.net.URL;
 import java.util.*;
 
 public class GameController implements Initializable {
-    private static final String HANGMAN_PATH = "src/main/resources/data/hangman.txt";
     private static final String soundCorrect = "src/main/resources/com/sound/correctAnswer.mp3";
     private static final String soundDrawing = "src/main/resources/com/sound/drawing.mp3";
     private static final String soundHang = "src/main/resources/com/sound/man_scream.mp3";
@@ -32,11 +33,9 @@ public class GameController implements Initializable {
     @FXML
     GridPane gridPaneConsonants;
     File file;
-    private int currentWrongTime = 0;
 
     public String answer;
-    List<Label> listLabel;
-    List<String> answerList;
+    List<Label> listLabel = new ArrayList<>();
     @FXML
     public HBox Hbox;
 
@@ -95,6 +94,8 @@ public class GameController implements Initializable {
     @FXML private Button buttonY;
     @FXML private Button buttonZ;
 
+    private Hangman game;
+
     public void updateListLabel(String s, int index) {
         listLabel.get(index).setText(s);
     }
@@ -108,19 +109,19 @@ public class GameController implements Initializable {
         //Hbox.setLayoutY();
     }
 
-    public List<String> readFile(String Path, File file) throws FileNotFoundException {
-        List<String> res = new ArrayList<>();
-        file = new File(Path);
-        Scanner sc = new Scanner(new FileReader(file));
-        while (sc.hasNextLine()) {
-            res.add(sc.next());
-        }
-        return res;
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        startConfig();
+        game = new Hangman();
+        Thread loadThread = new Thread(() -> {
+            Platform.runLater(() -> {
+                game.initialize();
+                startConfig();
+            });
+        });
+        loadThread.start();
+
+        initListImage();
+        setOpacity();
         resetButton.setVisible(false);
         resetIcon.setVisible(false);
         resetButton.setOnAction(event -> reset());
@@ -133,21 +134,19 @@ public class GameController implements Initializable {
      * @param event The event triggered when the button is clicked.
      */
     public void addClickEvent(ActionEvent event) {
-        if (!wining()) {
+        if (!game.isGameOver() && !game.isWin()) {
             // Lấy đối tượng gửi sự kiện (button được nhấn)
             Button clickedButton = (Button) event.getSource();
-            if (currentWrongTime < 10) {
+            if (!game.isGameOver()) {
                 handleClickEvent(clickedButton);
                 clickedButton.setVisible(false);
             }
         }
-        if (wining()) {
-            if (wining()) {
-                resetButton.setVisible(true);
-                resetIcon.setVisible(true);
-                System.out.println("Win");
-                //Thêm nhạc win.
-            }
+        if (game.isWin()) {
+            resetButton.setVisible(true);
+            resetIcon.setVisible(true);
+            System.out.println("Win");
+            //Thêm nhạc win.
         }
     }
 
@@ -161,19 +160,15 @@ public class GameController implements Initializable {
         System.out.println(buttonID + " được nhấn!");
         buttonID = buttonID.toLowerCase().substring(6,7);
         char tmp = buttonID.charAt(0);
-        boolean find = false;
-        for (int i = 0; i < answer.length(); i++) {
-            if (answer.charAt(i) == tmp) {
-                listLabel.get(i).setText(buttonID.toUpperCase());
-                find = true;
-            }
-        }
-        if (!find) {
+        if (!game.takeGuess(tmp)) {
             // Draw hangman
-            currentWrongTime++;
             updateImage();
-
         } else {
+            for (int i = 0; i < answer.length(); i++) {
+                if (answer.charAt(i) == tmp) {
+                    listLabel.get(i).setText(buttonID.toUpperCase());
+                }
+            }
             playSoundCorrectAnswer();
         }
     }
@@ -210,7 +205,7 @@ public class GameController implements Initializable {
     }
 
     public void updateImage() {
-        if(currentWrongTime == 10){
+        if(game.isGameOver()){
             animationHang();
             for (int i = 0; i < listLabel.size(); i++) {
                 if(listLabel.get(i).getText().equals("__")) {
@@ -223,9 +218,9 @@ public class GameController implements Initializable {
             resetIcon.setVisible(true);
             System.out.println("Lose");
             // Thêm nhạc thua
-        } else if(currentWrongTime < 10) {
+        } else {
             playSoundDrawing();
-            FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.3), listImageview.get(currentWrongTime - 1));
+            FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.3), listImageview.get(game.getWrongGuess() - 1));
             fadeTransition.setFromValue(0.0);
             fadeTransition.setToValue(1.0);
             fadeTransition.play();
@@ -270,11 +265,15 @@ public class GameController implements Initializable {
     public void reset() {
         System.out.println("reset");
         imageHang.setOpacity(0.0);
-        for (Button button : Arrays.asList(buttonA, buttonB, buttonC, buttonD, buttonE, buttonF, buttonG, buttonH, buttonI, buttonJ, buttonK, buttonL, buttonM, buttonN, buttonO, buttonP, buttonQ, buttonR, buttonS, buttonT, buttonU, buttonV, buttonW, buttonX, buttonY, buttonZ)) {
+        for (Button button : Arrays.asList(buttonA, buttonB, buttonC, buttonD, buttonE,
+                                            buttonF, buttonG, buttonH, buttonI, buttonJ,
+                                            buttonK, buttonL, buttonM, buttonN, buttonO,
+                                            buttonP, buttonQ, buttonR, buttonS, buttonT,
+                                            buttonU, buttonV, buttonW, buttonX, buttonY,
+                                            buttonZ)) {
             button.setVisible(true);
         }
         System.out.println("reset");
-        currentWrongTime = 0;
         startConfig();
     }
 
@@ -284,27 +283,19 @@ public class GameController implements Initializable {
      * and configuring opacity.
      */
     private void startConfig() {
-        listLabel = new ArrayList<>();
-        try {
-            answerList = readFile(HANGMAN_PATH, file);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
-        int randomIndex = new Random().nextInt(answerList.size());
-        answer = answerList.get(randomIndex);
-
+        answer = game.randomWord();
+        listLabel.clear();
         for (int i = 0; i < answer.length(); i++) {
             Label tmp = new Label("__");
             listLabel.add(tmp);
         }
         updateHbox();
-        initListImage();
         setOpacity();
+        initListImage();
     }
 
     private boolean wining() {
-        if (currentWrongTime == 10) {
+        if (!game.isGameOver()) {
             return false;
         }
         for (Label label : listLabel) {

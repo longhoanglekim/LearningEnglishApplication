@@ -1,5 +1,6 @@
 package com.controller;
 
+import com.dictionary.ACTION;
 import com.dictionary.Word;
 import com.task.LookupTask;
 import com.task.SearchTask;
@@ -28,6 +29,8 @@ import java.net.URL;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import static com.ui.Model.dictionary;
 
@@ -147,7 +150,8 @@ public class DictionaryController implements Initializable {
     private TextToSpeechTask speechTask;
     private LookupTask lookupTask;
     private String currentWord;
-    private static Word currentWordObject;
+    private static Word liveWord;
+    private ExecutorService executorService;
 
     /**
      * Initialize the controller, updating the search view list.
@@ -157,6 +161,7 @@ public class DictionaryController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        executorService = Executors.newFixedThreadPool(20);
         //setStyleProperty();
         setStyleListButton("searchList");
         // Set button action for search field and list view.
@@ -206,6 +211,9 @@ public class DictionaryController implements Initializable {
         });
         listOfWord.setOnMouseClicked(event -> {
             currentWord = listOfWord.getSelectionModel().getSelectedItem();
+            if (listViewType == ListViewType.HISTORY) {
+                currentWord = currentWord.substring(1);
+            }
             LookupWord();
         });
 
@@ -261,26 +269,38 @@ public class DictionaryController implements Initializable {
                 return;
             }
             if (mode == Mode.ADD) {
-                if (dictionary.lookup(newValue) != null) {
-                    validateIcon.glyphNameProperty().setValue("TIMES");
-                    validateIcon.setId("validateIcon-rejected");
-                } else {
-                    validateIcon.glyphNameProperty().setValue("CHECK");
-                    validateIcon.setId("validateIcon-accepted");
+                if (lookupTask != null && lookupTask.isRunning()) {
+                    lookupTask.cancel();
                 }
+                lookupTask = new LookupTask(newValue);
+                lookupTask.setOnSucceeded(event -> {
+                    if (lookupTask.getValue() != null) {
+                        validateIcon.glyphNameProperty().setValue("TIMES");
+                        validateIcon.setId("validateIcon-rejected");
+                    }
+                    else {
+                        validateIcon.glyphNameProperty().setValue("CHECK");
+                        validateIcon.setId("validateIcon-accepted");
+                    }
+                });
+                executorService.submit(lookupTask);
             } else if (mode == Mode.EDIT) {
                 if (newValue.equals(currentWord)) {
                     validateIcon.glyphNameProperty().setValue("CHECK");
                     validateIcon.setId("validateIcon-accepted");
                 } else {
-                    currentWordObject = dictionary.lookup(tfield.getText());
-                    if (currentWordObject != null) {
-                        validateIcon.glyphNameProperty().setValue("TIMES");
-                        validateIcon.setId("validateIcon-rejected");
-                    } else {
-                        validateIcon.glyphNameProperty().setValue("CHECK");
-                        validateIcon.setId("validateIcon-accepted");
-                    }
+                    lookupTask = new LookupTask(newValue);
+                    lookupTask.setOnSucceeded(event -> {
+                        if (lookupTask.getValue() != null) {
+                            validateIcon.glyphNameProperty().setValue("TIMES");
+                            validateIcon.setId("validateIcon-rejected");
+                        } else {
+                            validateIcon.glyphNameProperty().setValue("CHECK");
+                            validateIcon.setId("validateIcon-accepted");
+                        }
+                        liveWord = lookupTask.getValue();
+                    });
+                    executorService.submit(lookupTask);
                 }
             }
         });
@@ -335,6 +355,7 @@ public class DictionaryController implements Initializable {
         bookmarkList.setOnAction(event -> bookmarkListView());
         copyButton.setOnAction(event -> onCopyClick());
         deleteButton.setOnAction(event -> onDeleteClick());
+
         onActionSearchField();
         searchListView();
         Platform.runLater(() -> searchField.requestFocus());
@@ -344,6 +365,7 @@ public class DictionaryController implements Initializable {
      * Get the current word and show its definition.
      */
     public void LookupWord() {
+        System.out.println("Lookup word: " + currentWord);
         if (notGiveAlert()) {
             return;
         }
@@ -361,9 +383,7 @@ public class DictionaryController implements Initializable {
                 setDefinitionField(lookupTask.getValue());
             }
         });
-        Thread thread = new Thread(lookupTask);
-        thread.setDaemon(true);
-        thread.start();
+        executorService.submit(lookupTask);
     }
 
     /**
@@ -375,6 +395,10 @@ public class DictionaryController implements Initializable {
      * @param word Word to show.
      */
     public void setDefinitionField(Word word) {
+        if (word == null) {
+            tfield.setText("Currently not available.");
+            return;
+        }
         tfield.setText(word.getTarget());
         pfield.setText(word.getPronounce());
         tfield.setPromptText("");
@@ -383,6 +407,9 @@ public class DictionaryController implements Initializable {
         definitionField.setTranslateX(10);
 
         for (String s : word.getDefinition()) {
+            if (s.isEmpty()) {
+                continue;
+            }
             Text result = new Text(s.substring(1).trim());
             TextFlow textFlow = new TextFlow(result);
             char firstChar = s.charAt(0);
@@ -423,7 +450,7 @@ public class DictionaryController implements Initializable {
         pfield.setEditable(false);
         tfield.setId("word");
         pfield.setId("wordpronounce");
-        currentWordObject = word;
+        liveWord = word;
     }
 
     public void setEditField() {
@@ -441,11 +468,11 @@ public class DictionaryController implements Initializable {
         if (lookupTask != null && lookupTask.isRunning()) {
             lookupTask.cancel();
         }
-        currentWordObject = dictionary.lookup(currentWord);
+        liveWord = dictionary.lookup(currentWord);
         pfield.setEditable(true);
         tfield.setEditable(true);
-        tfield.setText(currentWordObject.getTarget());
-        pfield.setText(currentWordObject.getPronounce());
+        tfield.setText(liveWord.getTarget());
+        pfield.setText(liveWord.getPronounce());
         pfield.setId("");
         tfield.setId("");
 
@@ -454,15 +481,14 @@ public class DictionaryController implements Initializable {
 
         definitionField.getChildren().clear();
         TextArea result = new TextArea();
-        LookupTask lookupTask = new LookupTask(currentWord);
+        lookupTask = new LookupTask(currentWord);
         lookupTask.setOnSucceeded(event -> {
             if (lookupTask.getValue() != null) {
                 result.setText(lookupTask.getValue().getExplain());
             }
+            liveWord = lookupTask.getValue();
         });
-        Thread thread = new Thread(lookupTask);
-        thread.setDaemon(true);
-        thread.start();
+        executorService.submit(lookupTask);
 
         VBox.setVgrow(result, javafx.scene.layout.Priority.ALWAYS);
         VBox.setMargin(result, new Insets(0, 10, 0, -10));
@@ -599,6 +625,9 @@ public class DictionaryController implements Initializable {
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
             // Clear the list view if the search field is empty.
             if (newValue == null || newValue.isEmpty()) {
+                if (searchTask != null && searchTask.isRunning()) {
+                    searchTask.cancel();
+                }
                 listOfWord.getItems().clear();
             // Otherwise, search the dictionary and update the list view.
             } else {
@@ -609,16 +638,14 @@ public class DictionaryController implements Initializable {
                         searchTask.cancel();
                     }
                     searchTask = new SearchTask(newValue);
-                    Thread thread = new Thread(searchTask);
-                    thread.setDaemon(true);
-                    thread.start();
+                    searchTask.setOnSucceeded(event -> {
+                        if (searchTask.getValue() != null && searchTask.getMessage().equals(newValue)) {
+                            listOfWord.getItems().setAll(searchTask.getValue());
+                            listOfWord.scrollTo(0);
+                        }
+                    });
+                    executorService.submit(searchTask);
                 }
-                searchTask.setOnSucceeded(event -> {
-                    if (searchTask.getValue() != null) {
-                        listOfWord.getItems().setAll(searchTask.getValue());
-                        listOfWord.scrollTo(0);
-                    }
-                });
             }
         });
     }
@@ -659,7 +686,7 @@ public class DictionaryController implements Initializable {
         listviewToolBar.setVisible(true);
         listviewToolBar.getChildren().remove(moveUpButton);
         listviewToolBar.getChildren().remove(moveDownButton);
-        //removeSelectedButton.setDisable(true);
+
         seperateLine.setVisible(true);
 
         listViewType = ListViewType.HISTORY;
@@ -728,7 +755,8 @@ public class DictionaryController implements Initializable {
         if (!buttonType.isPresent() || buttonType.get() == ButtonType.CANCEL) {
             return;
         }
-        setDefinitionField(currentWordObject);
+        liveWord = dictionary.lookup(currentWord);
+        setDefinitionField(liveWord);
         mode = Mode.SEARCH;
 
     }
@@ -784,8 +812,14 @@ public class DictionaryController implements Initializable {
             }
 
             Word newWord = new Word(newTarget, newPronounce, newExplain);
-            dictionary.removeWord(currentWord);
-            dictionary.editWord(newWord);
+            if (!newTarget.equals(oldWord.getTarget())) {
+                dictionary.removeWord(oldWord.getTarget());
+                dictionary.addWord(newWord);
+                listOfWord.getItems().set(listOfWord.getSelectionModel().getSelectedIndex(), newTarget);
+                currentWord = newTarget;
+            } else {
+                dictionary.editWord(newWord);
+            }
             setDefinitionField(newWord);
             mode = Mode.SEARCH;
         } else {
@@ -800,7 +834,7 @@ public class DictionaryController implements Initializable {
             String newPronounce = pfield.getText();
             String newExplain = textArea.getText();
             System.out.println(newExplain);
-            if (validateIcon.glyphNameProperty().getValue().equals("TIMES_CIRCLE")) {
+            if (validateIcon.glyphNameProperty().getValue().equals("TIMES")) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText("Word is null or already exists.");
@@ -888,19 +922,18 @@ public class DictionaryController implements Initializable {
     }
 
     static class HistoryCell extends ListCell<String> {
-        HBox hbox = new HBox();
-        Label label = new Label("");
+        HBox hBox = new HBox();
         FontAwesomeIconView iconView = new FontAwesomeIconView();
+        FontAwesomeIconView iconView2 = new FontAwesomeIconView();
 
         public HistoryCell() {
             super();
-            iconView.glyphNameProperty().setValue("HISTORY");
             iconView.setId("listbutton-icon");
+            iconView2.glyphNameProperty().setValue("DATABASE");
+            iconView2.setId("listbutton-icon");
+            iconView2.setGlyphSize(8);
             iconView.setGlyphSize(15);
-            label.setStyle("-fx-text-fill: #191919;");
-            hbox.getChildren().addAll(iconView, label);
-            HBox.setMargin(iconView, new Insets(5, 5, 0, 0));
-            HBox.setMargin(label, new Insets(5, 5, 0, 0));
+            hBox.getChildren().addAll(iconView2, iconView);
         }
         @Override
         public void updateItem(String item, boolean empty) {
@@ -908,15 +941,47 @@ public class DictionaryController implements Initializable {
             setText(null);
             setGraphic(null);
             if (item != null && !empty) {
-                label.setText(item);
-                setGraphic(hbox);
+                setText(item.substring(1));
+                ACTION action = ACTION.parseAction(item);
+                switch (action) {
+                    case DADD -> {
+                        iconView.glyphNameProperty().setValue("PLUS");
+                        setGraphic(hBox);
+                    }
+                    case DREMOVE -> {
+                        iconView.glyphNameProperty().setValue("MINUS");
+                        setGraphic(hBox);
+                    }
+                    case DEDIT -> {
+                        iconView.glyphNameProperty().setValue("PENCIL");
+                        setGraphic(hBox);
+                    }
+                    case DLOOKUP -> {
+                        iconView.glyphNameProperty().setValue("HISTORY");
+                        setGraphic(hBox);
+                    }
+                    case LEDIT -> {
+                        iconView.glyphNameProperty().setValue("PENCIL");
+                        setGraphic(iconView);
+                    }
+                    case LREMOVE -> {
+                        iconView.glyphNameProperty().setValue("MINUS");
+                        setGraphic(iconView);
+                    }
+                    case LADD -> {
+                        iconView.glyphNameProperty().setValue("PLUS");
+                        setGraphic(iconView);
+                    }
+                    default -> {
+                        iconView.glyphNameProperty().setValue("HISTORY");
+                        setGraphic(iconView);
+                    }
+                }
             }
         }
     }
 
     static class BookmarkCell extends ListCell<String> {
-        HBox hbox = new HBox();
-        Label label = new Label("");
         FontAwesomeIconView iconView = new FontAwesomeIconView();
 
         public BookmarkCell() {
@@ -924,9 +989,6 @@ public class DictionaryController implements Initializable {
             iconView.glyphNameProperty().setValue("BOOKMARK");
             iconView.setId("bookmarked");
             iconView.setGlyphSize(15);
-            hbox.getChildren().addAll(iconView, label);
-            HBox.setMargin(iconView, new Insets(5, 5, 0, 0));
-            HBox.setMargin(label, new Insets(5, 5, 0, 0));
         }
         @Override
         public void updateItem(String item, boolean empty) {
@@ -934,18 +996,15 @@ public class DictionaryController implements Initializable {
             setText(null);
             setGraphic(null);
             if (item != null && !empty) {
-                label.setText(item);
-                setGraphic(hbox);
+                setText(item);
+                setGraphic(iconView);
             }
         }
     }
 
     static class Cell extends ListCell<String> {
-        Label label = new Label("");
         public Cell() {
             super();
-            label.setStyle("-fx-text-fill: #191919;");
-            label.setPadding(new Insets(5, 5, 0, 0));
         }
 
         @Override
@@ -954,8 +1013,7 @@ public class DictionaryController implements Initializable {
             setText(null);
             setGraphic(null);
             if (item != null && !empty) {
-                label.setText(item);
-                setGraphic(label);
+                setText(item);
             }
         }
     }

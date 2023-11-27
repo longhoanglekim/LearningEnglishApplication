@@ -2,7 +2,6 @@ package com.task;
 
 import com.dictionary.TextToSpeech;
 import javafx.concurrent.Task;
-import javafx.scene.media.MediaPlayer;
 
 public class TextToSpeechTask extends Task<Void> {
     private final String text;
@@ -17,9 +16,5 @@ public class TextToSpeechTask extends Task<Void> {
     protected Void call() throws Exception {
         TextToSpeech.play(text, lang);
         return null;
-    }
-
-    public void stop() {
-        TextToSpeech.stop();
     }
 }

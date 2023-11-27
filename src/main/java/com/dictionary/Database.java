@@ -1,7 +1,10 @@
 package com.dictionary;
 
-import javafx.collections.transformation.SortedList;
+import javafx.stage.FileChooser;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,12 +12,15 @@ import java.util.logging.Logger;
 
 public class Database extends Dictionary {
     private static Connection databaseLink;
+    private static int numberOfWords;
+    private static String databaseName = "dictionarybasic";
+    private static String table = "en_vi";
+    Trie words = new Trie();
 
     /**
      * Get database connection from a database.
      */
     public void getDatabaseConnection() throws Exception {
-        String databaseName = "dictionary";
         String databaseUser = "root";
         String databasePassword = "lyhongduc123";
         String url = "jdbc:mysql://localhost:3306/" + databaseName;
@@ -27,25 +33,17 @@ public class Database extends Dictionary {
         }
     }
 
-    /**
-     * Close database connection.
-     */
-    public void closeDatabaseConnection() {
-        try {
-            databaseLink.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     @Override
     public boolean initialize() {
         try {
             getDatabaseConnection();
-            boolean isInitialized = true;
+            List<String> allWords = getAllWordsTarget();
+            for (String word : allWords) {
+                Word newWord = new Word(word, "", "");
+                Trie.insert(words, newWord);
+            }
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
-            //e.printStackTrace();
             return false;
         }
         return true;
@@ -53,6 +51,18 @@ public class Database extends Dictionary {
 
     public List<String> getAllWordsTarget() {
         ArrayList<String> result = new ArrayList<>();
+        String query = "SELECT word FROM " + table + " ORDER BY word asc";
+        try {
+            Statement statement = databaseLink.createStatement();
+            ResultSet queryOutput = statement.executeQuery(query);
+            while (queryOutput.next()) {
+                String target = queryOutput.getString(1);
+                result.add(target);
+            }
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage() + "\nWhile getting all word's target");
+        }
+        numberOfWords = result.size();
         return result;
     }
 
@@ -64,18 +74,7 @@ public class Database extends Dictionary {
      */
     @Override
     public List<String> search(String word) {
-        ArrayList<String> result = new ArrayList<>();
-        String query = "SELECT word FROM tbl_edict WHERE word regexp'^" + word + ".*' ORDER BY word asc";
-        try {
-            Statement statement = databaseLink.createStatement();
-            ResultSet queryOutput = statement.executeQuery(query);
-            while (queryOutput.next()) {
-                String target = queryOutput.getString(1);
-                result.add(target);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        ArrayList<String> result = Trie.search(words, word);
         return result;
     }
 
@@ -86,18 +85,19 @@ public class Database extends Dictionary {
      */
     @Override
     public Word lookup(String word) {
-        String query = "SELECT * FROM tbl_edict WHERE word = '" + word + "'";
+        String query = "SELECT * FROM " + table + " WHERE word LIKE \"" + word + "\"";
         try {
             Statement statement = databaseLink.createStatement();
             ResultSet queryOutput = statement.executeQuery(query);
-            while (queryOutput.next()) {
-                String target = queryOutput.getString("word");
-                String pronounce = queryOutput.getString("pronounce");
-                String explain = queryOutput.getString("detail");
+            if (queryOutput.next()) {
+                String target = queryOutput.getString(2);
+                String pronounce = queryOutput.getString(3);
+                String explain = queryOutput.getString(4);
+                historyList.add(ACTION.DLOOKUP + target);
                 return new Word(target, pronounce, explain);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Error: " + e.getMessage() + "\nWhile looking up word: " + word);
         }
         return null;
     }
@@ -109,19 +109,20 @@ public class Database extends Dictionary {
     @Override
     public void addWord(Word word) {
         if (word == null) return;
-        if (lookup(word.getTarget()) == null) return;
+        if (lookup(word.getTarget()) != null) return;
 
-        String query = "INSERT INTO tbl_edict(word, pronounce, detail) VALUES (?, ?, ?)";
+        String query = "INSERT INTO "+ table + "(index, word, pronounce, definition) VALUES (?, ?, ?, ?)";
         try {
             PreparedStatement preparedStatement = databaseLink.prepareStatement(query);
-            preparedStatement.setString(1, word.getTarget());
-            preparedStatement.setString(2, word.getPronounce());
-            preparedStatement.setString(3, word.getExplain());
+            preparedStatement.setInt(1, ++numberOfWords);
+            preparedStatement.setString(2, word.getTarget());
+            preparedStatement.setString(3, word.getPronounce());
+            preparedStatement.setString(4, word.getExplain());
             preparedStatement.executeUpdate();
+            historyList.add(ACTION.DADD + word.getTarget());
             System.out.println("Added word: " + word.getTarget());
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
-            e.printStackTrace();
         }
     }
 
@@ -132,14 +133,14 @@ public class Database extends Dictionary {
      */
     @Override
     public void removeWord(String word) {
-        String query = "DELETE FROM tbl_edict WHERE word = '" + word + "'";
+        String query = "DELETE FROM " + table + " WHERE word LIKE \"" + word + "\"";
         try {
             PreparedStatement preparedStatement = databaseLink.prepareStatement(query);
             preparedStatement.executeUpdate();
+            historyList.add(ACTION.DREMOVE + word);
             System.out.println("Deleted word: " + word);
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
-            e.printStackTrace();
         }
     }
 
@@ -150,17 +151,17 @@ public class Database extends Dictionary {
      */
     @Override
     public void editWord(Word word) {
-        String query = "UPDATE tbl_edict SET pronounce = ?, detail = ? WHERE word = ?";
+        String query = "UPDATE " + table + " SET pronounce = ?, definition = ? WHERE word = ?";
         try {
             PreparedStatement preparedStatement = databaseLink.prepareStatement(query);
             preparedStatement.setString(1, word.getPronounce());
             preparedStatement.setString(2, word.getExplain());
             preparedStatement.setString(3, word.getTarget());
             preparedStatement.executeUpdate();
+            historyList.add(ACTION.DEDIT + word.getTarget());
             System.out.println("Edited word: " + word.getTarget());
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
-            e.printStackTrace();
         }
     }
 
@@ -169,8 +170,23 @@ public class Database extends Dictionary {
      */
     @Override
     public void export(boolean defaultPath) {
+        File selectedDirectory;
+        if (!defaultPath) {
+            FileChooser directoryChooser = new FileChooser();
+            directoryChooser.setTitle("Export dictionary");
+            directoryChooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("Text Document files", "*.txt"));
+            directoryChooser.setInitialFileName("Beta_dictionary.txt");
+            directoryChooser.setInitialDirectory(new File("./src/main/resources/data/"));
+
+            selectedDirectory = directoryChooser.showSaveDialog(null);
+            if (selectedDirectory == null) return;
+        } else {
+            selectedDirectory = new File("./src/main/resources/data/Beta_dictionary.txt");
+        }
+
         List<Word> words = new ArrayList<>();
-        String query = "SELECT * FROM tbl_edict";
+        String query = "SELECT * FROM " + table + " ORDER BY word asc";
         try {
             Statement statement = databaseLink.createStatement();
             ResultSet queryOutput = statement.executeQuery(query);
@@ -182,11 +198,28 @@ public class Database extends Dictionary {
                 words.add(word);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Error: " + e.getMessage() + "\nCaused by: " + e.getCause()
+                    + "\nWhile exporting dictionary");
         }
 
-        words.sort((o1, o2) -> o1.getTarget().compareTo(o2.getTarget()));
-
+        try (FileWriter fileWriter = new FileWriter(selectedDirectory)) {
+            for (Word word : words) {
+                fileWriter.write(word.toString());
+                fileWriter.write("\n\n");
+            }
+            System.out.println("Exported dictionary to: " + selectedDirectory.getAbsolutePath());
+        } catch (IOException e) {
+            Logger.getLogger("Can not export dictionary. Caused by: " + e.getMessage());
+        }
     }
 
+    @Override
+    public void close() {
+        super.close();
+        try {
+            databaseLink.close();
+        } catch (SQLException e) {
+            System.err.println("Error: " + e.getMessage() + "\nWhile closing database connection");
+        }
+    }
 }

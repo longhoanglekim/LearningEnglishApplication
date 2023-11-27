@@ -14,6 +14,7 @@ public class LookupTask extends Task<Word> {
 
     @Override
     protected Word call() {
+        Thread.currentThread().setName("LookupTask");
         Word result = dictionary.lookup(word);
         if (isCancelled()) {
             return null;

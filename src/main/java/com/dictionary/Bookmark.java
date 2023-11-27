@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Bookmark {
-    private static final String BOOKMARK_PATH = "src/main/resources/data/bookmark.txt";
+    private static final String BOOKMARK_PATH = "src/main/resources/data/txt/bookmark.txt";
     private final List<String> bookmarkList = new ArrayList<>();
 
     public Bookmark() {

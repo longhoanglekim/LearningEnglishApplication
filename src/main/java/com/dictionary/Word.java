@@ -19,7 +19,6 @@ public class Word {
         this.target = target;
         this.pronounce = pronounce;
         this.explain = explain;
-
         beautifyWord();
     }
 
@@ -32,24 +31,28 @@ public class Word {
      * Define '|' as none type special.
      */
     private void beautifyWord() {
-        Scanner sc = new Scanner(explain);
-        String s;
-        int indexBlock = 1;
-        while (sc.hasNextLine()) {
-            s = sc.nextLine();
-            char firstChar = s.charAt(0);
-            if (firstChar == '-') {
-                s = "-" + indexBlock++ + ". " + s.substring(1);
-            } else if (firstChar == '=') {
-                String[] tmp = s.split("\\+");
-                s = "=٠ " + tmp[0].substring(1);
-                s += (tmp.length > 1) ? "\n " + tmp[1] : "";
-            } else if (firstChar == '!') {
-                s = "!- " + s.substring(1);
-            } else if (firstChar != '*') {
-                s = "|" + s;
+        try {
+            Scanner sc = new Scanner(explain);
+            String s;
+            int indexBlock = 1;
+            while (sc.hasNextLine()) {
+                s = sc.nextLine();
+                char firstChar = s.charAt(0);
+                if (firstChar == '-') {
+                    s = "-" + indexBlock++ + ". " + s.substring(1);
+                } else if (firstChar == '=') {
+                    String[] tmp = s.split("\\+");
+                    s = "=٠ " + tmp[0].substring(1);
+                    s += (tmp.length > 1) ? "\n " + tmp[1] : "";
+                } else if (firstChar == '!') {
+                    s = "!- " + s.substring(1);
+                } else if (firstChar != '*') {
+                    s = "|" + s;
+                }
+                definition.add(s);
             }
-            definition.add(s);
+        } catch (NullPointerException e) {
+            definition.add("");
         }
     }
 

@@ -48,7 +48,7 @@ public class Translator {
     public static String splitJson(String json) {
 
         JsonElement jsonElement = JsonParser.parseString(json);
-        String res = "";
+        StringBuilder res = new StringBuilder();
         if (jsonElement.isJsonArray()) {
             JsonArray jsonArray = jsonElement.getAsJsonArray();
 
@@ -62,12 +62,12 @@ public class Translator {
 
                     // Lấy translate word ở index 0 của mảng JSON;
                     if (!innerArray2.isEmpty()) {
-                        res += innerArray2.get(0).getAsString();
+                        res.append(innerArray2.get(0).getAsString());
                     }
                     innerArray1.remove(0);
                 }
             }
         }
-        return res;
+        return res.toString();
     }
 }

@@ -39,35 +39,13 @@
     -fx-background-color: #3d80c9;
 }
 
-/* ------------------------------------------------------------------------------------- */
-/** EVENT CSS **/
-/* ------------------------------------------------------------------------------------- */
-/* Kích thước my button font 12px */
-.my-button12 {
-    -fx-background-color: none;
-    -fx-background-radius: 0em;
-    -fx-text-fill: black;
-    -fx-font-size: 12px;
+.toggle-button {
+    -fx-background-color: black;
+
 }
 
-/* Kích thước my button font 14px */
-.my-button14 {
-    -fx-background-color: none;
-    -fx-background-radius: 0em;
-    -fx-text-fill: black;
-    -fx-font-size: 14px;
-}
-/* Kích thước my label font 12px */
-.my-label12 {
-    -fx-background-color: none;
-    -fx-background-radius: 0em;
-    -fx-text-fill: black;
-    -fx-font-size: 12px;
-}
-/* Kích thước my label font 14px */
-.my-label14 {
-    -fx-background-color: none;
-    -fx-background-radius: 0em;
-    -fx-text-fill: black;
-    -fx-font-size: 14px;
+.toggle-button:selected {
+    -fx-background-color: #6a777e;
+    -fx-border-color: #505050;
+
 }

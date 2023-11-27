@@ -83,7 +83,6 @@ public abstract class Dictionary {
     }
 
     public void close() {
-        export(true);
         try {
             bookmarkList.saveBookmark();
         } catch (IOException e) {
