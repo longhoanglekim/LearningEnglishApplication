@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class Hangman {
-    private static final String HANGMAN_PATH = "src/main/resources/data/hangman.txt";
+    private static final String HANGMAN_PATH = "src/main/resources/data/txt/hangman.txt";
     private static final int MAX_WRONG_GUESS = 10;
     private static int wrongGuess = 0;
     private static String answer;

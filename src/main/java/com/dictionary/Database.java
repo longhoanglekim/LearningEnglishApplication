@@ -22,7 +22,7 @@ public class Database extends Dictionary {
      */
     public void getDatabaseConnection() throws Exception {
         String databaseUser = "root";
-        String databasePassword = "lyhongduc123";
+        String databasePassword = "Long24062004";
         String url = "jdbc:mysql://localhost:3306/" + databaseName;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -111,16 +111,16 @@ public class Database extends Dictionary {
         if (word == null) return;
         if (lookup(word.getTarget()) != null) return;
 
-        String query = "INSERT INTO "+ table + "(index, word, pronounce, definition) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO "+ table + "(word, pronounce, definition) VALUES (?, ?, ?)";
         try {
             PreparedStatement preparedStatement = databaseLink.prepareStatement(query);
-            preparedStatement.setInt(1, ++numberOfWords);
-            preparedStatement.setString(2, word.getTarget());
-            preparedStatement.setString(3, word.getPronounce());
-            preparedStatement.setString(4, word.getExplain());
+            preparedStatement.setString(1, word.getTarget());
+            preparedStatement.setString(2, word.getPronounce());
+            preparedStatement.setString(3, word.getExplain());
             preparedStatement.executeUpdate();
             historyList.add(ACTION.DADD + word.getTarget());
             System.out.println("Added word: " + word.getTarget());
+            Trie.insert(words, word);
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
         }
@@ -139,6 +139,7 @@ public class Database extends Dictionary {
             preparedStatement.executeUpdate();
             historyList.add(ACTION.DREMOVE + word);
             System.out.println("Deleted word: " + word);
+            Trie.remove(words, word);
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
         }
@@ -159,10 +160,12 @@ public class Database extends Dictionary {
             preparedStatement.setString(3, word.getTarget());
             preparedStatement.executeUpdate();
             historyList.add(ACTION.DEDIT + word.getTarget());
+            Trie.remove(words, word.getTarget());
             System.out.println("Edited word: " + word.getTarget());
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
         }
+        Trie.insert(words, word);
     }
 
     /**

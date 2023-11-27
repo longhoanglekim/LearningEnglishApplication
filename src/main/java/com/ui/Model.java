@@ -16,7 +16,7 @@ public class Model {
     private Model() {
         //dictionary = new Database();
         //if (!dictionary.initialize()) {
-            dictionary = new Local();
+            dictionary = new Database();
             if (!dictionary.initialize()) {
                 System.out.println("Cannot initialize dictionary");
                 Platform.exit();
