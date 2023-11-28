@@ -125,6 +125,7 @@ public class View {
         stage.getIcons().add(new Image("file:src/main/resources/com/ui/zictionary.png"));
         stage.setMinWidth(800);
         stage.setMinHeight(550);
+        stage.show();
         stage.setOnCloseRequest(event -> {
             dictionary.close();
             System.out.println("Application closed!");
@@ -147,13 +148,5 @@ public class View {
     public void hideView() {
         Stage stage = (Stage) dashboardPane.getScene().getWindow();
         stage.hide();
-    }
-
-    public void init() throws IOException {
-        dictionaryPane = new FXMLLoader(getClass().getResource("Dictionary.fxml")).load();
-        gamePane = new FXMLLoader(getClass().getResource("Game.fxml")).load();
-        translatePane = new FXMLLoader(getClass().getResource("Translate.fxml")).load();
-        // loi >
-        /*flashcardPane = new FXMLLoader(getClass().getResource("Flashcard.fxml")).load();*/
     }
 }

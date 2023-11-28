@@ -22,7 +22,7 @@ public class Database extends Dictionary {
      */
     public void getDatabaseConnection() throws Exception {
         String databaseUser = "root";
-        String databasePassword = "kyoukainokanata";
+        String databasePassword = "lyhongduc123";
         String url = "jdbc:mysql://localhost:3306/" + databaseName;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
