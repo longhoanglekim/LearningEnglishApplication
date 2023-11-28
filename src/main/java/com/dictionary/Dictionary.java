@@ -39,7 +39,7 @@ public abstract class Dictionary {
      * Add a word to the dictionary.
      * @param word Word to add.
      */
-    public abstract void addWord(Word word);
+    public abstract boolean addWord(Word word);
 
     /**
      * Remove a word from the dictionary.

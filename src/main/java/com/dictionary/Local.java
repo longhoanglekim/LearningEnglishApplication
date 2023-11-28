@@ -135,9 +135,10 @@ public class Local extends Dictionary {
      * @param word Word to add.
      */
     @Override
-    public void addWord(Word word) {
+    public boolean addWord(Word word) {
         Trie.insert(words, word);
         historyList.add(ACTION.LADD + word.getTarget());
+        return true;
     }
 
     /**

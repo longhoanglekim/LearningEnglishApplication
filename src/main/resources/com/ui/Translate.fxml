@@ -188,7 +188,6 @@
                   <Insets top="15.0" />
                </HBox.margin>
             </Text>
-            <Label text="Label" />
          </children>
       </HBox>
       <HBox fx:id="notificationHBox" alignment="CENTER" layoutX="32.0" layoutY="530.0" prefHeight="50.0" prefWidth="1140.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
