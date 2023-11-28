@@ -1,6 +1,5 @@
 package com.controller;
 
-import com.dictionary.Word;
 import javafx.animation.Interpolator;
 import javafx.animation.RotateTransition;
 import javafx.application.Platform;
@@ -13,9 +12,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
-import static com.ui.Model.dictionary;
 import java.util.ArrayList;
 import java.util.List;
+import com.flashcard.Flashcard;
 
 public class FlashcardController implements Initializable {
 
@@ -29,29 +28,31 @@ public class FlashcardController implements Initializable {
     public Button helpButton;
     List<String> cardAnwserList = new ArrayList<>();
     List<String> cardQuestionList = new ArrayList<>();
+    private Flashcard flashcard;
+
 
     @Override
     public void initialize(java.net.URL url, java.util.ResourceBundle resourceBundle) {
-        loadCard();
-        questionArea.setText(cardQuestionList.get(currentCard));
-        answerArea.setText(cardAnwserList.get(currentCard));
-
-        questionArea.setVisible(true);
-        answerArea.setVisible(false);
-        currentCardLabel.setText((currentCard + 1) + "/" + cardQuestionList.size());
+        //loadCard();
+        flashcard = new Flashcard();
+        Thread loadThread = new Thread(() -> {
+            Platform.runLater(() -> {
+                flashcard.initialize();
+                startConfig();
+            });
+        });
+        loadThread.start();
         leftButton.setOnMouseClicked(this::onLeftButton);
         rightButton.setOnMouseClicked(this::onRightButton);
         cardPane.setStyle("-fx-background-color: #2e3856");
         cardPane.setOnMouseClicked(this::flipCard);
         questionArea.setOnMouseClicked(this::flipCard);
         answerArea.setOnMouseClicked(this::flipCard);
-        answerArea.setWrapText(true);
-        questionArea.setWrapText(true);
+
         System.out.println(cardPane.getPrefHeight() + " " + cardPane.getPrefWidth());
         Platform.runLater(() -> {
             hackTextAreaLayout(questionArea);
         });
-        String tmp = answerArea.getText();
         helpButton.setOnAction(event -> {
             if (helpButton.getText().equals("Hiển thị gợi ý")) {
                 helpButton.setText(getProperty());
@@ -62,9 +63,9 @@ public class FlashcardController implements Initializable {
     }
 
     private void onRightButton(MouseEvent mouseEvent) {
-        if (currentCard < cardAnwserList.size() - 1) {
+        if (currentCard < flashcard.size() - 1) {
             currentCard++;
-            currentCardLabel.setText((currentCard + 1) + "/" + cardQuestionList.size());
+            currentCardLabel.setText((currentCard + 1) + "/" + flashcard.size());
         }
         System.out.println(currentCard + 1);
         showQuestion();
@@ -73,7 +74,7 @@ public class FlashcardController implements Initializable {
     private void onLeftButton(MouseEvent mouseEvent) {
         if (currentCard >= 1) {
             currentCard--;
-            currentCardLabel.setText((currentCard + 1) + "/" + cardQuestionList.size());
+            currentCardLabel.setText((currentCard + 1) + "/" +flashcard.size());
         }
         System.out.println(currentCard + 1);
         showQuestion();
@@ -90,22 +91,12 @@ public class FlashcardController implements Initializable {
         rotateTransition.play();
     }
 
-    public void loadCard() {
-        for (int i = 0; i < dictionary.getBookmarkList().getList().size(); i++) {
-            cardQuestionList.add(dictionary.getBookmarkList().getList().get(i));
-            Word word = dictionary.lookup(cardQuestionList.get(i));
-            if (word != null) {
-                cardAnwserList.add(word.getDefinition().toString());
-            }
-        }
-    }
-
     private void showAnswer() {
         helpButton.setVisible(false);
         questionArea.setVisible(false);
         answerArea.setVisible(true);
 
-        answerArea.setText(cardAnwserList.get(currentCard));
+        answerArea.setText(flashcard.getAnswer(currentCard));
         hackTextAreaLayout(answerArea);
     }
 
@@ -114,7 +105,7 @@ public class FlashcardController implements Initializable {
         helpButton.setText("Hiển thị gợi ý");
         questionArea.setVisible(true);
         answerArea.setVisible(false);
-        questionArea.setText(cardQuestionList.get(currentCard));
+        questionArea.setText(flashcard.getQuestion(currentCard));
         hackTextAreaLayout(questionArea);
     }
 
@@ -152,12 +143,15 @@ public class FlashcardController implements Initializable {
     }
 
     private String getProperty() {
-        String text = cardAnwserList.get(currentCard);
+        String text = flashcard.getAnswer(currentCard);
         if (text.contains("tính từ")) {
             return "tính từ";
         }
         if (text.contains("danh từ")) {
             return "danh từ";
+        }
+        if (text.contains("trạng tự")) {
+            return "trạng tự";
         }
         return "động từ";
     }
@@ -173,4 +167,14 @@ public class FlashcardController implements Initializable {
         return rotator;
     }
 
+
+    public void startConfig() {
+        questionArea.setText(flashcard.getQuestion(currentCard));
+        answerArea.setText(flashcard.getAnswer(currentCard));
+        questionArea.setVisible(true);
+        answerArea.setVisible(false);
+        currentCardLabel.setText((currentCard + 1) + "/" + flashcard.size());
+        answerArea.setWrapText(true);
+        questionArea.setWrapText(true);
+    }
 }
