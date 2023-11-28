@@ -9,29 +9,20 @@
     -fx-text-fill: white;
 }
 
-.button:hover {
-    -fx-background-color: #6a777e;
+.button:hover {;
     -fx-background-color: #5691d0;
-}
+    -fx-background-radius: 0.5em;
 
-.button:pressed {
-    -fx-background-color: #6a777e;
-    -fx-background-color: #5691d0;
-    -fx-border-color: #505050;
-    -fx-border-color: #59a2ea;
-    -fx-border-width: 0px 0px 0px 3px;
 }
 
 #button {
-    -fx-background-color: #6a777e;
     -fx-background-color: #5691d0;
-    -fx-border-color: #505050;
-    -fx-border-color: #59a2ea;
-    -fx-border-width: 0px 0px 0px 3px;
+    -fx-border-color: darkblue;
+    -fx-border-width: 0px 4px 0px 0px;
 }
 
 .vbox {
-    -fx-background-color: linear-gradient(to bottom, #3d80c9, #a63dc9) ;
+    -fx-background-color: #3d80c9;
 }
 
 .hbox {
@@ -47,5 +38,4 @@
 .toggle-button:selected {
     -fx-background-color: #6a777e;
     -fx-border-color: #505050;
-
 }

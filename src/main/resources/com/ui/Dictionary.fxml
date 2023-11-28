@@ -55,8 +55,8 @@
                      </AnchorPane>
                      <AnchorPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                         <children>
-                           <TextField id="word" fx:id="tfield" minHeight="-Infinity" prefHeight="35.0" prefWidth="275.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
-                           <TextField id="wordpronounce" fx:id="pfield" layoutY="26.0" minHeight="-Infinity" prefHeight="35.0" prefWidth="275.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="35.0" />
+                           <TextField id="word" fx:id="targetField" minHeight="-Infinity" prefHeight="35.0" prefWidth="275.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
+                           <TextField id="wordpronounce" fx:id="pronouceField" layoutY="26.0" minHeight="-Infinity" prefHeight="35.0" prefWidth="275.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="35.0" />
                            <Button fx:id="speakButton" mnemonicParsing="false" styleClass="normal-button" text="US" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="25.0">
                               <graphic>
                                  <FontAwesomeIconView glyphName="VOLUME_UP" size="25" />
@@ -88,8 +88,8 @@
          </AnchorPane>
       </center>
       <left>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="225.0" BorderPane.alignment="CENTER">
-                <ListView fx:id="listOfWord" prefHeight="519.0" prefWidth="226.0" stylesheets="@../css/Dashboard.css" AnchorPane.bottomAnchor="40.0" AnchorPane.topAnchor="80.0" />
+            <AnchorPane id="leftPane" minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="225.0" BorderPane.alignment="CENTER">
+                <ListView fx:id="wordList" prefHeight="519.0" prefWidth="226.0" stylesheets="@../css/Dashboard.css" AnchorPane.bottomAnchor="40.0" AnchorPane.topAnchor="80.0" />
                <HBox fx:id="searchHBox" prefHeight="40.0" prefWidth="225.0" styleClass="search-box" AnchorPane.topAnchor="40.0">
                    <opaqueInsets>
                        <Insets left="10.0" />
