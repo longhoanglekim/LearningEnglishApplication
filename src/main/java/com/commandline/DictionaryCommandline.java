@@ -102,7 +102,7 @@ public class DictionaryCommandline {
             switch (choice) {
                 case 0:
                     System.out.println("Tam biet ban!");
-                    break;
+                    return;
                 case 1:
                     DictionaryManagement.insertFromCommandline();
                     break;
