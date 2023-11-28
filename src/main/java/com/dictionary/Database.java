@@ -111,7 +111,7 @@ public class Database extends Dictionary {
         if (word == null) return;
         if (lookup(word.getTarget()) != null) return;
 
-        String query = "INSERT INTO "+ table + "(index, word, pronounce, definition) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO " + table + " VALUES (?, ?, ?, ?)";
         try {
             PreparedStatement preparedStatement = databaseLink.prepareStatement(query);
             preparedStatement.setInt(1, ++numberOfWords);
@@ -120,6 +120,7 @@ public class Database extends Dictionary {
             preparedStatement.setString(4, word.getExplain());
             preparedStatement.executeUpdate();
             historyList.add(ACTION.DADD + word.getTarget());
+            Trie.insert(words, word);
             System.out.println("Added word: " + word.getTarget());
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
@@ -138,6 +139,7 @@ public class Database extends Dictionary {
             PreparedStatement preparedStatement = databaseLink.prepareStatement(query);
             preparedStatement.executeUpdate();
             historyList.add(ACTION.DREMOVE + word);
+            Trie.remove(words, word);
             System.out.println("Deleted word: " + word);
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
@@ -151,12 +153,13 @@ public class Database extends Dictionary {
      */
     @Override
     public void editWord(Word word) {
-        String query = "UPDATE " + table + " SET pronounce = ?, definition = ? WHERE word = ?";
+        String query = "UPDATE " + table + " SET word = ?, pronounce = ?, definition = ? WHERE word = ?";
         try {
             PreparedStatement preparedStatement = databaseLink.prepareStatement(query);
-            preparedStatement.setString(1, word.getPronounce());
-            preparedStatement.setString(2, word.getExplain());
-            preparedStatement.setString(3, word.getTarget());
+            preparedStatement.setString(1, word.getTarget());
+            preparedStatement.setString(2, word.getPronounce());
+            preparedStatement.setString(3, word.getExplain());
+            preparedStatement.setString(4, word.getTarget());
             preparedStatement.executeUpdate();
             historyList.add(ACTION.DEDIT + word.getTarget());
             System.out.println("Edited word: " + word.getTarget());
