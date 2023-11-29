@@ -992,8 +992,6 @@ public class DictionaryController implements Initializable {
         @Override
         public void updateItem(String item, boolean empty) {
             super.updateItem(item, empty);
-            setText(null);
-            setGraphic(null);
             if (item != null && !empty) {
                 setText(item.substring(1));
                 ACTION action = ACTION.parseAction(item);
@@ -1016,19 +1014,23 @@ public class DictionaryController implements Initializable {
                     }
                     case LEDIT -> {
                         iconView.glyphNameProperty().setValue("PENCIL");
-                        setGraphic(iconView);
+                        iconView2.setVisible(false);
+                        setGraphic(hBox);
                     }
                     case LREMOVE -> {
                         iconView.glyphNameProperty().setValue("MINUS");
-                        setGraphic(iconView);
+                        iconView2.setVisible(false);
+                        setGraphic(hBox);
                     }
                     case LADD -> {
                         iconView.glyphNameProperty().setValue("PLUS");
-                        setGraphic(iconView);
+                        iconView2.setVisible(false);
+                        setGraphic(hBox);
                     }
                     default -> {
                         iconView.glyphNameProperty().setValue("HISTORY");
-                        setGraphic(iconView);
+                        iconView2.setVisible(false);
+                        setGraphic(hBox);
                     }
                 }
             }
