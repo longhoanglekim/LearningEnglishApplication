@@ -134,23 +134,27 @@ public class DictionaryManagement {
     /**
      * Export current local dictionary to txt file.
      */
+
     public static void dictionaryExportToFile() {
-        File new_file = new File("src/main/java/com/commandline/demo.txt");
-        if (!new_file.exists()) {
-            try {
-                new_file.createNewFile();
+        File newFile = new File("src/main/java/com/commandline/demo.txt");
+
+        try {
+            if (newFile.createNewFile()) {
+                System.out.println("Tạo tệp mới thành công.");
+            } else {
+                System.out.println("Tệp đã tồn tại.");
+            }
+
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(newFile))) {
+                for (Word word : Dictionary.words) {
+                    writer.write(word.getWord_target() + " " + word.getWord_explain());
+                    writer.write(System.lineSeparator()); // Sử dụng System.lineSeparator() để tạo dòng mới độc lập với hệ điều hành
+                }
+
+                System.out.println("Xuất file thành công.");
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-        try {
-            FileWriter writer = new FileWriter(new_file);
-            for (Word i : Dictionary.words) {
-                writer.write(i.getWord_target() + "\t" + i.getWord_explain());
-                writer.write("\n");
-            }
-            writer.close();
-            System.out.println("Xuất file thành công.");
         } catch (IOException e) {
             e.printStackTrace();
         }
