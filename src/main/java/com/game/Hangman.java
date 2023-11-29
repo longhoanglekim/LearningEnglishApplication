@@ -50,6 +50,10 @@ public class Hangman {
         int index = (int) (Math.random() * candidateWords.size());
         wrongGuess = 0;
         answer = candidateWords.get(index);
+        while(answer.length() > 9) {
+            index = (int) (Math.random() * candidateWords.size());
+            answer = candidateWords.get(index);
+        }
         guessList.clear();
         for (int i = 0; i < answer.length(); i++) {
             if (!guessList.contains(answer.charAt(i))) {

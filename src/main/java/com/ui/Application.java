@@ -10,8 +10,6 @@ public class Application extends javafx.application.Application {
 
     @Override
     public void init() throws Exception {
-
-        Thread.sleep(2000);
     }
 
     public void start(Stage primaryStage) throws IOException {
