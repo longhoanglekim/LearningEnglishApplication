@@ -26,6 +26,7 @@ public class FlashcardController implements Initializable {
     public TextArea answerArea;
     public TextArea questionArea;
     public Button helpButton;
+    public TextArea rotateCard;
     List<String> cardAnwserList = new ArrayList<>();
     List<String> cardQuestionList = new ArrayList<>();
     private Flashcard flashcard;
@@ -81,13 +82,20 @@ public class FlashcardController implements Initializable {
     }
 
     public void flipCard(MouseEvent mouseEvent) {
-        RotateTransition rotateTransition = createRotator(cardPane);
-
-        if (questionArea.isVisible()) {
-            showAnswer();
-        } else {
-            showQuestion();
-        }
+        boolean isQuestion = questionArea.isVisible();
+        answerArea.setVisible(false);
+        questionArea.setVisible(false);
+        helpButton.setVisible(false);
+        rotateCard.setVisible(true);
+        RotateTransition rotateTransition = createRotator(rotateCard);
+        rotateTransition.setOnFinished(event -> {
+            rotateCard.setVisible(false);
+            if (isQuestion) {
+                showAnswer();
+            } else {
+                showQuestion();
+            }
+        });
         rotateTransition.play();
     }
 
@@ -157,10 +165,10 @@ public class FlashcardController implements Initializable {
     }
 
     private RotateTransition createRotator(Node card) {
-        RotateTransition rotator = new RotateTransition(Duration.millis(1000), card);
-        rotator.setAxis(Rotate.Y_AXIS);
+        RotateTransition rotator = new RotateTransition(Duration.millis(700), card);
+        rotator.setAxis(Rotate.X_AXIS);
         rotator.setFromAngle(0);
-        rotator.setToAngle(360);
+        rotator.setToAngle(180);
         rotator.setInterpolator(Interpolator.LINEAR);
         rotator.setCycleCount(1);
 

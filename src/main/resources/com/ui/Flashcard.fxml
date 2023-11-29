@@ -7,15 +7,16 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="anchor_pane" stylesheets="@../css/flashcard.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.FlashcardController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="anchor_pane" stylesheets="@../css/flashcard.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.FlashcardController">
     <Pane fx:id="cardPane" layoutX="93.0" layoutY="48.0" prefHeight="230.0" prefWidth="850.0">
         <TextArea fx:id="answerArea" editable="false" layoutX="8.0" layoutY="16.0" prefHeight="196.0" prefWidth="834.0" />
         <TextArea fx:id="questionArea" editable="false" layoutX="320.0" layoutY="100.0" prefHeight="60.0" prefWidth="132.0" />
-      <Button fx:id="helpButton" layoutX="24.0" layoutY="27.0" mnemonicParsing="false" text="Hiển thị gợi ý" styleClass="button-help">
+      <Button fx:id="helpButton" layoutX="24.0" layoutY="27.0" mnemonicParsing="false" styleClass="button-help" text="Hiển thị gợi ý">
           <graphic>
               <FontAwesomeIconView glyphName="LIGHTBULB_ALT" size="30" styleClass="fontawesome-icon" textAlignment="CENTER" wrappingWidth="30.0" />
           </graphic>
       </Button>
+      <TextArea fx:id="rotateCard" editable="false" layoutX="8.0" layoutY="17.0" prefHeight="196.0" prefWidth="834.0" visible="false" />
     </Pane>
     <Label fx:id="currentCardLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="445.0" layoutY="277.0" prefHeight="25.0" prefWidth="53.0" text="Label" />
     <Button fx:id="leftButton" layoutX="376.0" layoutY="277.0" mnemonicParsing="false">
