@@ -7,7 +7,9 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -27,6 +29,7 @@ public class GameController implements Initializable {
     private static final String soundCorrect = "src/main/resources/com/sound/correctAnswer.mp3";
     private static final String soundDrawing = "src/main/resources/com/sound/drawing.mp3";
     private static final String soundHang = "src/main/resources/com/sound/man_scream.mp3";
+    private static final String soundWin = "src/main/resources/com/sound/win.mp3";
     public Button resetButton;
     public FontAwesomeIconView resetIcon;
 
@@ -106,7 +109,6 @@ public class GameController implements Initializable {
         }
         Hbox.setLayoutY(520);
         System.out.println(Hbox.getLayoutX() + " " + Hbox.getLayoutY());
-        //Hbox.setLayoutY();
     }
 
     @Override
@@ -146,7 +148,6 @@ public class GameController implements Initializable {
             resetButton.setVisible(true);
             resetIcon.setVisible(true);
             System.out.println("Win");
-            //Thêm nhạc win.
         }
     }
 
@@ -169,6 +170,19 @@ public class GameController implements Initializable {
                     listLabel.get(i).setText(buttonID.toUpperCase());
                 }
             }
+            if(game.isWin()){
+                playSoundWin();
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Notification");
+                alert.setHeaderText("YOU WIN");
+                alert.setContentText("Do you want to continue playing?");
+                Optional<ButtonType> buttonType = alert.showAndWait();
+                if (buttonType.isEmpty() || buttonType.get() == ButtonType.CANCEL) {
+                    return;
+                }
+                reset();
+            }
+            else
             playSoundCorrectAnswer();
         }
     }
@@ -217,7 +231,6 @@ public class GameController implements Initializable {
             resetButton.setVisible(true);
             resetIcon.setVisible(true);
             System.out.println("Lose");
-            // Thêm nhạc thua
         } else {
             playSoundDrawing();
             FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.3), listImageview.get(game.getWrongGuess() - 1));
@@ -243,6 +256,17 @@ public class GameController implements Initializable {
         }
         timeline.setCycleCount(1);
         timeline.playFromStart();
+        timeline.setOnFinished(e ->  Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Notification");
+            alert.setHeaderText("YOU LOSE");
+            alert.setContentText("Do you want to continue playing?");
+            Optional<ButtonType> buttonType = alert.showAndWait();
+            if (buttonType.isEmpty() || buttonType.get() == ButtonType.CANCEL) {
+                return;
+            }
+            reset();
+        }));
     }
 
     public void playSoundCorrectAnswer() {
@@ -258,6 +282,11 @@ public class GameController implements Initializable {
 
     public void playSoundHang() {
         File file = new File(soundHang);
+        AudioClip audioClip = new AudioClip(file.toURI().toString());
+        audioClip.play();
+    }
+    public void playSoundWin() {
+        File file = new File(soundWin);
         AudioClip audioClip = new AudioClip(file.toURI().toString());
         audioClip.play();
     }
@@ -305,4 +334,5 @@ public class GameController implements Initializable {
         }
         return true;
     }
+
 }
