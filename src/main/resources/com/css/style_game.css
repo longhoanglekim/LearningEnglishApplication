@@ -1,0 +1,27 @@
+.label {
+  -fx-background-color: #FFCC00;
+  -fx-background-radius: 30%;
+  -fx-padding: 10px;
+  -fx-font-size: 32px;
+  -fx-font-weight: bold;
+  -fx-text-align: center;
+}
+
+#resetButton {
+  -fx-background-color: #FFCC00;
+  -fx-background-radius: 30%;
+  -fx-padding: 10px;
+  -fx-font-size: 32px;
+  -fx-font-weight: bold;
+  -fx-text-align: center;
+}
+
+#resetButton:hover {
+  -fx-background-color: #FFCC00;
+  -fx-opacity: 0.5;
+}
+
+#resetButton:pressed {
+  -fx-background-color: #FFCC00;
+  -fx-opacity: 0.8;
+}

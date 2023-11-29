@@ -44,12 +44,6 @@ public class TranslateController implements Initializable {
     private TextArea toField;
 
     @FXML
-    public ImageView imageFrom;
-
-    @FXML
-    public ImageView imageTo;
-
-    @FXML
     private Label labelFromLanguage;
 
     @FXML
@@ -70,8 +64,7 @@ public class TranslateController implements Initializable {
     TextToSpeechTask speechTask;
 
     TranslateTask translateTask;
-    Image imageVi;
-    Image imageEn;
+
     boolean enToVi = true;
     private String fromLanguage = "en";
     private String toLanguage = "vi";
@@ -88,14 +81,18 @@ public class TranslateController implements Initializable {
                 event -> notificationHBox.setVisible(false)
         );
 
-        imageVi = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/icon/Vietnam.png")));
-        imageEn = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/icon/UK.png")));
-
-        imageFrom = new ImageView(imageEn);
-        imageTo = new ImageView(imageVi);
-
         limitLabel.setText("0/" + CHARACTER_LIMIT);
 
+        fromFieldListener(visiblePause);
+        fromFieldTextFormatter(visiblePause);
+
+        fromSpeakButton.setOnAction(event -> onFromSpeak());
+        toSpeakButton.setOnAction(event -> onToSpeak());
+        copyToClipboardButton.setOnAction(event -> onCopyToClipboard());
+        switchButton.setOnAction(event -> switchLanguage());
+    }
+
+    private void fromFieldListener(PauseTransition visiblePause) {
         fromField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (translateTask != null) {
                 translateTask.cancel();
@@ -118,16 +115,19 @@ public class TranslateController implements Initializable {
             });
             new Thread(translateTask).start();
 
-            if (newValue.length() > 100) {
+            if (newValue == null || newValue.length() > 100) {
                 fromField.setStyle("-fx-font-size: 1.2em;");
                 toField.setStyle("-fx-font-size: 1.2em;");
             } else {
                 fromField.setStyle("-fx-font-size: 1.5em;");
                 toField.setStyle("-fx-font-size: 1.5em;");
             }
-            limitLabel.setText(newValue.length() + "/" + CHARACTER_LIMIT);
-        });
 
+            limitLabel.setText(newValue == null ? "0" : newValue.length() + "/" + CHARACTER_LIMIT);
+        });
+    }
+
+    private void fromFieldTextFormatter(PauseTransition visiblePause) {
         fromField.setTextFormatter(new TextFormatter<Character>(change -> {
             if (change.getControlNewText().length() <= CHARACTER_LIMIT) {
                 return change;
@@ -141,31 +141,32 @@ public class TranslateController implements Initializable {
             }
             return null;
         }));
+    }
 
-        fromSpeakButton.setOnAction(event -> {
-            try {
-                speechTask = new TextToSpeechTask(fromField.getText(), fromLanguage);
-                new Thread(speechTask).start();
-            } catch (Exception e) {
+    private void onFromSpeak() {
+        try {
+            speechTask = new TextToSpeechTask(fromField.getText(), fromLanguage);
+            new Thread(speechTask).start();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
 
-            }
-        });
-        toSpeakButton.setOnAction(event -> {
-            try {
-                speechTask = new TextToSpeechTask(toField.getText(), toLanguage);
-                new Thread(speechTask).start();
-            } catch (Exception e) {
+    private void onToSpeak() {
+        try {
+            speechTask = new TextToSpeechTask(toField.getText(), toLanguage);
+            new Thread(speechTask).start();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
 
-            }
-        });
-        copyToClipboardButton.setOnAction(event -> {
-            String text = toField.getText();
-            Clipboard clipboard = Clipboard.getSystemClipboard();
-            ClipboardContent clipboardContent = new ClipboardContent();
-            clipboardContent.putString(text);
-            clipboard.setContent(clipboardContent);
-        });
-        switchButton.setOnAction(event -> switchLanguage());
+    private void onCopyToClipboard() {
+        String text = toField.getText();
+        Clipboard clipboard = Clipboard.getSystemClipboard();
+        ClipboardContent clipboardContent = new ClipboardContent();
+        clipboardContent.putString(text);
+        clipboard.setContent(clipboardContent);
     }
 
     public void switchLanguage() {

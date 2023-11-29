@@ -1,5 +1,6 @@
 package com.controller;
 
+import com.dictionary.Local;
 import com.ui.Model;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -38,6 +39,12 @@ public class WindowController implements Initializable {
                     break;
                 case "Flashcard":
                     rootWindow.setCenter(Model.getInstance().getView().getFlashcardPane());
+                    break;
+                case "toLocal":
+                    Model.dictionary = new Local();
+                    break;
+                case "toSQL":
+                    Model.getInstance().getView().showLoginSQLView();
                     break;
                 default:
                     rootWindow.setCenter(Model.getInstance().getView().getDictionaryPane());

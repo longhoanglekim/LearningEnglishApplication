@@ -22,8 +22,8 @@ public class View {
     private AnchorPane dictionaryPane;
     private AnchorPane translatePane;
     private AnchorPane gamePane;
-    private AnchorPane settingPane;
     private AnchorPane flashcardPane;
+    private AnchorPane loginSQLPane;
 
     public View() {
         selectedMenuItem = new SimpleStringProperty("");
@@ -42,7 +42,7 @@ public class View {
             try {
                 dictionaryPane = new FXMLLoader(getClass().getResource("Dictionary.fxml")).load();
             } catch (IOException e) {
-                Logger.getLogger(View.class.getName()).info("Cannot load dictionary data.");
+                Logger.getLogger(View.class.getName()).info("Cannot load dictionary data.\n" + e.getCause());
             }
         }
         return dictionaryPane;
@@ -57,7 +57,7 @@ public class View {
             try {
                 dashboardPane = new FXMLLoader(getClass().getResource("Dashboard.fxml")).load();
             } catch (IOException e) {
-                Logger.getLogger(View.class.getName()).info("Cannot load dashboard pane - FXML.");
+                Logger.getLogger(View.class.getName()).info("Cannot load dashboard pane - FXML.\n" + e.getCause());
             }
         }
         return dashboardPane;
@@ -72,8 +72,7 @@ public class View {
             try {
                 translatePane = new FXMLLoader(getClass().getResource("Translate.fxml")).load();
             } catch (IOException e) {
-                Logger.getLogger(View.class.getName()).info("Cannot load translate pane - FXML.");
-                e.printStackTrace();
+                Logger.getLogger(View.class.getName()).info("Cannot load translate pane - FXML.\n" + e.getCause());
             }
         }
         return translatePane;
@@ -88,7 +87,7 @@ public class View {
             try {
                 gamePane = new FXMLLoader(getClass().getResource("Game.fxml")).load();
             } catch (IOException e) {
-                Logger.getLogger(View.class.getName()).info("Cannot load game pane - FXML.");
+                Logger.getLogger(View.class.getName()).info("Cannot load game pane - FXML.\n" + e.getCause());
             }
         }
         return gamePane;
@@ -99,10 +98,21 @@ public class View {
             try {
                 flashcardPane = new FXMLLoader(getClass().getResource("Flashcard.fxml")).load();
             } catch (IOException e) {
-                Logger.getLogger(View.class.getName()).info("Cannot load Flashcard pane - FXML.");
+                Logger.getLogger(View.class.getName()).info("Cannot load Flashcard pane - FXML.\n" + e.getCause());
             }
         }
         return flashcardPane;
+    }
+    
+    public AnchorPane getLoginSQLPane() {
+        if (loginSQLPane == null) {
+            try {
+                loginSQLPane = new FXMLLoader(getClass().getResource("LoginSQLController.fxml")).load();
+            } catch (IOException e) {
+                Logger.getLogger(View.class.getName()).info("Cannot load LoginSQLController pane - FXML.");
+            }
+        }
+        return loginSQLPane;
     }
 
     /**
@@ -122,7 +132,7 @@ public class View {
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.setTitle("Dictionary beta");
-        stage.getIcons().add(new Image("file:src/main/resources/com/ui/zictionary.png"));
+        stage.getIcons().add(new Image("file:src/main/resources/com/icon/Dictionary.png"));
         stage.setMinWidth(800);
         stage.setMinHeight(550);
         stage.setOnCloseRequest(event -> {
@@ -149,11 +159,22 @@ public class View {
         stage.hide();
     }
 
+    public void showLoginSQLView() {
+        Scene scene = getLoginSQLPane().getScene();
+        if (scene == null) {
+            scene = new Scene(getLoginSQLPane());
+        }
+        Stage stage = new Stage();
+        stage.initOwner(dashboardPane.getScene().getWindow());
+        stage.initModality(javafx.stage.Modality.APPLICATION_MODAL);
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.show();
+    }
+
     public void init() throws IOException {
         dictionaryPane = new FXMLLoader(getClass().getResource("Dictionary.fxml")).load();
         gamePane = new FXMLLoader(getClass().getResource("Game.fxml")).load();
         translatePane = new FXMLLoader(getClass().getResource("Translate.fxml")).load();
-        // loi >
-        /*flashcardPane = new FXMLLoader(getClass().getResource("Flashcard.fxml")).load();*/
     }
 }

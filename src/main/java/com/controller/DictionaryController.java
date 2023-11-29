@@ -223,9 +223,17 @@ public class DictionaryController implements Initializable {
         copyButton.setOnAction(event -> onCopyClick());
         deleteButton.setOnAction(event -> onDeleteClick());
 
+        Model.getInstance().getChangeDictionary().addListener((observable, oldValue, newValue) -> {
+            wordList.getItems().clear();
+            targetField.setText("");
+            pronouceField.setText("");
+            definitionField.getChildren().clear();
+        });
+
         // Listener
         listenerSearchField();
         listenerTargetField();
+
         //searchListView();
         Platform.runLater(() -> searchField.requestFocus());
     }
