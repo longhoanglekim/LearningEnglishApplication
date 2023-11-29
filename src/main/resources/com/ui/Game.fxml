@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="960.0" styleClass="Game.css" stylesheets="@../css/Game.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.GameController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="960.0" styleClass="style_game.css" stylesheets="@../css/style_game.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.GameController">
    <children>
       <Button fx:id="buttonA" layoutX="60.0" layoutY="208.0" mnemonicParsing="false" onAction="#addClickEvent" prefHeight="25.0" prefWidth="34.0">
          <graphic>
@@ -265,7 +265,7 @@
             </Button>
          </children>
       </GridPane>
-      <HBox fx:id="Hbox" alignment="CENTER" layoutX="144.0" layoutY="490.0" prefHeight="53.0" prefWidth="566.0" spacing="10.0" stylesheets="@../css/Game.css">
+      <HBox fx:id="Hbox" alignment="CENTER" layoutX="144.0" layoutY="490.0" prefHeight="53.0" prefWidth="566.0" spacing="10.0" stylesheets="@../css/style_game.css">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>

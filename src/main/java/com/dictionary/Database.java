@@ -13,30 +13,32 @@ import java.util.logging.Logger;
 public class Database extends Dictionary {
     private static Connection databaseLink;
     private static int numberOfWords;
-    private static String databaseName = "dictionarybasic";
-    private static String table = "en_vi";
+    private static final String databaseName = "dictionarybasic";
+    private String user;
+    private String table = "en_vi";
     Trie words = new Trie();
 
     /**
      * Get database connection from a database.
      */
-    public void getDatabaseConnection() throws Exception {
-        String databaseUser = "root";
-        String databasePassword = "Long24062004";
+    public void getDatabaseConnection(String user, String password, String databaseName) throws Exception {
+        if (databaseName == null || databaseName.isEmpty()) {
+            databaseName = Database.databaseName;
+        }
         String url = "jdbc:mysql://localhost:3306/" + databaseName;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            databaseLink = DriverManager.getConnection(url, databaseUser, databasePassword);
+            databaseLink = DriverManager.getConnection(url, user, password);
+            this.user = user;
         } catch (Exception e) {
             Logger.getLogger(Database.class.getName()).warning("SQLException: " + e.getMessage());
-            throw new Exception("Cannot connect to database.");
+            throw new Exception(e.getCause());
         }
     }
 
     @Override
     public boolean initialize() {
         try {
-            getDatabaseConnection();
             List<String> allWords = getAllWordsTarget();
             for (String word : allWords) {
                 Word newWord = new Word(word, "", "");
@@ -228,5 +230,17 @@ public class Database extends Dictionary {
         } catch (SQLException e) {
             System.err.println("Error: " + e.getMessage() + "\nWhile closing database connection");
         }
+    }
+
+    public String getTable() {
+        return table;
+    }
+
+    public void setTable(String table) {
+        this.table = table;
+    }
+
+    public String getUser() {
+        return user;
     }
 }

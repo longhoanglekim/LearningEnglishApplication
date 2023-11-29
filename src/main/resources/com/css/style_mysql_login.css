@@ -1,0 +1,39 @@
+.hbox {
+    -fx-background-color: white;
+    -fx-border-color: #2e3856;
+}
+
+.text-field {
+    -fx-background-color: transparent;
+}
+
+.password-field {
+    -fx-background-color: transparent;
+}
+
+.label {
+    -fx-font-size: 15px;
+    -fx-alignment: center;
+}
+
+#cancelButton {
+    -fx-background-color: white;
+    -fx-border-color: #2e3856;
+    -fx-border-radius: 0.2em;
+    -fx-text-fill: black;
+}
+
+#cancelButton:hover {
+    -fx-background-color: #2e3856;
+    -fx-text-fill: white;
+}
+
+#connectButton {
+    -fx-background-color: #5691d0;
+    -fx-opacity: 0.8;
+    -fx-text-fill: white;
+}
+
+#connectButton:hover {
+    -fx-opacity: 1;
+}

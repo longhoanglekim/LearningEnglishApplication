@@ -15,7 +15,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane stylesheets="@../css/Dictionary.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.DictionaryController">
+<AnchorPane stylesheets="@../css/style_dictionary.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.DictionaryController">
    <BorderPane prefHeight="626.0" prefWidth="772.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <center>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="576.0" prefWidth="542.0" styleClass="definitionArea" BorderPane.alignment="CENTER">
@@ -89,12 +89,12 @@
       </center>
       <left>
             <AnchorPane id="leftPane" minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="225.0" BorderPane.alignment="CENTER">
-                <ListView fx:id="wordList" prefHeight="519.0" prefWidth="226.0" stylesheets="@../css/Dashboard.css" AnchorPane.bottomAnchor="40.0" AnchorPane.topAnchor="80.0" />
+                <ListView fx:id="wordList" prefHeight="519.0" prefWidth="226.0" stylesheets="@../css/style_dashboard.css" AnchorPane.bottomAnchor="40.0" AnchorPane.topAnchor="80.0" />
                <HBox fx:id="searchHBox" prefHeight="40.0" prefWidth="225.0" styleClass="search-box" AnchorPane.topAnchor="40.0">
                    <opaqueInsets>
                        <Insets left="10.0" />
                    </opaqueInsets>
-                   <TextField id="search_field" fx:id="searchField" prefHeight="40.0" prefWidth="190.0" promptText="Search" styleClass="search-field" stylesheets="@../css/Dashboard.css">
+                   <TextField id="search_field" fx:id="searchField" prefHeight="40.0" prefWidth="190.0" promptText="Search" styleClass="search-field" stylesheets="@../css/style_dashboard.css">
                        <font>
                            <Font size="14.0" />
                        </font>

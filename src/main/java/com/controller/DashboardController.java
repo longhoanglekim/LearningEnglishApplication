@@ -1,18 +1,27 @@
 package com.controller;
 
+import com.dictionary.Database;
 import com.ui.Model;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
+
+import java.util.Optional;
 
 import static com.ui.Model.dictionary;
 
 public class DashboardController implements Initializable {
     @FXML
     public Button flashcardButton;
+
     @FXML
     private Button dictionaryButton;
 
@@ -27,6 +36,12 @@ public class DashboardController implements Initializable {
 
     @FXML
     private Button barButton;
+
+    @FXML
+    private ToggleButton switchModeButton;
+
+    @FXML
+    private TextFlow statusText;
 
     @FXML
     private VBox buttonVBox;
@@ -47,6 +62,27 @@ public class DashboardController implements Initializable {
         gameButton.setOnAction(actionEvent -> onGameClicked());
         exportButton.setOnAction(actionEvent -> onExportClicked());
         flashcardButton.setOnAction(actionEvent -> onFlashcardClicked());
+
+        switchModeButtonListener();
+    }
+
+    private void switchModeButtonListener() {
+        switchModeButton.selectedProperty().addListener((observableValue, oldValue, newValue) -> {
+            if (!switchModeButton.isSelected()) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation");
+                alert.setHeaderText("Switch to local mode?");
+                Optional<ButtonType> result = alert.showAndWait();
+                if (!result.isPresent() || result.get() == ButtonType.CANCEL) {
+                    switchModeButton.setSelected(true);
+                    return;
+                }
+                Model.getInstance().getView().getSelectedMenuItem().setValue("toLocal");
+                switchModeButton.setText("Connect\nMySQL");
+            } else {
+                Model.getInstance().getView().getSelectedMenuItem().setValue("toSQL");
+            }
+        });
     }
 
     public void onBarClicked() {
@@ -81,6 +117,10 @@ public class DashboardController implements Initializable {
     public void onFlashcardClicked() {
         Model.getInstance().getView().getSelectedMenuItem().setValue("Flashcard");
         setStyleButtonOnClick("Flashcard");
+    }
+
+    public void onSwitchModeClicked() {
+        Model.getInstance().getView().getSelectedMenuItem().setValue("SwitchMode");
     }
 
     /**

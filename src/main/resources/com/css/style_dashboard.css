@@ -31,11 +31,11 @@
 }
 
 .toggle-button {
-    -fx-background-color: black;
-
+    -fx-background-color: #3d80c9;
+    -fx-text-fill: white;
 }
 
 .toggle-button:selected {
-    -fx-background-color: #6a777e;
-    -fx-border-color: #505050;
+    -fx-background-color: #5691d0;
+    -fx-text-fill: white;
 }
