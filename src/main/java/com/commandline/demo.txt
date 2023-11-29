@@ -6,3 +6,5 @@ fish con cá
 frog con ếch
 giraffe con hươu cao cổ
 goat con dê
+long Long
+short ngắn

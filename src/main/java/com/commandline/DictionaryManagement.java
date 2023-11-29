@@ -17,13 +17,23 @@ public class DictionaryManagement {
 
         int n = sc.nextInt();
         sc.nextLine(); // Remove enter
-
         for (int i = 0; i < n; i++) {
+            System.out.println("Nhập từ muốn thêm:");
             String target = sc.nextLine();
+            System.out.println("Nhập nghĩa:");
             String explain = sc.nextLine();
             Word newWord = new Word(target, explain);
             Dictionary.words.add(newWord);
+            File file = new File(DictionaryCommandline.FILE_PATH);
+            try {
+                BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true));
+                bufferedWriter.write(target + " " + explain + "\n");
+                bufferedWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+
     }
 
     /**
@@ -69,26 +79,6 @@ public class DictionaryManagement {
         return null;
     }
 
-    /**
-     * Add a word to dictionary.
-     */
-    public static void addWord() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Nhập từ muốn thêm:");
-        String target = sc.nextLine();
-        System.out.println("Nhập nghĩa:");
-        String explain = sc.nextLine();
-        Word newWord = new Word(target, explain);
-        Dictionary.words.add(newWord);
-        File file = new File(DictionaryCommandline.FILE_PATH);
-        try {
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true));
-            bufferedWriter.write(target + " " + explain + "\n");
-            bufferedWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     /**
      * Delete a word from dictionary.

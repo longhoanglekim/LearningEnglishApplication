@@ -106,7 +106,7 @@ public class DictionaryCommandline {
                     System.out.println("Tam biet ban!");
                     return;
                 case 1:
-                    DictionaryManagement.addWord();
+                    DictionaryManagement.insertFromCommandline();
                     break;
                 case 2:
                     DictionaryManagement.deleteWord();
