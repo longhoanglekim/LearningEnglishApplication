@@ -1,6 +1,6 @@
 /* your-styles.css */
 .anchor_pane {
-    -fx-background-color: #0a092d;
+    -fx-background-color: #F4F4F4;
 }
 .card_pane {
     -fx-background-color: #2e3856;
@@ -24,9 +24,11 @@
 }
 .label {
     -fx-text-fill: white;
+    -fx-background-color: #2e3856;
 }
 .text {
     -fx-text-fill: white;
+
 }
 .button-help {
     -fx-background-color: #2e3856;

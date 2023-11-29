@@ -181,5 +181,6 @@ public class TranslateController implements Initializable {
             toLanguage = "vi";
         }
         fromField.setText(toField.getText());
+        enToVi = !enToVi;
     }
 }
