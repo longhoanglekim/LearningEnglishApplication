@@ -51,9 +51,7 @@ public class FlashcardController implements Initializable {
         answerArea.setOnMouseClicked(this::flipCard);
 
         System.out.println(cardPane.getPrefHeight() + " " + cardPane.getPrefWidth());
-        Platform.runLater(() -> {
-            hackTextAreaLayout(questionArea);
-        });
+
         helpButton.setOnAction(event -> {
             if (helpButton.getText().equals("Hiển thị gợi ý")) {
                 helpButton.setText(getProperty());
@@ -184,5 +182,6 @@ public class FlashcardController implements Initializable {
         currentCardLabel.setText((currentCard + 1) + "/" + flashcard.size());
         answerArea.setWrapText(true);
         questionArea.setWrapText(true);
+        hackTextAreaLayout(questionArea);
     }
 }
