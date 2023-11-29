@@ -1,10 +1,7 @@
 package com.commandline;
 
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
-import java.io.File;
-import java.io.FileNotFoundException;
 
 /**
  * Manage dictionary.
@@ -39,9 +36,15 @@ public class DictionaryManagement {
 
             while (sc.hasNextLine()) {
                 String data = sc.nextLine();
-                String[] word = data.split("\t");
-                Word newWord = new Word(word[0], word[word.length - 1]);
-                Dictionary.words.add(newWord);
+
+                // Tách chỉ từ đầu tiên trong dòng
+                String[] words = data.split(" ", 2);
+
+                // Kiểm tra xem có ít nhất một từ trong dòng
+                if (words.length >= 1) {
+                    Word newWord = new Word(words[0], words[1]);
+                    Dictionary.words.add(newWord);
+                }
             }
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred. No such file or dictionary.");
@@ -49,6 +52,7 @@ public class DictionaryManagement {
             System.exit(1);
         }
     }
+
 
     /**
      * Look up a word in dictionary.
@@ -70,12 +74,20 @@ public class DictionaryManagement {
      */
     public static void addWord() {
         Scanner sc = new Scanner(System.in);
-
+        System.out.println("Nhập từ muốn thêm:");
         String target = sc.nextLine();
+        System.out.println("Nhập nghĩa:");
         String explain = sc.nextLine();
-
         Word newWord = new Word(target, explain);
         Dictionary.words.add(newWord);
+        File file = new File(DictionaryCommandline.FILE_PATH);
+        try {
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true));
+            bufferedWriter.write(target + " " + explain + "\n");
+            bufferedWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -91,6 +103,31 @@ public class DictionaryManagement {
                 Dictionary.words.remove(i);
                 break;
             }
+        }
+        try {
+            // Đọc tất cả các dòng từ tệp văn bản và lưu chúng vào danh sách
+            File file = new File(DictionaryCommandline.FILE_PATH);
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+            String dong;
+            StringBuilder content = new StringBuilder();
+
+            while ((dong = bufferedReader.readLine()) != null) {
+                // Kiểm tra nếu là dòng cần xóa
+                if (!dong.contains(target)) {
+                    content.append(dong).append("\n");
+                }
+            }
+
+            bufferedReader.close();
+
+            // Ghi lại tất cả các dòng còn lại vào tệp văn bản
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
+            bufferedWriter.write(content.toString());
+            bufferedWriter.close();
+
+            System.out.println("Đã xóa dòng thành công.");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -113,6 +150,7 @@ public class DictionaryManagement {
                 writer.write("\n");
             }
             writer.close();
+            System.out.println("Xuất file thành công.");
         } catch (IOException e) {
             e.printStackTrace();
         }

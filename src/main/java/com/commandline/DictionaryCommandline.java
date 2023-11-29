@@ -4,6 +4,8 @@ import java.util.*;
 
 
 public class DictionaryCommandline {
+    public static final String FILE_PATH = "src/main/java/com/commandline/demo.txt";
+
     /**
      * Show all words in dictionary.
      * May be used for testing. May be removed later.
@@ -104,7 +106,7 @@ public class DictionaryCommandline {
                     System.out.println("Tam biet ban!");
                     return;
                 case 1:
-                    DictionaryManagement.insertFromCommandline();
+                    DictionaryManagement.addWord();
                     break;
                 case 2:
                     DictionaryManagement.deleteWord();
