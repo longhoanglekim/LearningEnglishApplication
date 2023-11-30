@@ -107,7 +107,7 @@ public class View {
     public AnchorPane getLoginSQLPane() {
         if (loginSQLPane == null) {
             try {
-                loginSQLPane = new FXMLLoader(getClass().getResource("LoginSQLController.fxml")).load();
+                loginSQLPane = new FXMLLoader(getClass().getResource("LoginSQL.fxml")).load();
             } catch (IOException e) {
                 Logger.getLogger(View.class.getName()).info("Cannot load LoginSQLController pane - FXML.");
             }

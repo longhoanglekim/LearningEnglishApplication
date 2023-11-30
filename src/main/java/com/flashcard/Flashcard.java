@@ -44,6 +44,10 @@ public class Flashcard {
                 answerList.add(word.getDefinition().toString());
             }
         }
+        if (questionList.size() == 0) {
+            questionList.add("Không có từ nào được đánh dấu");
+            answerList.add("Không có từ nào được đánh dấu");
+        }
     }
 
     public String getAnswer(int index) {

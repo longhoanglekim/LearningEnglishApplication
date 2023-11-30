@@ -604,6 +604,7 @@ public class DictionaryController implements Initializable {
             return;
         }
         dictionary.removeWord(currentWord);
+        dictionary.getBookmarkList().remove(currentWord);
         wordList.getItems().remove(currentWord);
         mode = Mode.SEARCH;
         currentWord = null;
@@ -627,7 +628,7 @@ public class DictionaryController implements Initializable {
                 .hideAfter(javafx.util.Duration.seconds(1))
                 .position(Pos.BOTTOM_RIGHT)
                 .graphic(null)
-                .owner(Model.getInstance().getView().getDictionaryPane())
+                .owner(definitionField)
                 .hideCloseButton();
 
         if (dictionary.getBookmarkList().getList().isEmpty())  {
@@ -909,7 +910,7 @@ public class DictionaryController implements Initializable {
                     .hideAfter(javafx.util.Duration.seconds(1))
                     .position(Pos.BOTTOM_RIGHT)
                     .graphic(null)
-                    .owner(Model.getInstance().getView().getDictionaryPane())
+                    .owner(definitionField)
                     .hideCloseButton();
             notification.show();
             mode = Mode.SEARCH;
@@ -1000,6 +1001,8 @@ public class DictionaryController implements Initializable {
         @Override
         public void updateItem(String item, boolean empty) {
             super.updateItem(item, empty);
+            setText(null);
+            setGraphic(null);
             if (item != null && !empty) {
                 setText(item.substring(1));
                 ACTION action = ACTION.parseAction(item);
